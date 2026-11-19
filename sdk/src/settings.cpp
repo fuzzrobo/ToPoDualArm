@@ -5,6 +5,8 @@
 #include <stdexcept>
 namespace fuzzrobo::topoarm_hardware {
 void validate_settings(const std::vector<Joint> &joints, const SessionOptions &options) {
+    if (options.read_profile != "teleop" && options.read_profile != "bam")
+        throw std::invalid_argument("read_profileにはteleopまたはbamを指定してください");
     if (!std::isfinite(options.floor_z_m) || !std::isfinite(options.floor_margin_m) ||
         options.floor_margin_m < .001 || (options.floor_enabled && options.robot_model.empty()))
         throw std::invalid_argument("床設定には有限の高さ・1mm以上の余裕・有効時のURDFが必要です");

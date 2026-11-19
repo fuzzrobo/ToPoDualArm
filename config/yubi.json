@@ -3,6 +3,7 @@
   "quest_host": "REPLACE_WITH_QUEST_IP",
   "quest_port": 65432,
   "hardware_verified": false,
+  "meta_trigger_released_opening": 0.5,
   "quest_to_robot_xyzw": [
     0,
     0,

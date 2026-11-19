@@ -115,6 +115,7 @@ PYBIND11_MODULE(_native, m) {
         .def_readonly("velocity_trajectory", &JointState::velocity_trajectory);
     py::class_<SessionOptions>(m, "Options")
         .def(py::init<>())
+        .def_readwrite("read_profile", &SessionOptions::read_profile)
         .def_readwrite("xm540_p", &SessionOptions::xm540_p)
         .def_readwrite("xm540_d", &SessionOptions::xm540_d)
         .def_readwrite("xm540_profile_ms", &SessionOptions::xm540_profile_ms)

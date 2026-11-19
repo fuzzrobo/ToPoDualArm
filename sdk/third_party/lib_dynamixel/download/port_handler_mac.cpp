@@ -1,12 +1,42 @@
 // SPDX-License-Identifier: Apache-2.0
 #include "port_handler_mac.h"
 #include <IOKit/serial/ioss.h>
+#include <IOKit/IOKitLib.h>
+#include <IOKit/serial/IOSerialKeys.h>
 #include <cstring>
+#include <cerrno>
+#include <cstdio>
 #include <fcntl.h>
 #include <stdexcept>
 #include <sys/ioctl.h>
 #include <termios.h>
 #include <unistd.h>
+
+namespace {
+// 実際に開くBSDデバイスの親をたどり、AppleUSBFTDIにだけ単位の差を適用する。
+bool usesAppleUsbFtdi(const char* path) {
+  auto matching = IOServiceMatching(kIOSerialBSDServiceValue);
+  if (!matching) return false;
+  auto device = CFStringCreateWithCString(nullptr, path, kCFStringEncodingUTF8);
+  if (!device) { CFRelease(matching); return false; }
+  const auto key = std::strncmp(path, "/dev/tty.", 9) == 0
+      ? CFSTR(kIODialinDeviceKey) : CFSTR(kIOCalloutDeviceKey);
+  CFDictionarySetValue(matching, key, device);
+  CFRelease(device);
+  auto node = IOServiceGetMatchingService(kIOMainPortDefault, matching);
+  while (node) {
+    io_name_t name{};
+    const bool found = IORegistryEntryGetName(node, name) == KERN_SUCCESS &&
+                       std::strcmp(name, "AppleUSBFTDI") == 0;
+    io_registry_entry_t parent{};
+    if (!found) IORegistryEntryGetParentEntry(node, kIOServicePlane, &parent);
+    IOObjectRelease(node);
+    if (found) return true;
+    node = parent;
+  }
+  return false;
+}
+} // namespace
 
 PortHandlerMac::PortHandlerMac(const char* name) {
   is_using_ = false;
@@ -46,6 +76,14 @@ bool PortHandlerMac::setBaudRate(int baudrate) {
   // termiosの標準定数にはない1 MbpsもIOSSIOSPEEDで設定する。
   speed_t speed = static_cast<speed_t>(baudrate);
   ok = ok && ioctl(fd_, IOSSIOSPEED, &speed) == 0;
+  if (ok) {
+    // AppleUSBFTDIは実測上ms、標準のIOSSDATALATはµs。
+    unsigned long latency_arg = static_cast<unsigned long>(latency_ms_) * (usesAppleUsbFtdi(name_) ? 1UL : 1000UL);
+    if (ioctl(fd_, IOSSDATALAT, &latency_arg) < 0) {
+      std::fprintf(stderr, "%s: IOSSDATALAT(%lu): %s\n", name_, latency_arg,
+                   std::strerror(errno));
+    }
+  }
   if (!ok) {
     closePort();
     return false;

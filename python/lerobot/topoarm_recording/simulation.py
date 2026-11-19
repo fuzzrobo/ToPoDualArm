@@ -9,14 +9,15 @@ from topoarm_sdk._session import PositionSession
 
 
 class SimTarget(PositionSession):
-    def __init__(self, cfg, root):
+    def __init__(self, cfg, root, *, scene=None, step_on_command=True, cameras=("front", "left", "right")):
         self.hardware = (root / cfg["hardware"]).resolve()
         rate = float(cfg["hz"])
         if not math.isfinite(rate) or not 1 <= rate <= 1000:
             raise ValueError("シミュレーション周期が不正です")
+        self.step_on_command = step_on_command
         self.dt = 1 / rate
         self.sim = Simulation(self.hardware, simulation_config=root / cfg["simulation"],
-                              width=320, height=240, cameras=("front", "left", "right"))
+                              scene_config=scene, width=320, height=240, cameras=cameras)
         super().__init__(self.sim.names, cfg["role"], cfg.get("state_timeout_s", .25))
         self.home = yaml.safe_load((root / cfg["home"]).read_text())
 
@@ -34,7 +35,8 @@ class SimTarget(PositionSession):
 
     def _command(self, q):
         accepted = self.sim.command(q)
-        self.sim.step(self.dt)
+        if self.step_on_command:
+            self.sim.step(self.dt)
         return accepted
 
     def _enable(self):

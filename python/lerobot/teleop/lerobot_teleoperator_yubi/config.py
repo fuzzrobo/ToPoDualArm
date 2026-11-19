@@ -31,8 +31,9 @@ class YubiTeleoperatorConfig(TeleoperatorConfig):
     quest_port: int = 65432
     arms: dict[str, YubiArmConfig] = field(default_factory=default_arms)
     hardware_verified: bool = False
-    # Unity→右手Z-up変換後の基準回転。順序はxyzw。
+    # Unity→右手Z-up変換後のHMD座標をロボットの基準方向に合わせる。順序はxyzw。
     quest_to_robot_xyzw: list[float] = field(default_factory=lambda: [0., 0., 0., 1.])
+    meta_trigger_released_opening: float = 1.0
     position_scale: float = 1.0
     neck_mode: str = "fixed"
     neck_pan_deg: float = 0.0
@@ -52,6 +53,8 @@ class YubiTeleoperatorConfig(TeleoperatorConfig):
         return make_yubi_processor(self, robot_config)
 
     def validate(self):
+        if not 0 <= self.meta_trigger_released_opening <= 1:
+            raise ValueError("meta_trigger_released_openingは0〜1で指定してください")
         if self.neck_mode not in ("fixed", "follow"):
             raise ValueError("neck_modeはfixed/followを指定してください")
         if set(self.arms) != set(SIDES):

@@ -1,7 +1,14 @@
 .venv/
 build/
 data/
-/dev/
+/config/yubi-local.json
+/dev/*
+!/dev/viewer/
+/dev/viewer/*
+!/dev/viewer/scene_window.py
+!/dev/viewer/record_quest.py
+!/dev/viewer/sim_frames.py
+!/dev/viewer/stack_boxes.yaml
 /outputs/
 /logs/
 /.pytest_cache/

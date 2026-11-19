@@ -45,6 +45,7 @@ class DriverSession {
     std::vector<uint8_t> last_reset_ids_;
     size_t reset_count_{0};
     bool reset_pending_{false};
+    double next_diagnostic_{0};
     bool fail(const std::string &reason);
     bool positions_valid() const;
     bool write_impl(bool torque_off_diagnostic);

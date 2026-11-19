@@ -28,7 +28,31 @@ HEIGHT, WIDTH = 240, 320
 DEFAULT_ROBOT = ROOT / "config/robots/mujoco.yaml"
 
 
-def inputs(mode, cfg, cleanup, pose, names, hardware, leader_config):
+class QuestReader:
+    def __init__(self, step, receive, names):
+        self.step, self.receive, self.names = step, receive, names
+        self.tracking = {}
+
+    def __call__(self, index, state):
+        observed = {name + ".pos": state[name] for name in self.names}
+        raw = self.receive()
+        self.tracking = {s: bool(raw.get(f"{s}.tracked", True)) for s in SIDES}
+        self.tracking["received"] = raw["received"]
+        action = self.step.compute(raw, observed)
+        return {name: action[name + ".pos"] for name in self.names}
+
+    def accepted(self, applied):
+        self.step.last = dict(applied)
+
+    def pause(self, applied):
+        self.accepted(applied)
+        self.step.head_anchor = None
+        for side in SIDES:
+            self.step.active[side] = self.step.released[side] = False
+
+
+def inputs(mode, cfg, cleanup, pose, names, hardware, leader_config, *, real_robot,
+           button_event=None, position_first=False, direct_quest_pose=None):
     if mode == "leader":
         if not leader_config:
             raise ValueError("--leader に読み取り専用の個体YAMLを指定してください")
@@ -44,19 +68,22 @@ def inputs(mode, cfg, cleanup, pose, names, hardware, leader_config):
         from lerobot_teleoperator_yubi.joints import JOINTS
         if set(names) != set(JOINTS):
             raise ValueError("Meta入力には18軸モデルを指定してください")
-        robot = SimpleNamespace(type="topoarm", joints=JOINTS, config_file=str(hardware))
-        step = YubiActionStep(cfg, robot)
+        robot = SimpleNamespace(type="topoarm" if real_robot else "topoarm_mujoco",
+                                joints=JOINTS, config_file=str(hardware))
+        step = YubiActionStep(cfg, robot, position_first=position_first, direct_quest_pose=direct_quest_pose)
         if mode == "meta":
-            if not cfg.hardware_verified:
+            if real_robot and not cfg.hardware_verified:
                 raise ValueError("Metaの取付け・座標変換を確認してください")
             from lerobot_teleoperator_yubi.quest import QuestInput
-            device = QuestInput(cfg)
+            device = QuestInput(cfg, allow_untracked=True, button_event=button_event)
             cleanup.callback(device.close)
             device.connect()
             def receive():
                 raw = dict(device.snapshot())
                 for side in SIDES:
-                    raw[f"{side}.opening"] = float(not raw[f"{side}.trigger"])
+                    if raw.get(f"{side}.tracked") is False:
+                        continue
+                    raw[f"{side}.opening"] = 0.0 if raw[f"{side}.trigger"] else cfg.meta_trigger_released_opening
                     raw[f"{side}.opening_received"] = raw["received"]
                 return raw
         else:
@@ -65,11 +92,7 @@ def inputs(mode, cfg, cleanup, pose, names, hardware, leader_config):
             cleanup.callback(device.disconnect)
             receive = device.get_action
 
-        def read_quest(index, state):
-            observed = {name + ".pos": state[name] for name in names}
-            action = step.compute(receive(), observed)
-            return {name: action[name + ".pos"] for name in names}
-        return read_quest
+        return QuestReader(step, receive, names)
 
     ports = {}
     if mode == "glove":
@@ -121,7 +144,7 @@ def record(args):
                 from topoarm_sdk import load_config
                 cfg.urdf_path = load_config(str(robot.hardware)).options.robot_model
                 cfg.validate()
-            read = inputs(args.input, cfg, cleanup, pose, names, robot.hardware, args.leader)
+            read = inputs(args.input, cfg, cleanup, pose, names, robot.hardware, args.leader, real_robot=isinstance(robot, Device))
             features = {key: {"dtype": "float32", "shape": (len(names),), "names": names}
                         for key in ("action", "observation.state")}
             for camera in CAMERAS:
@@ -136,6 +159,8 @@ def record(args):
                 images = images_at_tick()
                 state = robot.read().position
                 applied = robot.command(read(index, state))
+                if isinstance(read, QuestReader):
+                    read.accepted(applied)
                 frame = {"observation.state": np.array([state[n] for n in names], np.float32),
                          "action": np.array([applied[n] for n in names], np.float32),
                          "task": args.task}

@@ -27,5 +27,6 @@ struct SessionOptions {
     double floor_z_m{0}, floor_margin_m{.02};
     // 運転中の電圧・過負荷エラーだけを、IDごとに接続中1回復旧する。
     bool auto_reset{false};
+    std::string read_profile{"teleop"};
 };
 } // namespace fuzzrobo::topoarm_hardware

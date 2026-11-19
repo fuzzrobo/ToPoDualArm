@@ -7,13 +7,18 @@ from ._session import PositionSession
 
 
 class Device(PositionSession):
-    def __init__(self, path):
+    def __init__(self, path, *, read_profile=None):
         path = Path(path).resolve()
         profile = yaml.safe_load(path.read_text())
         if profile["backend"] != "direct":
             raise ValueError("Deviceには実機直結用の個体プロファイルを指定してください")
         self.hardware = (path.parent / profile["hardware"]).resolve()
         self.cfg = load_config(str(self.hardware))
+        if read_profile is not None:
+            if read_profile not in ("teleop", "bam"):
+                raise ValueError("read_profileにはteleopまたはbamを指定してください")
+            self.cfg.options.read_profile = read_profile
+        self.last_states = ()
         super().__init__([j.name for j in self.cfg.joints], profile["role"], profile.get("state_timeout_s", .25))
         self.device = None
 
@@ -33,6 +38,7 @@ class Device(PositionSession):
         stamp = time.monotonic_ns()
         if any(j.valid != 1 or (self.read_only and j.torque_enabled != 0) for j in states):
             raise RuntimeError("関節状態が無効、またはリーダーのTorqueがONです")
+        self.last_states = states
         return {j.name: j.position for j in states}, stamp
 
     def _enable(self):

@@ -270,16 +270,18 @@ bool DynamixelHandler::configure_return_delay_time(int raw) {
     }
     return true;
 }
-bool DynamixelHandler::read_all() {
+bool DynamixelHandler::read_all(bool full) {
     last_result_ = {};
     faults_.clear();
-    // 内部軌道も同じ64〜146番地の範囲に含める。通信回数・読出しバイト数は増やさない。
-    const std::vector<DynamixelAddress> addresses{AddrX::present_position,      AddrX::present_velocity,
+    static const std::vector<DynamixelAddress> diagnostics{AddrX::present_position,      AddrX::present_velocity,
                                                   AddrX::present_current,       AddrX::present_pwm,
                                                   AddrX::present_input_voltage, AddrX::present_temperature,
                                                   AddrX::torque_enable,         AddrX::hardware_error_status,
                                                   AddrX::realtime_tick,         AddrX::goal_position,
                                                   AddrX::position_trajectory,   AddrX::velocity_trajectory};
+    static const std::vector<DynamixelAddress> motion{AddrX::present_position, AddrX::present_velocity,
+                                                      AddrX::present_current};
+    const auto &addresses = full ? diagnostics : motion;
     const auto values = transport_->sync_read(addresses, dxl_ids);
     if (!transport_->healthy() || values.size() != dxls.size())
         return fail(BusError::Incomplete, -1, "読出し周期が欠落しました");
@@ -289,9 +291,17 @@ bool DynamixelHandler::read_all() {
             return fail(BusError::Incomplete, d.config.id, "IDまたは項目が欠落しました");
     }
     // 欠測がないことを先に確認し、異常IDをすべて保存する。異常値は公開状態へ混ぜない。
-    for (const auto &d : dxls)
-        if (values.at(d.config.id)[7] != 0)
-            faults_.push_back({d.config.id, values.at(d.config.id)[7]});
+    if (!full && transport_->hardware_error()) {
+        // Alertの発生周期に詳細を読み、既存のID別復旧判定へ渡す。
+        if (!read_all(true))
+            return false;
+        return fail(BusError::Hardware, -1, "サーボの一過性Alert");
+    }
+    if (full) {
+        for (const auto &d : dxls)
+            if (values.at(d.config.id)[7] != 0)
+                faults_.push_back({d.config.id, values.at(d.config.id)[7]});
+    }
     if (!faults_.empty())
         return fail(BusError::Hardware, faults_[0].id,
                     "サーボのhardware error: ID=" + std::to_string(faults_[0].id) +
@@ -306,6 +316,14 @@ bool DynamixelHandler::read_all() {
             addresses[0].pulse2val(v[0], d.state.model_number) * d.config.multiplier + d.config.offset;
         d.state.velocity = addresses[1].pulse2val(v[1], d.state.model_number) * d.config.multiplier;
         d.state.current = addresses[2].pulse2val(v[2], d.state.model_number) * 0.001;
+        d.state.valid = 1.0;
+        d.state.age = 0.0;
+        if (!full) {
+            const double missing = std::numeric_limits<double>::quiet_NaN();
+            d.state.pwm = d.state.realtime_tick = d.state.goal_position_readback = missing;
+            d.state.position_trajectory = d.state.velocity_trajectory = missing;
+            continue;
+        }
         d.state.pwm = addresses[3].pulse2val(v[3], d.state.model_number);
         d.state.voltage = static_cast<double>(v[4]) * 0.1;
         d.state.temperature = v[5];
@@ -318,8 +336,6 @@ bool DynamixelHandler::read_all() {
             addresses[10].pulse2val(v[10], d.state.model_number) * d.config.multiplier + d.config.offset;
         d.state.velocity_trajectory =
             addresses[11].pulse2val(v[11], d.state.model_number) * d.config.multiplier;
-        d.state.valid = 1.0;
-        d.state.age = 0.0;
     }
     return true;
 }

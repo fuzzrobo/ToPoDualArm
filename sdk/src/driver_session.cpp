@@ -83,6 +83,7 @@ bool DriverSession::configure(bool passive) {
         handler_.close_port();
         return fail("初期状態・設定の確認失敗: " + handler_.last_result().detail);
     }
+    next_diagnostic_ = 0;
     connected_ = true;
     fresh_ = true;
     error_.clear();
@@ -117,6 +118,7 @@ bool DriverSession::activate() {
         return fail("現在位置設定・Torque ON失敗: ID=" + std::to_string(handler_.last_result().id) + " " +
                     handler_.last_result().detail);
     limiter_->reset(handler_.dxls);
+    next_diagnostic_ = 0;
     active_ = true;
     fresh_ = true;
     error_.clear();
@@ -145,7 +147,11 @@ bool DriverSession::read() {
     if (!connected_)
         return fail("接続されていません");
     read_start = seconds();
-    bool ok = handler_.read_all();
+    // Torque OFF診断とリーダーでは、各周期にTorqueの実測が必要。
+    const bool full = options_.read_profile == "bam" || !options_.torque || read_start >= next_diagnostic_;
+    bool ok = handler_.read_all(full);
+    if (full && ok)
+        next_diagnostic_ = read_start + 0.25;
     if (!ok && options_.auto_reset && options_.torque && active_ &&
         handler_.last_result().error == BusError::Hardware && !handler_.faults().empty()) {
         std::vector<uint8_t> ids;

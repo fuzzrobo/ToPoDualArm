@@ -55,7 +55,7 @@ class DynamixelHandler {
     virtual BusResult configure(bool allow_changes);
     bool configure_return_delay_time(int raw);
     bool write_position_pid();
-    virtual bool read_all();
+    virtual bool read_all(bool full = true);
     virtual bool set_joints_current();
     bool check_torque_off_target_write();
     virtual bool set_joints_position(bool acknowledged = false);

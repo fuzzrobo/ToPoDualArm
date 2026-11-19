@@ -2,11 +2,13 @@
 import json
 import math
 import socket
+import numpy as np
+from scipy.spatial.transform import Rotation
 from .transport import LineInput
 from .config import SIDES
 
 
-def pose(raw, prefix, position_key, rotation_key):
+def pose(raw, position_key, rotation_key):
     p = [raw[position_key][k] for k in ("x", "y", "z")]
     q = [raw[rotation_key][k] for k in ("x", "y", "z", "w")]
     if not all(isinstance(v, (float, int)) and not isinstance(v, bool) and math.isfinite(v) for v in p+q):
@@ -15,15 +17,24 @@ def pose(raw, prefix, position_key, rotation_key):
     if norm < 1e-6:
         raise ValueError("Quest姿勢のQuaternionがゼロです")
     # Unity左手Y-up → 右手Z-up。公式プロトコルと同じ軸変換。
-    p = [p[2], -p[0], p[1]]
+    p = np.array([p[2], -p[0], p[1]])
     q = [q[2]/norm, -q[0]/norm, q[1]/norm, -q[3]/norm]
-    return {**{f"{prefix}.p{i}": v for i, v in enumerate(p)},
-            **{f"{prefix}.q{i}": v for i, v in enumerate(q)}}
+    return p, Rotation.from_quat(q)
+
+
+def pose_fields(prefix, position, rotation):
+    return {**{f"{prefix}.p{i}": v for i, v in enumerate(position)},
+            **{f"{prefix}.q{i}": v for i, v in enumerate(rotation.as_quat())}}
 
 
 class QuestParser:
-    def __init__(self, config):
+    def __init__(self, config, *, allow_untracked=False, button_event=None):
         self.config = config
+        self.button_event = button_event
+        self.allow_untracked = allow_untracked
+        self.tracked = dict.fromkeys(SIDES, False)
+        self.losses = dict.fromkeys(SIDES, 0)
+        self.buttons = {}
         self.previous_stamp = None
         self.initial = None
         self.previous_clutch = dict.fromkeys(SIDES)
@@ -32,16 +43,41 @@ class QuestParser:
     def __call__(self, line, received):
         raw = json.loads(line)
         result = {}
+        head_position = head_rotation = head_inverse = None
+        if raw.get("hmdTracked", True) is True and raw.get("hmdValid", True) is True:
+            try:
+                head_position, head_rotation = pose(raw, "hmdPosition", "hmdRotation")
+            except (KeyError, TypeError, ValueError) as exc:
+                if not self.allow_untracked:
+                    raise ValueError("HMDの姿勢を取得できません") from exc
+            else:
+                head_inverse = head_rotation.inv()
+        if head_inverse is None and not self.allow_untracked:
+            raise ValueError("HMDの追跡が無効です")
         for side in SIDES:
-            if raw.get(f"{side}Tracked") is not True or raw.get(f"{side}Valid") is not True:
+            if (head_inverse is None or raw.get(f"{side}Tracked") is not True
+                    or raw.get(f"{side}Valid") is not True):
+                if self.allow_untracked:
+                    if self.tracked[side]:
+                        self.losses[side] += 1
+                    self.tracked[side] = False
+                    result[f"{side}.tracked"] = False
+                    continue
                 raise ValueError(f"{side}コントローラの追跡が無効です")
+            if self.allow_untracked:
+                self.tracked[side] = True
+                result[f"{side}.tracked"] = True
+                result[f"{side}.losses"] = self.losses[side]
             clutch = raw[f"{side}GripPressed"]
             if type(clutch) is not bool:
                 raise ValueError(f"{side}のクラッチ値が不正です")
             if not clutch and self.previous_clutch[side] is not False:
                 self.releases[side] += 1
             self.previous_clutch[side] = clutch
-            result.update(pose(raw, side, f"{side}ControllerPosition", f"{side}ControllerRotation"))
+            position, rotation = pose(raw, f"{side}ControllerPosition", f"{side}ControllerRotation")
+            # コントローラーの位置と向きを、同一フレームのHMD座標で表す。
+            result.update(pose_fields(side, head_inverse.apply(position - head_position),
+                                      head_inverse * rotation))
             result[f"{side}.clutch"] = clutch
             if f"{side}TriggerPressed" in raw:
                 trigger = raw[f"{side}TriggerPressed"]
@@ -61,22 +97,32 @@ class QuestParser:
             raise ValueError("Quest時刻に遅延または不連続があります")
         self.previous_stamp = stamp
         if self.config.neck_mode == "follow":
-            # 現行形式にはHMD専用validフラグがない。存在する版ではfalseを拒否する。
-            if raw.get("hmdTracked", True) is not True or raw.get("hmdValid", True) is not True:
-                raise ValueError("HMDの追跡が無効です")
-            result.update(pose(raw, "head", "hmdPosition", "hmdRotation"))
+            # 首は従来どおりQuestの固定座標系でHMDの向きの変化を見る。
+            if head_rotation is None:
+                result["head.tracked"] = False
+            else:
+                result.update(pose_fields("head", head_position, head_rotation))
+        if self.button_event:
+            for button in ("A", "B"):
+                pressed = raw.get(f"button{button}Pressed")
+                if type(pressed) is bool:
+                    if pressed and self.buttons.get(button) is False:
+                        self.button_event(received, button)
+                    self.buttons[button] = pressed
         return {**result, "received": received, "device_time_ns": stamp}
 
 
 class QuestInput(LineInput):
-    def __init__(self, config):
-        super().__init__(QuestParser(config), config.input_timeout_s)
+    def __init__(self, config, *, allow_untracked=False, button_event=None):
+        self.button_event = button_event
+        self.allow_untracked = allow_untracked
+        super().__init__(QuestParser(config, allow_untracked=allow_untracked), config.input_timeout_s)
         self.config = config
 
     def connect(self):
         if not self.config.quest_host:
             raise ValueError("quest_hostを設定してください")
-        self.parser = QuestParser(self.config)
+        self.parser = QuestParser(self.config, allow_untracked=self.allow_untracked, button_event=self.button_event)
         sock = socket.create_connection((self.config.quest_host, self.config.quest_port),
                                         timeout=self.config.connect_timeout_s)
         sock.settimeout(0.05)

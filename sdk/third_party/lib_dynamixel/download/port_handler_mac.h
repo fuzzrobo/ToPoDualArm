@@ -13,7 +13,7 @@ class PortHandlerMac final : public PortHandler {
   void clearPort() override;
   void setPortName(const char* name) override;
   char* getPortName() override { return name_; }
-  // FTDIドライバ設定ではなく、応答待ち時間の計算値を設定する。
+  // 次のsetBaudRateでドライバへ要求し、SDKの応答期限にも使う。
   void setLatencyTimer(int value) override { latency_ms_ = value; }
   int getLatencyTimer() override { return latency_ms_; }
   bool setBaudRate(int baudrate) override;

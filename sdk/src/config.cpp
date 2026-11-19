@@ -44,12 +44,13 @@ HardwareConfig load_config(const std::string &path, const std::vector<std::strin
         if (auto o = root["options"]) {
             keys(o,
                  {"torque_retention", "clip_to_limits", "write_pid_on_connect", "return_delay_time", "auto_reset",
-                  "neck_envelope", "neck_limits", "floor_config"},
+                  "neck_envelope", "neck_limits", "floor_config", "read_profile"},
                  "options");
             read(o, "torque_retention", config.options.retention);
             read(o, "clip_to_limits", config.options.clip_to_limits);
             read(o, "write_pid_on_connect", config.options.write_pid_on_connect);
             read(o, "return_delay_time", config.options.return_delay_time);
+            read(o, "read_profile", config.options.read_profile);
             read(o, "auto_reset", config.options.auto_reset);
             read(o, "neck_envelope", config.options.neck_envelope);
             if (auto n = o["neck_limits"]) {
