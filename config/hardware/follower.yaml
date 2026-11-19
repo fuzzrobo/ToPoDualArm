@@ -1,0 +1,25 @@
+# シミュレーション用。実機には個体ごとの確認済み設定を指定する。
+hardware_verified: false
+connection: {port: /dev/topoarm-unconfigured}
+model: ../../models/300mm/robot.urdf
+options: {clip_to_limits: true, floor_config: ../floor.yaml}
+actuator_profiles: ../models/servos.yaml
+joints:
+  R_joint1: {profile: arm, id: 31, operating_mode: 3, multiplier: 1, offset: 0, min: -2, max: 2, current_cap: 0.1, initial_current_limit: 0}
+  R_joint2: {profile: arm, id: 32, operating_mode: 3, multiplier: 1, offset: 0, min: -2, max: 2, current_cap: 0.1, initial_current_limit: 0}
+  R_joint3: {profile: arm, id: 33, operating_mode: 3, multiplier: 1, offset: 0, min: -2, max: 2, current_cap: 0.1, initial_current_limit: 0}
+  R_joint4: {profile: arm, id: 34, operating_mode: 3, multiplier: 1, offset: 0, min: -2, max: 2, current_cap: 0.1, initial_current_limit: 0}
+  R_joint5: {profile: arm, id: 35, operating_mode: 3, multiplier: 1, offset: 0, min: -2, max: 2, current_cap: 0.1, initial_current_limit: 0}
+  R_joint6: {profile: arm, id: 36, operating_mode: 3, multiplier: 1, offset: 0, min: -2, max: 2, current_cap: 0.1, initial_current_limit: 0}
+  R_joint7: {profile: arm, id: 37, operating_mode: 3, multiplier: 1, offset: 0, min: -2, max: 2, current_cap: 0.1, initial_current_limit: 0}
+  R_gripper_joint: {profile: end, id: 38, operating_mode: 5, multiplier: 1, offset: 0, min: -2, max: 2, current_cap: 0.1, initial_current_limit: 0}
+  L_joint1: {profile: arm, id: 41, operating_mode: 3, multiplier: 1, offset: 0, min: -2, max: 2, current_cap: 0.1, initial_current_limit: 0}
+  L_joint2: {profile: arm, id: 42, operating_mode: 3, multiplier: 1, offset: 0, min: -2, max: 2, current_cap: 0.1, initial_current_limit: 0}
+  L_joint3: {profile: arm, id: 43, operating_mode: 3, multiplier: 1, offset: 0, min: -2, max: 2, current_cap: 0.1, initial_current_limit: 0}
+  L_joint4: {profile: arm, id: 44, operating_mode: 3, multiplier: 1, offset: 0, min: -2, max: 2, current_cap: 0.1, initial_current_limit: 0}
+  L_joint5: {profile: arm, id: 45, operating_mode: 3, multiplier: 1, offset: 0, min: -2, max: 2, current_cap: 0.1, initial_current_limit: 0}
+  L_joint6: {profile: arm, id: 46, operating_mode: 3, multiplier: 1, offset: 0, min: -2, max: 2, current_cap: 0.1, initial_current_limit: 0}
+  L_joint7: {profile: arm, id: 47, operating_mode: 3, multiplier: 1, offset: 0, min: -2, max: 2, current_cap: 0.1, initial_current_limit: 0}
+  L_gripper_joint: {profile: end, id: 48, operating_mode: 5, multiplier: 1, offset: 0, min: -2, max: 2, current_cap: 0.1, initial_current_limit: 0}
+  neck_pan_joint: {profile: end, id: 51, operating_mode: 5, multiplier: 1, offset: 0, min: -2, max: 2, current_cap: 0.1, initial_current_limit: 0}
+  neck_tilt_joint: {profile: end, id: 52, operating_mode: 5, multiplier: 1, offset: 0, min: -2, max: 2, current_cap: 0.1, initial_current_limit: 0}

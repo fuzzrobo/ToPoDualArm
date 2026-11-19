@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- 全軸共通の状態interface。配列は再帰呼出しごとに短くし、元データを変更しない。 -->
+  <xacro:macro name="topoarm_states" params="names initialized:=false">
+    <xacro:if value="${len(names) > 0}">
+      <state_interface name="${names[0]}">
+        <xacro:if value="${initialized}"><param name="initial_value">0</param></xacro:if>
+      </state_interface>
+      <xacro:topoarm_states names="${names[1:]}" initialized="${initialized}"/>
+    </xacro:if>
+  </xacro:macro>
+
+  <xacro:macro name="topoarm_motor" params="name settings read_only">
+    <xacro:property name="motor" value="${settings[name]}"/>
+    <joint name="${name}">
+      <xacro:unless value="${read_only}">
+        <command_interface name="position">
+          <param name="min">${motor['min']}</param>
+          <param name="max">${motor['max']}</param>
+        </command_interface>
+        <xacro:if value="${motor['operating_mode'] == 5}">
+          <command_interface name="current_limit">
+            <param name="min">0</param>
+            <param name="max">${motor['current_cap']}</param>
+          </command_interface>
+        </xacro:if>
+      </xacro:unless>
+      <xacro:topoarm_states initialized="true" names="${['position', 'velocity', 'current', 'pwm', 'voltage', 'temperature', 'valid', 'age', 'torque_enabled', 'hardware_error', 'realtime_tick', 'goal_position_readback', 'position_command']}"/>
+      <state_interface name="current_limit">
+        <param name="initial_value">${motor['initial_current_limit']}</param>
+      </state_interface>
+    </joint>
+  </xacro:macro>
+
+  <xacro:macro name="topoarm_motors" params="names settings read_only">
+    <xacro:if value="${len(names) > 0}">
+      <xacro:topoarm_motor name="${names[0]}" settings="${settings}" read_only="${read_only}"/>
+      <xacro:topoarm_motors names="${names[1:]}" settings="${settings}" read_only="${read_only}"/>
+    </xacro:if>
+  </xacro:macro>
+
+  <xacro:macro name="topoarm_arm" params="side settings read_only">
+    <xacro:topoarm_motors names="${[side + '_joint' + str(i) for i in python.range(1, 8)] + [side + '_gripper_joint']}" settings="${settings}" read_only="${read_only}"/>
+  </xacro:macro>
+
+  <xacro:macro name="topoarm_mimic" params="side">
+    <joint name="${side}_gripper_mimic">
+      <param name="mimic">${side}_gripper_joint</param>
+      <param name="multiplier">-1</param>
+      <param name="offset">0</param>
+      <xacro:topoarm_states names="${['position', 'velocity']}"/>
+    </joint>
+  </xacro:macro>
+
+  <xacro:macro name="topoarm_control" params="config_file use_fake_hardware torque hardware_verified configure_devices read_only">
+    <xacro:property name="settings" value="${xacro.load_yaml(config_file)['joints']}"/>
+    <ros2_control name="TopoArmSystem" type="system">
+      <hardware>
+        <xacro:if value="${use_fake_hardware}">
+          <plugin>mock_components/GenericSystem</plugin>
+          <param name="mock_sensor_commands">false</param>
+          <param name="calculate_dynamics">false</param>
+        </xacro:if>
+        <xacro:unless value="${use_fake_hardware}">
+          <plugin>topoarm_hardware/ToPoArmSystemHardware</plugin>
+          <param name="config_file">${config_file}</param>
+          <param name="read_only">${str(read_only).lower()}</param>
+          <param name="torque">${str(torque).lower()}</param>
+          <param name="hardware_verified">${str(hardware_verified).lower()}</param>
+          <param name="configure_devices">${str(configure_devices).lower()}</param>
+        </xacro:unless>
+      </hardware>
+      <xacro:if value="${read_only}">
+        <xacro:topoarm_motors names="${python.list(settings.keys())}" settings="${settings}" read_only="true"/>
+      </xacro:if>
+      <xacro:unless value="${read_only}">
+        <xacro:topoarm_motors names="${['neck_pan_joint', 'neck_tilt_joint']}" settings="${settings}" read_only="false"/>
+        <xacro:topoarm_arm side="L" settings="${settings}" read_only="false"/>
+        <xacro:topoarm_arm side="R" settings="${settings}" read_only="false"/>
+      </xacro:unless>
+      <xacro:topoarm_mimic side="L"/>
+      <xacro:topoarm_mimic side="R"/>
+      <sensor name="bus">
+        <xacro:topoarm_states names="${['read_start_monotonic_s', 'read_end_monotonic_s', 'write_start_monotonic_s', 'write_end_monotonic_s', 'write_ok']}"/>
+      </sensor>
+    </ros2_control>
+  </xacro:macro>
+</robot>

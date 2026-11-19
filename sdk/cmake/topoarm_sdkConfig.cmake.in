@@ -1,0 +1,7 @@
+@PACKAGE_INIT@
+include(CMakeFindDependencyMacro)
+find_dependency(yaml-cpp CONFIG)
+find_dependency(Eigen3 3.3 CONFIG)
+include("${CMAKE_CURRENT_LIST_DIR}/TopoArmSdkDependencies.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/topoarm_sdkTargets.cmake")
+check_required_components(topoarm_sdk)

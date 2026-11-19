@@ -1,0 +1,7 @@
+backend: mujoco
+role: follower
+hardware: ../hardware/follower.yaml
+simulation: ../simulation.yaml
+home: ../teleop/quest.yaml
+hz: 20
+state_timeout_s: 2

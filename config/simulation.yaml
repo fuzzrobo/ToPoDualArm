@@ -1,0 +1,67 @@
+# 共通MuJoCo設定。実験用の机・箱はdev/scenes/の任意シーンで追加する。
+rendering:
+  shadows: false
+  samples: 0
+  visual_meshes: true
+  fisheye_method: wide_pair
+  fisheye_face_size: 640
+physics:
+  cone: elliptic
+  impratio: 10
+hand_collision:
+  simplify: true
+  plate_thickness_m: 0.004
+  plate_length_m: 0.045
+  solref:
+  - 0.003
+  - 1
+  solimp:
+  - 0.99
+  - 0.999
+  - 0.001
+  friction:
+  - 1
+  - 0.005
+  - 0.0001
+  condim: 4
+gripper_actuator:
+  kp: 10
+  kv: 1.2
+  force_limit_nm: 0.6
+actuators:
+  operating_mode: 3
+  derivative_sample_s: 0.001
+  models:
+    XM540-W270:
+      actuator: xm540
+      parameters: ../models/actuators/xm540_mode3_m4.json
+      ids:
+      - 31
+      - 32
+      - 33
+      - 41
+      - 42
+      - 43
+      voltage_v: 12.3
+      error_gain: 0.005754755004452713
+      source: data/bam/xm540/fit-all-lengths-mode3-20261112
+    XM430-W350:
+      actuator: xm430
+      parameters: ../models/actuators/xm430_mode3_m4.json
+      ids:
+      - 34
+      - 35
+      - 36
+      - 37
+      - 44
+      - 45
+      - 46
+      - 47
+      voltage_v: 12.4
+      error_gain: 0.005754755004452713
+      source: data/bam/xm430/fit-100-150-200mm-three-loads-20261104-211020
+camera_rig: ../models/300mm/cameras.yaml
+neck_actuator:
+  kp: 100
+  kv: 10
+  force_limit_nm: 20

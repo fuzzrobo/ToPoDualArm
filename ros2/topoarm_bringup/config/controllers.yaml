@@ -1,0 +1,151 @@
+/**/controller_manager:
+  ros__parameters:
+    update_rate: 100
+    lock_memory: false
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+    left_arm_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+    right_arm_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+    left_gripper_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+    right_gripper_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+    neck_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+    current_limits_controller:
+      type: forward_command_controller/ForwardCommandController
+    arm_position_controller:
+      type: forward_command_controller/ForwardCommandController
+    full_position_controller:
+      type: forward_command_controller/ForwardCommandController
+/leader/joint_state_broadcaster:
+  ros__parameters:
+    use_local_topics: true
+/follower/joint_state_broadcaster:
+  ros__parameters:
+    use_local_topics: true
+/**/left_arm_controller:
+  ros__parameters:
+    joints:
+    - L_joint1
+    - L_joint2
+    - L_joint3
+    - L_joint4
+    - L_joint5
+    - L_joint6
+    - L_joint7
+    command_interfaces:
+    - position
+    state_interfaces:
+    - position
+    - velocity
+    allow_partial_joints_goal: false
+    state_publish_rate: 100.0
+    action_monitor_rate: 20.0
+/**/right_arm_controller:
+  ros__parameters:
+    joints:
+    - R_joint1
+    - R_joint2
+    - R_joint3
+    - R_joint4
+    - R_joint5
+    - R_joint6
+    - R_joint7
+    command_interfaces:
+    - position
+    state_interfaces:
+    - position
+    - velocity
+    allow_partial_joints_goal: false
+    state_publish_rate: 100.0
+    action_monitor_rate: 20.0
+/**/left_gripper_controller:
+  ros__parameters:
+    joints:
+    - L_gripper_joint
+    command_interfaces:
+    - position
+    state_interfaces:
+    - position
+    - velocity
+    allow_partial_joints_goal: false
+    state_publish_rate: 100.0
+    action_monitor_rate: 20.0
+/**/right_gripper_controller:
+  ros__parameters:
+    joints:
+    - R_gripper_joint
+    command_interfaces:
+    - position
+    state_interfaces:
+    - position
+    - velocity
+    allow_partial_joints_goal: false
+    state_publish_rate: 100.0
+    action_monitor_rate: 20.0
+/**/neck_controller:
+  ros__parameters:
+    joints:
+    - neck_pan_joint
+    - neck_tilt_joint
+    command_interfaces:
+    - position
+    state_interfaces:
+    - position
+    - velocity
+    allow_partial_joints_goal: false
+    state_publish_rate: 100.0
+    action_monitor_rate: 20.0
+/**/current_limits_controller:
+  ros__parameters:
+    joints:
+    - neck_pan_joint
+    - neck_tilt_joint
+    - L_gripper_joint
+    - R_gripper_joint
+    interface_name: current_limit
+/**/arm_position_controller:
+  ros__parameters:
+    joints:
+    - R_joint1
+    - R_joint2
+    - R_joint3
+    - R_joint4
+    - R_joint5
+    - R_joint6
+    - R_joint7
+    - R_gripper_joint
+    - L_joint1
+    - L_joint2
+    - L_joint3
+    - L_joint4
+    - L_joint5
+    - L_joint6
+    - L_joint7
+    - L_gripper_joint
+    interface_name: position
+/**/full_position_controller:
+  ros__parameters:
+    joints:
+    - R_joint1
+    - R_joint2
+    - R_joint3
+    - R_joint4
+    - R_joint5
+    - R_joint6
+    - R_joint7
+    - R_gripper_joint
+    - L_joint1
+    - L_joint2
+    - L_joint3
+    - L_joint4
+    - L_joint5
+    - L_joint6
+    - L_joint7
+    - L_gripper_joint
+    - neck_pan_joint
+    - neck_tilt_joint
+    interface_name: position

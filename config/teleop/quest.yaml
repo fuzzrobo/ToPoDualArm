@@ -1,0 +1,37 @@
+# OpenArmの手先ホームに合わせた300 mmモデルの基準姿勢。
+home_rad:
+  R_joint1: -0.406266719
+  R_joint2: 1.515297174
+  R_joint3: 0.007803326
+  R_joint4: 1.164949059
+  R_joint5: 0.078515410
+  R_joint6: 0.810755849
+  R_joint7: 0.042189728
+  L_joint1: 0.397407770
+  L_joint2: -1.520445228
+  L_joint3: -0.006947620
+  L_joint4: -1.157518983
+  L_joint5: -0.071231924
+  L_joint6: -0.809563339
+  L_joint7: -0.038523771
+gripper_deg:
+  right: {open: 74, closed: -6}
+  left: {open: -70, closed: 5}
+pose:
+  # ヘッド座標で表した、ヘッドから首の付け根へのオフセット。
+  neck_pivot_m: [0.0, -0.075, 0.080]
+  # ロボットの両肩中央を基準にした、固定の位置合わせ。
+  frame_offset_m: [-0.085, 0.0, -0.14]
+filter:
+  min_cutoff: 2.0
+  beta: 0.04
+  d_cutoff: 1.5
+  max_linear_speed: 1.0
+  max_angular_speed: 6.0
+control_hz: 100
+input_timeout_s: 0.15
+
+# シミュレーションでも中央・下向きに固定する首の姿勢。
+neck_hold_rad:
+  neck_pan_joint: 0.0
+  neck_tilt_joint: -0.9

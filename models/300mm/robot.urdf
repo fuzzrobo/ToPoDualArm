@@ -1,0 +1,349 @@
+<robot name="topoarm">
+  <link name="base_footprint" />
+  <link name="base_link">
+    </link>
+  <joint name="base_footprint_to_base" type="fixed">
+    <parent link="base_footprint" />
+    <child link="base_link" />
+    <origin xyz="0 0 0.02" rpy="0 0 0" />
+  </joint>
+  <link name="L_shoulder_cover_link">
+    </link>
+  <joint name="L_shoulder_cover_fixed" type="fixed">
+    <parent link="torso_link" />
+    <child link="L_shoulder_cover_link" />
+    <origin xyz="0 0.025 0.15" rpy="0 0 0" />
+  </joint>
+  <link name="R_shoulder_cover_link">
+    </link>
+  <joint name="R_shoulder_cover_fixed" type="fixed">
+    <parent link="torso_link" />
+    <child link="R_shoulder_cover_link" />
+    <origin xyz="0 -0.025 0.15" rpy="0 0 0" />
+  </joint>
+  <link name="torso_link">
+    
+    </link>
+  <joint name="base_to_torso_fixed" type="fixed">
+    <parent link="base_link" />
+    <child link="torso_link" />
+    <origin xyz="0 0 0.1225" rpy="0 0 0" />
+  </joint>
+  <link name="neck_pan_link">
+    </link>
+  <joint name="neck_pan_joint" type="revolute">
+    <parent link="torso_link" />
+    <child link="neck_pan_link" />
+    <origin xyz="0 0 0.2205" rpy="0 0 0" />
+    <axis xyz="0 0 1" />
+    <limit effort="3" velocity="3" lower="-1.5707963267948966" upper="1.5707963267948966" />
+  </joint>
+  <link name="neck_tilt_link">
+    </link>
+  <joint name="neck_tilt_joint" type="revolute">
+    <parent link="neck_pan_link" />
+    <child link="neck_tilt_link" />
+    <origin xyz="0.024 0 0.0195" rpy="0 0 0" />
+    <axis xyz="0 -1 0" />
+    <limit lower="-1.3962634015954636" upper="1.8325957145940461" effort="3" velocity="3" />
+  </joint>
+  <link name="neck_tilt_cover_link">
+    </link>
+  <joint name="neck_tilt_cover_fixed" type="fixed">
+    <parent link="neck_pan_link" />
+    <child link="neck_tilt_cover_link" />
+    <origin xyz="0.024 0 0.0195" rpy="0 0 0" />
+  </joint>
+  <link name="camera_link">
+    </link>
+  <joint name="camera_fixed" type="fixed">
+    <parent link="neck_tilt_link" />
+    <child link="camera_link" />
+    <origin xyz="0.05775 0.0175 0" rpy="0 0 0" />
+  </joint>
+  <link name="realsense_mount_link">
+    </link>
+  <joint name="realsense_mount_fixed" type="fixed">
+    <parent link="neck_tilt_link" />
+    <child link="realsense_mount_link" />
+    <origin xyz="0.0295 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="camera_optical_frame" />
+  <joint name="camera_optical_fixed" type="fixed">
+    <parent link="camera_link" />
+    <child link="camera_optical_frame" />
+    <origin xyz="0 0 0" rpy="-1.5707963267948966 0 -1.5707963267948966" />
+  </joint>
+  <link name="L_shoulder_mount" />
+  <joint name="L_shoulder_mount_fixed" type="fixed">
+    <parent link="torso_link" />
+    <child link="L_shoulder_mount" />
+    <origin xyz="0 0.0715 0.15" rpy="0 0 0" />
+  </joint>
+  <link name="L_link1">
+    </link>
+  <joint name="L_joint1" type="revolute">
+    <parent link="L_shoulder_mount" />
+    <child link="L_link1" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit effort="6" velocity="3" lower="-1.9198621771937625" upper="1.0471975511965976" />
+  </joint>
+  <link name="L_XM540_cover_link">
+    </link>
+  <joint name="L_XM540_cover_fixed" type="fixed">
+    <parent link="L_link1" />
+    <child link="L_XM540_cover_link" />
+    <origin xyz="0 0.06725 0" rpy="0 0 0" />
+  </joint>
+  <link name="L_link2">
+    </link>
+  <joint name="L_joint2" type="revolute">
+    <parent link="L_link1" />
+    <child link="L_link2" />
+    <origin xyz="0 0.06725 0" rpy="1.5707963267949 0 0" />
+    <axis xyz="1 0 0" />
+    <limit lower="-1.7453292519943295" upper="1.7453292519943295" effort="6" velocity="3" />
+  </joint>
+  <link name="L_link3">
+    </link>
+  <joint name="L_joint3" type="revolute">
+    <parent link="L_link2" />
+    <child link="L_link3" />
+    <origin xyz="0.0155 0 -0.0825" rpy="0 0 0" />
+    <axis xyz="0 0 -1" />
+    <limit effort="6" velocity="3" lower="-1.4835298641951802" upper="1.4835298641951802" />
+  </joint>
+  <link name="L_link4_cover_link">
+    </link>
+  <joint name="L_link4_cover_fixed" type="fixed">
+    <parent link="L_link3" />
+    <child link="L_link4_cover_link" />
+    <origin xyz="-0.00135 0 -0.068" rpy="0 0 0" />
+  </joint>
+  <link name="L_link4">
+    </link>
+  <joint name="L_joint4" type="revolute">
+    <parent link="L_link3" />
+    <child link="L_link4" />
+    <origin xyz="-0.00135 0 -0.068" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="-1.7453292519943295" upper="0.8726646259971648" effort="6" velocity="3" />
+  </joint>
+  <link name="L_link5">
+    </link>
+  <joint name="L_joint5" type="revolute">
+    <parent link="L_link4" />
+    <child link="L_link5" />
+    <origin xyz="0 0 -0.064" rpy="0 0 0" />
+    <axis xyz="0 0 -1" />
+    <limit effort="6" velocity="3" lower="-1.4835298641951802" upper="1.4835298641951802" />
+  </joint>
+  <link name="L_link6_cover_link">
+    </link>
+  <joint name="L_link6_cover_fixed" type="fixed">
+    <parent link="L_link5" />
+    <child link="L_link6_cover_link" />
+    <origin xyz="0 0 -0.0645" rpy="0 0 0" />
+  </joint>
+  <link name="L_link6">
+    </link>
+  <joint name="L_joint6" type="revolute">
+    <parent link="L_link5" />
+    <child link="L_link6" />
+    <origin xyz="0 0 -0.0645" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="-1.7453292519943295" upper="1.7453292519943295" effort="6" velocity="3" />
+  </joint>
+  <link name="L_link7">
+    </link>
+  <joint name="L_joint7" type="revolute">
+    <parent link="L_link6" />
+    <child link="L_link7" />
+    <origin xyz="-0.000195616396 0.001335752307 -0.06325" rpy="0 0 0" />
+    <axis xyz="1 0 0" />
+    <limit lower="-1.7453292519943295" upper="1.7453292519943295" effort="6" velocity="3" />
+  </joint>
+  <link name="L_joint7_cover_link">
+    </link>
+  <joint name="L_joint7_cover_fixed" type="fixed">
+    <parent link="L_link6" />
+    <child link="L_joint7_cover_link" />
+    <origin xyz="-0.000195616396 0.001335752307 -0.06325" rpy="0 0 -1.57079632679" />
+  </joint>
+  <link name="L_gripper_base">
+    </link>
+  <joint name="L_gripper_base_fixed" type="fixed">
+    <parent link="L_link7" />
+    <child link="L_gripper_base" />
+    <origin xyz="0 0 -0.028" rpy="0 0 0" />
+  </joint>
+  <link name="L_finger_left">
+    </link>
+  <joint name="L_gripper_joint" type="revolute">
+    <parent link="L_gripper_base" />
+    <child link="L_finger_left" />
+    <origin xyz="0 0.015 -0.01815" rpy="-0.028986242824046368 0 0" />
+    <axis xyz="-1 0 0" />
+    <limit lower="-1.2217304763960306" upper="0.08726646259971647" effort="20" velocity="1" />
+  </joint>
+  <link name="L_finger_right">
+    </link>
+  <joint name="L_gripper_mimic" type="revolute">
+    <parent link="L_gripper_base" />
+    <child link="L_finger_right" />
+    <origin xyz="0 -0.015 -0.01815" rpy="0.028986242824046368 0 0" />
+    <axis xyz="-1 0 0" />
+    <limit lower="-0.08726646259971647" upper="1.2217304763960306" effort="20" velocity="1" />
+    <mimic joint="L_gripper_joint" multiplier="-1" offset="0" />
+  </joint>
+  <link name="L_tcp" />
+  <joint name="L_tcp_fixed" type="fixed">
+    <parent link="L_gripper_base" />
+    <child link="L_tcp" />
+    <origin xyz="0.0173 0 -0.0814" rpy="0 0 0" />
+  </joint>
+  <link name="R_shoulder_mount" />
+  <joint name="R_shoulder_mount_fixed" type="fixed">
+    <parent link="torso_link" />
+    <child link="R_shoulder_mount" />
+    <origin xyz="0 -0.0715 0.15" rpy="0 0 0" />
+  </joint>
+  <link name="R_link1">
+    </link>
+  <joint name="R_joint1" type="revolute">
+    <parent link="R_shoulder_mount" />
+    <child link="R_link1" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <axis xyz="0 -1 0" />
+    <limit effort="6" velocity="3" lower="-1.0471975511965976" upper="1.9198621771937625" />
+  </joint>
+  <link name="R_XM540_cover_link">
+    </link>
+  <joint name="R_XM540_cover_fixed" type="fixed">
+    <parent link="R_link1" />
+    <child link="R_XM540_cover_link" />
+    <origin xyz="0 -0.06725 0" rpy="0 0 0" />
+  </joint>
+  <link name="R_link2">
+    </link>
+  <joint name="R_joint2" type="revolute">
+    <parent link="R_link1" />
+    <child link="R_link2" />
+    <origin xyz="0 -0.06725 0" rpy="-1.5707963267949 0 0" />
+    <axis xyz="1 0 0" />
+    <limit lower="-1.7453292519943295" upper="1.7453292519943295" effort="6" velocity="3" />
+  </joint>
+  <link name="R_link3">
+    </link>
+  <joint name="R_joint3" type="revolute">
+    <parent link="R_link2" />
+    <child link="R_link3" />
+    <origin xyz="0.0155 0 -0.0825" rpy="0 0 0" />
+    <axis xyz="0 0 -1" />
+    <limit effort="6" velocity="3" lower="-1.4835298641951802" upper="1.4835298641951802" />
+  </joint>
+  <link name="R_link4_cover_link">
+    </link>
+  <joint name="R_link4_cover_fixed" type="fixed">
+    <parent link="R_link3" />
+    <child link="R_link4_cover_link" />
+    <origin xyz="0 0 -0.068" rpy="0 0 0" />
+  </joint>
+  <link name="R_link4">
+    </link>
+  <joint name="R_joint4" type="revolute">
+    <parent link="R_link3" />
+    <child link="R_link4" />
+    <origin xyz="0 0 -0.068" rpy="0 0 0" />
+    <axis xyz="0 -1 0" />
+    <limit lower="-0.8726646259971648" upper="1.7453292519943295" effort="6" velocity="3" />
+  </joint>
+  <link name="R_link5">
+    </link>
+  <joint name="R_joint5" type="revolute">
+    <parent link="R_link4" />
+    <child link="R_link5" />
+    <origin xyz="0 0 -0.064" rpy="0 0 0" />
+    <axis xyz="0 0 -1" />
+    <limit effort="6" velocity="3" lower="-1.4835298641951802" upper="1.4835298641951802" />
+  </joint>
+  <link name="R_link6_cover_link">
+    </link>
+  <joint name="R_link6_cover_fixed" type="fixed">
+    <parent link="R_link5" />
+    <child link="R_link6_cover_link" />
+    <origin xyz="0 0 -0.0645" rpy="0 0 0" />
+  </joint>
+  <link name="R_link6">
+    </link>
+  <joint name="R_joint6" type="revolute">
+    <parent link="R_link5" />
+    <child link="R_link6" />
+    <origin xyz="0 0 -0.0645" rpy="0 0 0" />
+    <axis xyz="0 -1 0" />
+    <limit lower="-1.7453292519943295" upper="1.7453292519943295" effort="6" velocity="3" />
+  </joint>
+  <link name="R_link7">
+    </link>
+  <joint name="R_joint7" type="revolute">
+    <parent link="R_link6" />
+    <child link="R_link7" />
+    <origin xyz="0 0 -0.06325" rpy="0 0 0" />
+    <axis xyz="1 0 0" />
+    <limit lower="-1.7453292519943295" upper="1.7453292519943295" effort="6" velocity="3" />
+  </joint>
+  <link name="R_joint7_cover_link">
+    </link>
+  <joint name="R_joint7_cover_fixed" type="fixed">
+    <parent link="R_link6" />
+    <child link="R_joint7_cover_link" />
+    <origin xyz="0 0 -0.06325" rpy="0 0 -1.57079632679" />
+  </joint>
+  <link name="R_gripper_base">
+    </link>
+  <joint name="R_gripper_base_fixed" type="fixed">
+    <parent link="R_link7" />
+    <child link="R_gripper_base" />
+    <origin xyz="0 0 -0.028" rpy="0 0 0" />
+  </joint>
+  <link name="R_finger_left">
+    </link>
+  <joint name="R_gripper_joint" type="revolute">
+    <parent link="R_gripper_base" />
+    <child link="R_finger_left" />
+    <origin xyz="0 0.015 -0.01825" rpy="0 0 0" />
+    <axis xyz="1 0 0" />
+    <limit lower="-0.10471975511965978" upper="1.2915436464758039" effort="20" velocity="1" />
+  </joint>
+  <link name="R_finger_right">
+    </link>
+  <joint name="R_gripper_mimic" type="revolute">
+    <parent link="R_gripper_base" />
+    <child link="R_finger_right" />
+    <origin xyz="0 -0.015 -0.01825" rpy="0 0 0" />
+    <axis xyz="1 0 0" />
+    <limit lower="-1.2915436464758039" upper="0.10471975511965978" effort="20" velocity="1" />
+    <mimic joint="R_gripper_joint" multiplier="-1" offset="0" />
+  </joint>
+  <link name="R_tcp" />
+  <joint name="R_tcp_fixed" type="fixed">
+    <parent link="R_gripper_base" />
+    <child link="R_tcp" />
+    <origin xyz="0.0173 0 -0.0815" rpy="0 0 0" />
+  </joint>
+  <link name="main_column_link">
+    </link>
+  <joint name="main_column_fixed" type="fixed">
+    <parent link="base_link" />
+    <child link="main_column_link" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="lower_frame_link">
+    </link>
+  <joint name="lower_frame_fixed" type="fixed">
+    <parent link="base_link" />
+    <child link="lower_frame_link" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+</robot>

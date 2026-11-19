@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="topoarm">
+  <xacro:arg name="use_fake_hardware" default="true"/>
+  <xacro:arg name="config_file" default="$(find topoarm_description)/config/hardware/follower.yaml"/>
+  <xacro:arg name="read_only" default="false"/>
+  <xacro:arg name="torque" default="false"/>
+  <xacro:arg name="hardware_verified" default="false"/>
+  <xacro:arg name="configure_devices" default="false"/>
+  <xacro:include filename="$(find topoarm_description)/models/300mm/robot.urdf"/>
+  <xacro:include filename="ros2_control.xacro"/>
+  <link name="world"/>
+  <joint name="world_to_base_footprint" type="fixed">
+    <parent link="world"/>
+    <child link="base_footprint"/>
+  </joint>
+  <xacro:topoarm_control config_file="$(arg config_file)" use_fake_hardware="$(arg use_fake_hardware)"
+      read_only="$(arg read_only)" torque="$(arg torque)" hardware_verified="$(arg hardware_verified)"
+      configure_devices="$(arg configure_devices)"/>
+</robot>

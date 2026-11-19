@@ -1,0 +1,3 @@
+backend: direct
+role: follower
+hardware: ../hardware/follower.yaml

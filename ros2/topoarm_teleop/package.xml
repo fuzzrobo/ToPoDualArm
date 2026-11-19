@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>topoarm_teleop</name>
+  <version>1.0.0</version>
+  <description>リーダーの関節状態をROS 2のフォロワー指令へ変換する。</description>
+  <maintainer email="nagashima@fuzzrobo.com">nagashima</maintainer>
+  <license>FuzzRobo</license>
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <buildtool_depend>ament_cmake_python</buildtool_depend>
+  <exec_depend>control_msgs</exec_depend>
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>python3-yaml</exec_depend>
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
