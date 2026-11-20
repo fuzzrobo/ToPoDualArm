@@ -13,7 +13,7 @@ dependencies = ["PyYAML>=6,<7"]
 
 [project.optional-dependencies]
 act = ["lerobot[training]==0.6.1"]
-record = ["lerobot[dataset]==0.6.1", "mujoco==3.8.1", "better-actuator-models==1.0.2", "pyserial>=3.5,<4", "scipy", "PyYAML>=6,<7"]
+record = ["lerobot[dataset]==0.6.1", "mujoco==3.8.1", "mink==1.2.0", "better-actuator-models==1.0.2", "pyserial>=3.5,<4", "scipy", "PyYAML>=6,<7"]
 
 [tool.scikit-build]
 cmake.source-dir = "python/bindings"

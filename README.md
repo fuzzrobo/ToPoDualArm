@@ -37,7 +37,9 @@ MacではHomebrewの `eigen@3`、`yaml-cpp`、`tinyxml2` とTkが使えるPython
 uv run --extra record python dev/viewer/record_quest.py --config config/yubi-local.json
 ```
 
-実機では校正済みのQuest設定を指定し、`--hardware` に直結プロファイル、`--cameras` に `left`、`front`、`right` をカメラのAVFoundation IDに対応付けたYAMLを渡します。macOSで実カメラを使う場合は `uv pip install pyobjc-framework-AVFoundation pyobjc-framework-CoreMedia` を実行します。`--position-first` を付けるとMuJoCoと同じ位置優先IKを使い、QuestとIKの更新を最大20 Hzにします。
+Quest＋MuJoCoは実測関節角から手先を追従させるMink IKを使います。追加の起動オプションは不要です。
+
+実機では校正済みのQuest設定を指定し、`--hardware` に直結プロファイル、`--cameras` に `left`、`front`、`right` をカメラのAVFoundation IDに対応付けたYAMLを渡します。macOSで実カメラを使う場合は `uv pip install pyobjc-framework-AVFoundation pyobjc-framework-CoreMedia` を実行します。`--position-first` は実機用の位置優先IKを最大20 Hzで使うオプションです。
 
 ### LeRobotで収録・再生・ACT推論
 

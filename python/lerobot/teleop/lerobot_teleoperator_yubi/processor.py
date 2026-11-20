@@ -1,6 +1,7 @@
 """左右の生入力と同一周期の実測値から、18軸の目標をまとめて作る。"""
 import math
 import time
+from pathlib import Path
 import numpy as np
 from scipy.spatial.transform import Rotation
 from topoarm_sdk import load_config
@@ -12,7 +13,7 @@ from .kinematics import ArmKinematics, IKTargetUnreachable, transform
 
 
 class YubiActionStep(ProcessorStep):
-    def __init__(self, config, robot_config, *, position_first=False, direct_quest_pose=None):
+    def __init__(self, config, robot_config, *, position_first=False, direct_quest_pose=None, simulation=None):
         config.validate()
         if robot_config.type not in ("topoarm", "topoarm_mujoco") or robot_config.joints != JOINTS:
             raise ValueError("YUBIは両腕・両グリッパー・パンチルトの18軸設定を使用してください")
@@ -59,6 +60,19 @@ class YubiActionStep(ProcessorStep):
         self.release_count = dict.fromkeys(SIDES)
         self.losses = dict.fromkeys(SIDES, 0)
         self.ik_hold = dict.fromkeys(SIDES, False)
+        self.stalls = dict.fromkeys(SIDES, 0)
+        self.previous_seed = dict.fromkeys(SIDES)
+        if self.simulated:
+            from .mink_ik import MinkArm
+            if simulation is None:
+                # LeRobotの設定だけから作る場合も同じMink経路を使う。
+                import mujoco
+                model = mujoco.MjModel.from_xml_path(str(Path(data.options.robot_model).with_suffix(".xml")))
+                dt = 1 / 20
+            else:
+                model, dt = simulation.sim.model, simulation.dt
+            self.mink_arms = {s: MinkArm(model, self.ik[s], config.base_link, config.arms[s].tcp_link, dt)
+                              for s in SIDES}
         self.failed = False
         self.last_call = None
 
@@ -133,6 +147,9 @@ class YubiActionStep(ProcessorStep):
             self.head_anchor = None
         candidate = self.last.copy()
         for side in SIDES:
+            was_holding = self.ik_hold[side] and self.active[side] and not paused
+            if not self.active[side] or paused:
+                self.stalls[side] = 0
             self.ik_hold[side] = False
             if side not in hands:
                 self.active[side] = False
@@ -161,18 +178,36 @@ class YubiActionStep(ProcessorStep):
                     target = tcp_origin.copy()
                     target[:3, 3] += self.config.position_scale*(hands[side][:3, 3]-input_origin[:3, 3])
                     target[:3, :3] = hands[side][:3, :3] @ input_origin[:3, :3].T @ tcp_origin[:3, :3]
+                if not self.active[side]:
+                    self.previous_seed[side] = None
+                    self.stalls[side] = 0
                 self.active[side] = True
                 try:
                     kin = self.ik[side]
-                    solve = kin.solve_position_first if self.position_first else kin.solve
-                    q = solve(target, [candidate[n] for n in ARMS[side]], self.config)
+                    seed = [candidate[n] for n in ARMS[side]]
+                    if self.position_first:
+                        seed = np.asarray(seed)
+                        prev = self.previous_seed[side]
+                        self.previous_seed[side] = seed
+                        params = dict(holding=was_holding and not recovered,
+                                      previous_step=None if prev is None else seed-prev)
+                        if self.simulated:
+                            q = self.mink_arms[side].solve(target, seed, self.config,
+                                                         actual=[actual[n] for n in ARMS[side]], **params)
+                        else:
+                            q = kin.solve_position_first(target, seed, self.config, **params)
+                    else:
+                        q = kin.solve(target, seed, self.config)
                 except IKTargetUnreachable:
-                    self.ik_hold[side] = True
+                    # 単発の停滞でも指令は直ちに保持。表示と解除閾値は持続した停滞にのみ適用。
+                    self.stalls[side] += 1
+                    self.ik_hold[side] = not self.position_first or self.stalls[side] >= 3
                     candidate.update({name: self.last[name] for name in ARMS[side]})
                     if not self.simulated:
                         candidate[GRIPPERS[side]] = self.last[GRIPPERS[side]]
                         continue
                 else:
+                    self.stalls[side] = 0
                     candidate.update(zip(ARMS[side], map(float, q), strict=True))
                 arm = self.config.arms[side]
                 candidate[GRIPPERS[side]] = arm.gripper_closed_rad + openings[side]*(arm.gripper_open_rad-arm.gripper_closed_rad)

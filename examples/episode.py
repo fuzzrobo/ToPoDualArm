@@ -52,7 +52,7 @@ class QuestReader:
 
 
 def inputs(mode, cfg, cleanup, pose, names, hardware, leader_config, *, real_robot,
-           button_event=None, position_first=False, direct_quest_pose=None):
+           button_event=None, position_first=False, direct_quest_pose=None, simulation=None):
     if mode == "leader":
         if not leader_config:
             raise ValueError("--leader に読み取り専用の個体YAMLを指定してください")
@@ -70,7 +70,8 @@ def inputs(mode, cfg, cleanup, pose, names, hardware, leader_config, *, real_rob
             raise ValueError("Meta入力には18軸モデルを指定してください")
         robot = SimpleNamespace(type="topoarm" if real_robot else "topoarm_mujoco",
                                 joints=JOINTS, config_file=str(hardware))
-        step = YubiActionStep(cfg, robot, position_first=position_first, direct_quest_pose=direct_quest_pose)
+        step = YubiActionStep(cfg, robot, position_first=position_first, direct_quest_pose=direct_quest_pose,
+                              simulation=simulation)
         if mode == "meta":
             if real_robot and not cfg.hardware_verified:
                 raise ValueError("Metaの取付け・座標変換を確認してください")
@@ -144,7 +145,9 @@ def record(args):
                 from topoarm_sdk import load_config
                 cfg.urdf_path = load_config(str(robot.hardware)).options.robot_model
                 cfg.validate()
-            read = inputs(args.input, cfg, cleanup, pose, names, robot.hardware, args.leader, real_robot=isinstance(robot, Device))
+            real = isinstance(robot, Device)
+            read = inputs(args.input, cfg, cleanup, pose, names, robot.hardware, args.leader,
+                          real_robot=real, simulation=None if real else robot)
             features = {key: {"dtype": "float32", "shape": (len(names),), "names": names}
                         for key in ("action", "observation.state")}
             for camera in CAMERAS:

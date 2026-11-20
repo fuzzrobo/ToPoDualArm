@@ -116,7 +116,8 @@ def run(config, destination, hardware=None, cameras=None, read_profile=None, *, 
         def connect_quest():
             return inputs("meta",cfg,conn,home,list(sim.joints),sim.hardware,None,
                           real_robot=bool(hardware),button_event=lambda t,k: events.put((t,k)),
-                          position_first=position_first,direct_quest_pose=direct_quest_pose)
+                          position_first=position_first,direct_quest_pose=direct_quest_pose,
+                          simulation=None if hardware else sim)
         read = None
         retry = barrier = start = 0.
         next_ik = 0.
@@ -378,6 +379,8 @@ if __name__ == "__main__":
     parser.add_argument("--read-profile", choices=("teleop", "bam"), help="実機SDKの読取プロファイル")
     parser.add_argument("--position-first", action="store_true", help="実機で位置優先IKを20 Hzで使う")
     args = parser.parse_args()
+    if args.position_first and not args.hardware:
+        parser.error("--position-first は実機専用です。MuJoCoは常に実測補正付きMinkを使います")
     if args.read_profile and not args.hardware:
         parser.error("--read-profileには--hardwareが必要です")
     if args.hardware and not args.cameras:

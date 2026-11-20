@@ -92,45 +92,54 @@ class ArmKinematics:
             if index == 0:
                 return frame[:3, 3]
 
-    def solve_position_first(self, target, seed, config):
-        """関節の残り可動域の中で肩も使い、必要なら手先姿勢を緩める。"""
+    def solve_position_first(self, target, seed, config, *, holding=False, previous_step=None):
+        """位置を重くした同一コストで、前回の受理角から次の1歩だけ追従する。"""
         start = np.clip(seed, self.lower, self.upper)
-        # 反復回数にかかわらず、1周期で別の腕姿勢に飛び移らないようにする。
-        lower = np.maximum(self.lower, start - 0.12)
-        upper = np.minimum(self.upper, start + 0.12)
         axes, origins = np.empty((7, 3)), np.empty((7, 3))
-        position_tol = config.ik_position_tolerance_m
-        rotation_tol = config.ik_rotation_tolerance_rad
-        rotation_slack = np.deg2rad(10.)
-        best = None
-        best_score = (np.inf, np.inf, np.inf)
-        iterations = min(8, config.ik_max_nfev)
-        # まず元の姿勢を狙い、位置が合わなければ向きの重みを下げて再探索する。
-        for weight in (0.2, 0.02):
-            q = start.copy()
-            for iteration in range(iterations + 1):
-                actual = self._forward(q, axes, origins)
-                dp = target[:3, 3] - actual[:3, 3]
-                dr = Rotation.from_matrix(target[:3, :3] @ actual[:3, :3].T).as_rotvec()
-                pos, rot = np.linalg.norm(dp), np.linalg.norm(dr)
-                if pos <= position_tol and rot <= rotation_tol:
-                    return q
-                # 急な回転入力でも、許容帯に戻る方向の中間解は選べるようにする。
-                score = (max(0., rot - rotation_slack), max(position_tol, pos), rot)
-                if best is None or score < best_score:
-                    best, best_score = q.copy(), score
-                if iteration == iterations:
-                    break
-                jac = np.vstack((np.cross(axes, actual[:3, 3] - origins).T,
-                                 weight * axes.T, 0.004 * np.eye(7)))
-                dq = lsq_linear(jac, np.r_[dp, weight * dr, np.zeros(7)],
-                                bounds=(lower - q, upper - q), method="bvls").x
-                if np.max(np.abs(dq)) < 1e-6:
-                    break
-                q = np.clip(q + dq, lower, upper)
-        if best is None or np.allclose(best, start, rtol=0., atol=1e-7):
-            raise IKTargetUnreachable("手先の位置・姿勢を改善できません")
-        return best
+        current = self._forward(start, axes, origins)
+        # 通常は向き1 radを位置9 cm相当とする。大きな姿勢誤差は滑らかに緩め、
+        # 手首の向きだけが難しい目標で、到達可能な位置まで捨てない（pseudo-Huber）。
+        weight = .09
+        slack = .15
+
+        def error(frame):
+            dp = target[:3, 3] - frame[:3, 3]
+            dr = Rotation.from_matrix(target[:3, :3] @ frame[:3, :3].T).as_rotvec()
+            return dp, dr
+
+        dp, dr = error(current)
+        if np.linalg.norm(dp) <= config.ik_position_tolerance_m and np.linalg.norm(dr) <= config.ik_rotation_tolerance_rad:
+            return start
+        def cost_norm(p, r):
+            r2 = r @ r
+            return np.sqrt(p @ p + weight**2 * 2*r2 / (1 + np.sqrt(1 + r2 / slack**2)))
+
+        angular = weight / (1 + (dr @ dr) / slack**2)**.25
+        # 一度に遠方を解かず、20 Hzで現在の手先から25 mm / 0.10 radまでを目指す。
+        # 停滞判定はこの局所目標ではなく、元のQuest目標に対して行う。
+        residual = np.r_[dp * min(1., .025 / max(1e-12, np.linalg.norm(dp))),
+                         angular * dr * min(1., .10 / max(1e-12, np.linalg.norm(dr)))]
+        cost = cost_norm(dp, dr)
+        # 特異姿勢でも肘などが飛ばないよう減衰を加え、20 Hzの1歩を制限する。
+        damping = .06
+        jac = np.vstack((np.cross(axes, current[:3, 3] - origins).T, angular * axes.T, damping * np.eye(7)))
+        # 停止方向は制限せず、発進・反転時の最初の1歩だけ小さくする。
+        # 前周期の提案値ではなく、床・関節制限を通った実際の指令差を基準にする。
+        previous = np.zeros(7) if previous_step is None else previous_step
+        down = np.minimum(.060, .020 + np.maximum(0., -previous))
+        up = np.minimum(.060, .020 + np.maximum(0., previous))
+        dq = lsq_linear(jac, np.r_[residual, np.zeros(7)],
+                        bounds=(np.maximum(self.lower - start, -down), np.minimum(self.upper - start, up)),
+                        method="bvls").x
+        # 停滞時は追跡ノイズで保持/解除を往復しない。通常の微小な追従は妨げない。
+        min_gain = min(.00035 if holding else .00003, .02 * cost**2)
+        for _ in range(min(6, config.ik_max_nfev)):
+            q = np.clip(start + dq, self.lower, self.upper)
+            p, r = error(self.fk(q))
+            if cost - cost_norm(p, r) > min_gain:
+                return q
+            dq *= .5
+        raise IKTargetUnreachable("現在の可動域で手先目標に有意な改善がありません")
 
     def solve(self, target, seed, config):
         # 世界座標の関節軸から幾何ヤコビアンを作り、前周期の解から減衰付きIKを解く。
