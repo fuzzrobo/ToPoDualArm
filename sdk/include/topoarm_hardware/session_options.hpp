@@ -5,6 +5,7 @@
 namespace fuzzrobo::topoarm_hardware {
 struct SessionOptions {
     bool verified{false}, torque{false}, retention{true}, configure_devices{false};
+    bool apply_startup_configuration{false};
     // 実測値は範囲外でも受け取り、起動時を含む目標角度だけを制限する。
     bool clip_to_limits{false};
     // Torque ON接続時、RAMの位置PIDを毎回書き込み読戻す。
@@ -25,7 +26,8 @@ struct SessionOptions {
     std::string robot_model;
     bool floor_enabled{false};
     double floor_z_m{0}, floor_margin_m{.02};
-    // 運転中の電圧・過負荷エラーだけを、IDごとに接続中1回復旧する。
-    bool auto_reset{false};
+    // 駆動時に、対象軸の電圧・過負荷エラーを条件確認後に復旧する。
+    static constexpr bool auto_reset = true;
+    std::string read_profile{"teleop"};
 };
 } // namespace fuzzrobo::topoarm_hardware

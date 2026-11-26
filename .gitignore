@@ -1,7 +1,9 @@
 .venv/
+.vscode/
 build/
 data/
 /dev/
+/tests/
 /outputs/
 /logs/
 /.pytest_cache/

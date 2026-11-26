@@ -5,7 +5,6 @@
 #include "topoarm_hardware/session_options.hpp"
 #include "topoarm_hardware/target_limiter.hpp"
 #include <chrono>
-#include <set>
 
 namespace fuzzrobo::topoarm_hardware {
 // 接続と明示操作を共有する。エラー後の継続・終了は呼び出し側が決める。
@@ -41,12 +40,16 @@ class DriverSession {
     std::unique_ptr<TargetLimiter> limiter_;
     bool connected_{false}, active_{false}, fresh_{false};
     std::string error_;
-    std::set<uint8_t> reset_attempted_;
     std::vector<uint8_t> last_reset_ids_;
     size_t reset_count_{0};
     bool reset_pending_{false};
+    double next_diagnostic_{0};
     bool fail(const std::string &reason);
     bool positions_valid() const;
+    bool configure_servos();
+    std::string servo_error(const std::string &context) const;
+    void hold_present();
+    bool read_with_recovery(bool full, bool allow_reset);
     bool write_impl(bool torque_off_diagnostic);
 };
 } // namespace fuzzrobo::topoarm_hardware

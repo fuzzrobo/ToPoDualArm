@@ -1,0 +1,6 @@
+# パスはこのYAMLを置いたディレクトリからの相対指定。
+quest: data/mac-hardware/quest.json
+robot: data/mac-hardware/device.yaml
+cameras: data/mac-hardware/cameras-wrists.yaml
+root: data/right_to_left
+task: Move the box from right to left

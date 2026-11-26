@@ -1,0 +1,8 @@
+/config/yubi-local.json
+/config/inference/*-local.yaml
+/config/demo/*-local.yaml
+/data/
+/outputs/
+/*-local.yaml
+/scratch/
+/tests/

@@ -1,0 +1,21 @@
+# 共通ロボットモデル上のカメラ取付先・光学フレーム。レンズ校正はconfig/camerasへ分離。
+front:
+  parent: camera_optical_frame
+  position_m:
+  - 0
+  - 0
+  - 0.02
+  quat_wxyz:
+  - 0
+  - 1
+  - 0
+  - 0
+  fovy_deg: 42.5
+  calibration_status: nominal_rgb_vertical_fov_not_device_calibrated
+  source: https://realsenseai.com/wp-content/uploads/2025/08/Intel-RealSense-D400-Series-Datasheet-August-2025.pdf
+left:
+  parent: L_gripper_base
+  lens_file: yubi.yaml
+right:
+  parent: R_gripper_base
+  lens_file: yubi.yaml

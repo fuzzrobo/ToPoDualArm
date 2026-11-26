@@ -1,36 +1,50 @@
 # ToPoDualArm
 
-C++ SDKは実機1台のDYNAMIXEL通信と関節・床・首の保護を担当します。Pythonからは `topoarm_sdk.Device`、ROS 2からは `ros2_control` が同じSDKを使います。同じ実機のポートはどちらか一方だけで開いてください。
+ToPoDualArm 300 mmの実機を操作するSDKです。C++ SDKは1台分のDYNAMIXEL通信、起動設定、異常復旧、関節可動域・床・首の指令制限を担当します。Pythonの `topoarm_sdk.Device` とROS 2の `ros2_control` が同じSDKを使います。実機のシリアルポートは一方のプロセスで開きます。
 
-### Pythonで実機に直結
+## 設定
+
+- `config/hardware/leader.yaml` と `config/hardware/follower.yaml` は18軸の初期設定です。通信の既定値は2 Mbps、Return Delay Timeはレジスタ値 `10`（20 µs）です。
+- `config/models/servos.yaml` にサーボの共通設定、`config/floor.yaml` に床の高さと余裕を置きます。ロボット形状と関節構造の正本は `models/300mm/robot.urdf` と `models/300mm/meshes/` です。MJCFと軽量描画メッシュは同じモデルの `models/300mm/mujoco/` に置いています。
+- 実機では機体別YAMLにポートと校正値を設定し、確認後に `hardware_verified: true` を指定します。Pythonでは `config/robots/` の `backend: direct` プロファイルを参考に、`hardware` で機体別YAMLを参照します。リーダーは `role: leader`、フォロワーは `role: follower` を指定します。
+
+`options.startup_configuration: apply` では、全IDと型番を確認し、動作モード、Drive Mode、Return Delay Time、PID、プロファイルの差分を読み戻しながら適用します。EEPROMの変更はトルクOFFで行います。フォロワーは駆動開始時に現在位置を目標にしてトルクをONにします。
+
+`connection.latency_timer` の単位はミリ秒です。MacではSDKがポートを開く際に `IOSSDATALAT` で受信遅延を要求します。`AppleUSBFTDI` では実測に基づきミリ秒値を渡し、それ以外のドライバではマイクロ秒に換算します。
+
+読み取りは `teleop` が既定です。通常周期に位置・速度・電流を一括取得し、温度や電圧は診断周期に取得します。詳細な診断値が毎周期必要なら `Device(path, read_profile="bam")` を使用します。対応するHardware Errorの自動復旧は駆動中のフォロワーで動作し、リーダーは監視します。
+
+## Python
+
+Macでは `eigen@3`、`yaml-cpp`、`tinyxml2` を、Ubuntuでは `build-essential cmake libeigen3-dev libyaml-cpp-dev libtinyxml2-dev` を用意します。`uv sync --locked` でSDKをビルドできます。
 
 ```python
 from topoarm_sdk import Device
 
-with Device("config/robots/direct.yaml") as arm:
-    arm.enable()                       # 接続とは別に駆動を許可
-    q = arm.read().position            # 各指令の直前に読む（絶対角 rad）
-    applied = arm.command(q)           # 補正後に受理された目標角
+with Device("path/to/follower-device.yaml") as arm:
+    arm.enable()
+    q = arm.read().position  # 関節名ごとの角度（rad）
+    applied = arm.command(q)
 ```
 
-1台につき1プロファイルです。[個体設定](config/hardware/follower.yaml)は未校正のため、そのままでは実機に接続しません。`role: leader` は読み取り専用。指令解除は非常停止ではありません。
+## ROS 2
 
-### LeRobotで収録・再生・ACT推論
-
-Ubuntuで `build-essential cmake libeigen3-dev libyaml-cpp-dev libtinyxml2-dev libegl1` と [uv](https://docs.astral.sh/uv/) を用意し、リポジトリ直下で実行します。
+HumbleまたはJazzy環境で実行します。リーダー・フォロワーの起動は既定で両側mockです。
 
 ```sh
-uv sync --locked --extra record --extra act --python 3.12
-uv run --extra record python examples/episode.py record data/demo
-uv run --extra record python examples/episode.py replay data/demo
-bash examples/train_act.sh data/demo data/act 4
-uv run --extra record --extra act python examples/act_sim.py data/act/checkpoints/last/pretrained_model
+rosdep install --from-paths ros2 --ignore-src -r -y
+colcon build --base-paths ros2
+source install/setup.bash
+ros2 launch topoarm_bringup leader_follower.launch.py
 ```
 
-既定は模擬入力 → MuJoCo（18軸・3視点、20 Hz）。操作元は `--input meta --config 設定.json` または `--input leader --leader リーダー.yaml`。Quest＋Yubiは `--input quest`、グローブのみは `--input glove`（[設定例](config/yubi.json)）。実機収録は `--robot config/robots/direct.yaml --allow-hardware --cameras カメラ.yaml` と実入力を指定します。カメラ設定は front/left/right と各V4L2パスです。再生と付属のACT推論例はMuJoCo専用です。
+## C++のビルド
 
-### ROS 2 Humbleでリーダー・フォロワー
+```sh
+cmake -S sdk -B build/sdk
+cmake --build build/sdk
+```
 
-ROS環境で `rosdep install --from-paths ros2 --ignore-src -r -y` → `colcon build --base-paths ros2` → `source install/setup.bash` → `ros2 launch topoarm_bringup leader_follower.launch.py`。既定は両側mock。ROSノードはトピックで指令し、LeRobotやPythonバインディングは使いません。
+[収録・ACT学習・推論デモ](python/demo/README.md)は `python/demo/` の環境で実行できます。
 
-C++ SDK単体は `cmake -S sdk -B build/sdk && cmake --build build/sdk`。[第三者コードの帰属](sdk/third_party/lib_dynamixel/README.md)
+[第三者コードの帰属](sdk/third_party/lib_dynamixel/README.md)

@@ -35,14 +35,6 @@ target_include_directories(${PROJECT_NAME}
 
 pluginlib_export_plugin_description_file(hardware_interface topoarm_hardware.xml)
 
-if(BUILD_TESTING AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/../../dev/ros2/tests/hardware/test_hardware.cpp")
-  find_package(ament_cmake_gtest REQUIRED)
-  ament_add_gtest(test_hardware ../../dev/ros2/tests/hardware/test_hardware.cpp)
-  target_link_libraries(test_hardware topoarm_hardware)
-  target_compile_definitions(test_hardware PRIVATE TEST_CONFIG_FILE="${CMAKE_CURRENT_SOURCE_DIR}/../../dev/sdk/tests/fixtures/hardware.yaml")
-  ament_target_dependencies(test_hardware hardware_interface rclcpp)
-endif()
-
 install(DIRECTORY include/
   DESTINATION include
 )

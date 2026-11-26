@@ -1,21 +1,327 @@
+<?xml version='1.0' encoding='utf-8'?>
 <robot name="topoarm">
+  <material name="cad_color_27">
+    <color rgba="1.000000000 1.000000000 1.000000000 1" />
+  </material>
+  <material name="red_FF5544">
+    <color rgba="1.000000000 0.333333333 0.266666667 1" />
+  </material>
+  <material name="cad_color_25">
+    <color rgba="0.955973327 0.467783809 0.000303527 1" />
+  </material>
+  <material name="cad_color_24">
+    <color rgba="0.938685715 0.242281124 0.000303527 1" />
+  </material>
+  <material name="cad_color_23">
+    <color rgba="0.913098633 0.913098633 0.921581864 1" />
+  </material>
+  <material name="cad_color_22">
+    <color rgba="0.822785735 0.822785735 0.822785735 1" />
+  </material>
+  <material name="cad_color_21">
+    <color rgba="0.597201765 0.644479692 0.863157213 1" />
+  </material>
+  <material name="cad_color_20">
+    <color rgba="0.590618849 0.637596846 0.854992628 1" />
+  </material>
+  <material name="cad_color_19">
+    <color rgba="0.577580452 0.270497799 0.002124689 1" />
+  </material>
+  <material name="cad_color_18">
+    <color rgba="0.552011430 0.760524511 0.896269381 1" />
+  </material>
+  <material name="cad_color_17">
+    <color rgba="0.434153646 0.434153646 0.434153646 1" />
+  </material>
+  <material name="cad_color_16">
+    <color rgba="0.376262128 0.376262128 0.376262128 1" />
+  </material>
+  <material name="cad_color_15">
+    <color rgba="0.351532608 0.351532608 0.351532608 1" />
+  </material>
+  <material name="cad_color_14">
+    <color rgba="0.337163627 0.623960376 0.846873224 1" />
+  </material>
+  <material name="cad_color_13">
+    <color rgba="0.318546772 0.318546772 0.318546772 1" />
+  </material>
+  <material name="cad_color_12">
+    <color rgba="0.212230757 0.212230757 0.212230757 1" />
+  </material>
+  <material name="cad_color_11">
+    <color rgba="0.127437681 0.127437681 0.127437681 1" />
+  </material>
+  <material name="cad_color_10">
+    <color rgba="0.116970666 0.070360094 0.070360094 1" />
+  </material>
+  <material name="cad_color_09">
+    <color rgba="0.102241732 0.102241732 0.102241732 1" />
+  </material>
+  <material name="cad_color_08">
+    <color rgba="0.080219820 0.080219820 0.080219820 1" />
+  </material>
+  <material name="cad_color_07">
+    <color rgba="0.057805430 0.184474990 0.132868320 1" />
+  </material>
+  <material name="cad_color_06">
+    <color rgba="0.051269457 0.051269457 0.051269457 1" />
+  </material>
+  <material name="cad_color_05">
+    <color rgba="0.043735031 0.119538426 0.456411034 1" />
+  </material>
+  <material name="cad_color_04">
+    <color rgba="0.021219010 0.021219010 0.021219010 1" />
+  </material>
+  <material name="cad_color_03">
+    <color rgba="0.020288562 0.020288562 0.020288562 1" />
+  </material>
+  <material name="cad_color_02">
+    <color rgba="0.000000000 1.000000000 0.000000000 1" />
+  </material>
+  <material name="cad_color_01">
+    <color rgba="0.000000000 0.070360094 0.386429429 1" />
+  </material>
+  <material name="cad_color_00">
+    <color rgba="0.000000000 0.000000000 0.351532608 1" />
+  </material>
   <link name="base_footprint" />
   <link name="base_link">
-    </link>
+    <visual name="base_link_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/base_link_00.stl" />
+      </geometry>
+      <material name="cad_color_00" />
+    </visual>
+    <collision name="base_link_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/base_link_00.stl" />
+      </geometry>
+    </collision>
+    <visual name="base_link_01">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/base_link_01.stl" />
+      </geometry>
+      <material name="cad_color_01" />
+    </visual>
+    <collision name="base_link_01">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/base_link_01.stl" />
+      </geometry>
+    </collision>
+    <visual name="base_link_02">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/base_link_02.stl" />
+      </geometry>
+      <material name="cad_color_02" />
+    </visual>
+    <collision name="base_link_02">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/base_link_02.stl" />
+      </geometry>
+    </collision>
+    <visual name="base_link_03">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/base_link_03.stl" />
+      </geometry>
+      <material name="cad_color_03" />
+    </visual>
+    <collision name="base_link_03">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/base_link_03.stl" />
+      </geometry>
+    </collision>
+    <visual name="base_link_04">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/base_link_04.stl" />
+      </geometry>
+      <material name="cad_color_04" />
+    </visual>
+    <collision name="base_link_04">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/base_link_04.stl" />
+      </geometry>
+    </collision>
+    <visual name="base_link_05">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/base_link_05.stl" />
+      </geometry>
+      <material name="cad_color_06" />
+    </visual>
+    <collision name="base_link_05">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/base_link_05.stl" />
+      </geometry>
+    </collision>
+    <visual name="base_link_06">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/base_link_06.stl" />
+      </geometry>
+      <material name="cad_color_07" />
+    </visual>
+    <collision name="base_link_06">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/base_link_06.stl" />
+      </geometry>
+    </collision>
+    <visual name="base_link_07">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/base_link_07.stl" />
+      </geometry>
+      <material name="cad_color_08" />
+    </visual>
+    <collision name="base_link_07">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/base_link_07.stl" />
+      </geometry>
+    </collision>
+    <visual name="base_link_08">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/base_link_08.stl" />
+      </geometry>
+      <material name="cad_color_11" />
+    </visual>
+    <collision name="base_link_08">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/base_link_08.stl" />
+      </geometry>
+    </collision>
+    <visual name="base_link_09">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/base_link_09.stl" />
+      </geometry>
+      <material name="cad_color_13" />
+    </visual>
+    <collision name="base_link_09">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/base_link_09.stl" />
+      </geometry>
+    </collision>
+    <visual name="base_link_10">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/base_link_10.stl" />
+      </geometry>
+      <material name="cad_color_15" />
+    </visual>
+    <collision name="base_link_10">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/base_link_10.stl" />
+      </geometry>
+    </collision>
+    <visual name="base_link_11">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/base_link_11.stl" />
+      </geometry>
+      <material name="cad_color_19" />
+    </visual>
+    <collision name="base_link_11">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/base_link_11.stl" />
+      </geometry>
+    </collision>
+    <visual name="base_link_12">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/base_link_12.stl" />
+      </geometry>
+      <material name="cad_color_20" />
+    </visual>
+    <collision name="base_link_12">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/base_link_12.stl" />
+      </geometry>
+    </collision>
+    <visual name="base_link_13">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/base_link_13.stl" />
+      </geometry>
+      <material name="cad_color_21" />
+    </visual>
+    <collision name="base_link_13">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/base_link_13.stl" />
+      </geometry>
+    </collision>
+    <visual name="base_link_14">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/base_link_14.stl" />
+      </geometry>
+      <material name="cad_color_23" />
+    </visual>
+    <collision name="base_link_14">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/base_link_14.stl" />
+      </geometry>
+    </collision>
+  </link>
   <joint name="base_footprint_to_base" type="fixed">
     <parent link="base_footprint" />
     <child link="base_link" />
     <origin xyz="0 0 0.02" rpy="0 0 0" />
   </joint>
   <link name="L_shoulder_cover_link">
-    </link>
+    <visual name="L_shoulder_cover_link_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_shoulder_cover_link_00.stl" />
+      </geometry>
+      <material name="cad_color_02" />
+    </visual>
+    <collision name="L_shoulder_cover_link_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_shoulder_cover_link_00.stl" />
+      </geometry>
+    </collision>
+  </link>
   <joint name="L_shoulder_cover_fixed" type="fixed">
     <parent link="torso_link" />
     <child link="L_shoulder_cover_link" />
     <origin xyz="0 0.025 0.15" rpy="0 0 0" />
   </joint>
   <link name="R_shoulder_cover_link">
-    </link>
+    <visual name="R_shoulder_cover_link_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_shoulder_cover_link_00.stl" />
+      </geometry>
+      <material name="cad_color_02" />
+    </visual>
+    <collision name="R_shoulder_cover_link_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_shoulder_cover_link_00.stl" />
+      </geometry>
+    </collision>
+  </link>
   <joint name="R_shoulder_cover_fixed" type="fixed">
     <parent link="torso_link" />
     <child link="R_shoulder_cover_link" />
@@ -30,7 +336,46 @@
     <origin xyz="0 0 0.1225" rpy="0 0 0" />
   </joint>
   <link name="neck_pan_link">
-    </link>
+    <visual name="neck_pan_link_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/neck_pan_link_00.stl" />
+      </geometry>
+      <material name="cad_color_08" />
+    </visual>
+    <collision name="neck_pan_link_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/neck_pan_link_00.stl" />
+      </geometry>
+    </collision>
+    <visual name="neck_pan_link_01">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/neck_pan_link_01.stl" />
+      </geometry>
+      <material name="cad_color_11" />
+    </visual>
+    <collision name="neck_pan_link_01">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/neck_pan_link_01.stl" />
+      </geometry>
+    </collision>
+    <visual name="neck_pan_link_02">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/neck_pan_link_02.stl" />
+      </geometry>
+      <material name="cad_color_23" />
+    </visual>
+    <collision name="neck_pan_link_02">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/neck_pan_link_02.stl" />
+      </geometry>
+    </collision>
+  </link>
   <joint name="neck_pan_joint" type="revolute">
     <parent link="torso_link" />
     <child link="neck_pan_link" />
@@ -39,7 +384,20 @@
     <limit effort="3" velocity="3" lower="-1.5707963267948966" upper="1.5707963267948966" />
   </joint>
   <link name="neck_tilt_link">
-    </link>
+    <visual name="neck_tilt_link_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/neck_tilt_link_00.stl" />
+      </geometry>
+      <material name="cad_color_11" />
+    </visual>
+    <collision name="neck_tilt_link_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/neck_tilt_link_00.stl" />
+      </geometry>
+    </collision>
+  </link>
   <joint name="neck_tilt_joint" type="revolute">
     <parent link="neck_pan_link" />
     <child link="neck_tilt_link" />
@@ -48,21 +406,190 @@
     <limit lower="-1.3962634015954636" upper="1.8325957145940461" effort="3" velocity="3" />
   </joint>
   <link name="neck_tilt_cover_link">
-    </link>
+    <visual name="neck_tilt_cover_link_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/neck_tilt_cover_link_00.stl" />
+      </geometry>
+      <material name="cad_color_02" />
+    </visual>
+    <collision name="neck_tilt_cover_link_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/neck_tilt_cover_link_00.stl" />
+      </geometry>
+    </collision>
+  </link>
   <joint name="neck_tilt_cover_fixed" type="fixed">
     <parent link="neck_pan_link" />
     <child link="neck_tilt_cover_link" />
     <origin xyz="0.024 0 0.0195" rpy="0 0 0" />
   </joint>
   <link name="camera_link">
-    </link>
+    <visual name="camera_link_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/camera_link_00.stl" />
+      </geometry>
+      <material name="cad_color_05" />
+    </visual>
+    <collision name="camera_link_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/camera_link_00.stl" />
+      </geometry>
+    </collision>
+    <visual name="camera_link_01">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/camera_link_01.stl" />
+      </geometry>
+      <material name="cad_color_10" />
+    </visual>
+    <collision name="camera_link_01">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/camera_link_01.stl" />
+      </geometry>
+    </collision>
+    <visual name="camera_link_02">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/camera_link_02.stl" />
+      </geometry>
+      <material name="cad_color_12" />
+    </visual>
+    <collision name="camera_link_02">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/camera_link_02.stl" />
+      </geometry>
+    </collision>
+    <visual name="camera_link_03">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/camera_link_03.stl" />
+      </geometry>
+      <material name="cad_color_14" />
+    </visual>
+    <collision name="camera_link_03">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/camera_link_03.stl" />
+      </geometry>
+    </collision>
+    <visual name="camera_link_04">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/camera_link_04.stl" />
+      </geometry>
+      <material name="cad_color_16" />
+    </visual>
+    <collision name="camera_link_04">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/camera_link_04.stl" />
+      </geometry>
+    </collision>
+    <visual name="camera_link_05">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/camera_link_05.stl" />
+      </geometry>
+      <material name="cad_color_18" />
+    </visual>
+    <collision name="camera_link_05">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/camera_link_05.stl" />
+      </geometry>
+    </collision>
+    <visual name="camera_link_06">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/camera_link_06.stl" />
+      </geometry>
+      <material name="cad_color_22" />
+    </visual>
+    <collision name="camera_link_06">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/camera_link_06.stl" />
+      </geometry>
+    </collision>
+    <visual name="camera_link_07">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/camera_link_07.stl" />
+      </geometry>
+      <material name="cad_color_23" />
+    </visual>
+    <collision name="camera_link_07">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/camera_link_07.stl" />
+      </geometry>
+    </collision>
+    <visual name="camera_link_08">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/camera_link_08.stl" />
+      </geometry>
+      <material name="cad_color_24" />
+    </visual>
+    <collision name="camera_link_08">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/camera_link_08.stl" />
+      </geometry>
+    </collision>
+    <visual name="camera_link_09">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/camera_link_09.stl" />
+      </geometry>
+      <material name="cad_color_25" />
+    </visual>
+    <collision name="camera_link_09">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/camera_link_09.stl" />
+      </geometry>
+    </collision>
+    <visual name="camera_link_10">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/camera_link_10.stl" />
+      </geometry>
+      <material name="cad_color_27" />
+    </visual>
+    <collision name="camera_link_10">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/camera_link_10.stl" />
+      </geometry>
+    </collision>
+  </link>
   <joint name="camera_fixed" type="fixed">
     <parent link="neck_tilt_link" />
     <child link="camera_link" />
     <origin xyz="0.05775 0.0175 0" rpy="0 0 0" />
   </joint>
   <link name="realsense_mount_link">
-    </link>
+    <visual name="realsense_mount_link_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/realsense_mount_link_00.stl" />
+      </geometry>
+      <material name="cad_color_02" />
+    </visual>
+    <collision name="realsense_mount_link_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/realsense_mount_link_00.stl" />
+      </geometry>
+    </collision>
+  </link>
   <joint name="realsense_mount_fixed" type="fixed">
     <parent link="neck_tilt_link" />
     <child link="realsense_mount_link" />
@@ -81,7 +608,46 @@
     <origin xyz="0 0.0715 0.15" rpy="0 0 0" />
   </joint>
   <link name="L_link1">
-    </link>
+    <visual name="L_link1_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link1_00.stl" />
+      </geometry>
+      <material name="cad_color_09" />
+    </visual>
+    <collision name="L_link1_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link1_00.stl" />
+      </geometry>
+    </collision>
+    <visual name="L_link1_01">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link1_01.stl" />
+      </geometry>
+      <material name="cad_color_11" />
+    </visual>
+    <collision name="L_link1_01">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link1_01.stl" />
+      </geometry>
+    </collision>
+    <visual name="L_link1_02">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link1_02.stl" />
+      </geometry>
+      <material name="cad_color_23" />
+    </visual>
+    <collision name="L_link1_02">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link1_02.stl" />
+      </geometry>
+    </collision>
+  </link>
   <joint name="L_joint1" type="revolute">
     <parent link="L_shoulder_mount" />
     <child link="L_link1" />
@@ -90,14 +656,105 @@
     <limit effort="6" velocity="3" lower="-1.9198621771937625" upper="1.0471975511965976" />
   </joint>
   <link name="L_XM540_cover_link">
-    </link>
+    <visual name="L_XM540_cover_link_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_XM540_cover_link_00.stl" />
+      </geometry>
+      <material name="cad_color_02" />
+    </visual>
+    <collision name="L_XM540_cover_link_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_XM540_cover_link_00.stl" />
+      </geometry>
+    </collision>
+  </link>
   <joint name="L_XM540_cover_fixed" type="fixed">
     <parent link="L_link1" />
     <child link="L_XM540_cover_link" />
     <origin xyz="0 0.06725 0" rpy="0 0 0" />
   </joint>
   <link name="L_link2">
-    </link>
+    <visual name="L_link2_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link2_00.stl" />
+      </geometry>
+      <material name="cad_color_02" />
+    </visual>
+    <collision name="L_link2_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link2_00.stl" />
+      </geometry>
+    </collision>
+    <visual name="L_link2_01">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link2_01.stl" />
+      </geometry>
+      <material name="cad_color_08" />
+    </visual>
+    <collision name="L_link2_01">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link2_01.stl" />
+      </geometry>
+    </collision>
+    <visual name="L_link2_02">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link2_02.stl" />
+      </geometry>
+      <material name="cad_color_11" />
+    </visual>
+    <collision name="L_link2_02">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link2_02.stl" />
+      </geometry>
+    </collision>
+    <visual name="L_link2_03">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link2_03.stl" />
+      </geometry>
+      <material name="cad_color_15" />
+    </visual>
+    <collision name="L_link2_03">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link2_03.stl" />
+      </geometry>
+    </collision>
+    <visual name="L_link2_04">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link2_04.stl" />
+      </geometry>
+      <material name="cad_color_17" />
+    </visual>
+    <collision name="L_link2_04">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link2_04.stl" />
+      </geometry>
+    </collision>
+    <visual name="L_link2_05">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link2_05.stl" />
+      </geometry>
+      <material name="cad_color_23" />
+    </visual>
+    <collision name="L_link2_05">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link2_05.stl" />
+      </geometry>
+    </collision>
+  </link>
   <joint name="L_joint2" type="revolute">
     <parent link="L_link1" />
     <child link="L_link2" />
@@ -106,7 +763,59 @@
     <limit lower="-1.7453292519943295" upper="1.7453292519943295" effort="6" velocity="3" />
   </joint>
   <link name="L_link3">
-    </link>
+    <visual name="L_link3_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link3_00.stl" />
+      </geometry>
+      <material name="cad_color_02" />
+    </visual>
+    <collision name="L_link3_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link3_00.stl" />
+      </geometry>
+    </collision>
+    <visual name="L_link3_01">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link3_01.stl" />
+      </geometry>
+      <material name="cad_color_08" />
+    </visual>
+    <collision name="L_link3_01">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link3_01.stl" />
+      </geometry>
+    </collision>
+    <visual name="L_link3_02">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link3_02.stl" />
+      </geometry>
+      <material name="cad_color_11" />
+    </visual>
+    <collision name="L_link3_02">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link3_02.stl" />
+      </geometry>
+    </collision>
+    <visual name="L_link3_03">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link3_03.stl" />
+      </geometry>
+      <material name="cad_color_23" />
+    </visual>
+    <collision name="L_link3_03">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link3_03.stl" />
+      </geometry>
+    </collision>
+  </link>
   <joint name="L_joint3" type="revolute">
     <parent link="L_link2" />
     <child link="L_link3" />
@@ -115,14 +824,92 @@
     <limit effort="6" velocity="3" lower="-1.4835298641951802" upper="1.4835298641951802" />
   </joint>
   <link name="L_link4_cover_link">
-    </link>
+    <visual name="L_link4_cover_link_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link4_cover_link_00.stl" />
+      </geometry>
+      <material name="cad_color_02" />
+    </visual>
+    <collision name="L_link4_cover_link_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link4_cover_link_00.stl" />
+      </geometry>
+    </collision>
+  </link>
   <joint name="L_link4_cover_fixed" type="fixed">
     <parent link="L_link3" />
     <child link="L_link4_cover_link" />
     <origin xyz="-0.00135 0 -0.068" rpy="0 0 0" />
   </joint>
   <link name="L_link4">
-    </link>
+    <visual name="L_link4_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link4_00.stl" />
+      </geometry>
+      <material name="cad_color_02" />
+    </visual>
+    <collision name="L_link4_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link4_00.stl" />
+      </geometry>
+    </collision>
+    <visual name="L_link4_01">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link4_01.stl" />
+      </geometry>
+      <material name="cad_color_03" />
+    </visual>
+    <collision name="L_link4_01">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link4_01.stl" />
+      </geometry>
+    </collision>
+    <visual name="L_link4_02">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link4_02.stl" />
+      </geometry>
+      <material name="cad_color_08" />
+    </visual>
+    <collision name="L_link4_02">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link4_02.stl" />
+      </geometry>
+    </collision>
+    <visual name="L_link4_03">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link4_03.stl" />
+      </geometry>
+      <material name="cad_color_11" />
+    </visual>
+    <collision name="L_link4_03">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link4_03.stl" />
+      </geometry>
+    </collision>
+    <visual name="L_link4_04">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link4_04.stl" />
+      </geometry>
+      <material name="cad_color_23" />
+    </visual>
+    <collision name="L_link4_04">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link4_04.stl" />
+      </geometry>
+    </collision>
+  </link>
   <joint name="L_joint4" type="revolute">
     <parent link="L_link3" />
     <child link="L_link4" />
@@ -131,7 +918,59 @@
     <limit lower="-1.7453292519943295" upper="0.8726646259971648" effort="6" velocity="3" />
   </joint>
   <link name="L_link5">
-    </link>
+    <visual name="L_link5_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link5_00.stl" />
+      </geometry>
+      <material name="cad_color_02" />
+    </visual>
+    <collision name="L_link5_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link5_00.stl" />
+      </geometry>
+    </collision>
+    <visual name="L_link5_01">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link5_01.stl" />
+      </geometry>
+      <material name="cad_color_08" />
+    </visual>
+    <collision name="L_link5_01">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link5_01.stl" />
+      </geometry>
+    </collision>
+    <visual name="L_link5_02">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link5_02.stl" />
+      </geometry>
+      <material name="cad_color_11" />
+    </visual>
+    <collision name="L_link5_02">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link5_02.stl" />
+      </geometry>
+    </collision>
+    <visual name="L_link5_03">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link5_03.stl" />
+      </geometry>
+      <material name="cad_color_23" />
+    </visual>
+    <collision name="L_link5_03">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link5_03.stl" />
+      </geometry>
+    </collision>
+  </link>
   <joint name="L_joint5" type="revolute">
     <parent link="L_link4" />
     <child link="L_link5" />
@@ -140,14 +979,79 @@
     <limit effort="6" velocity="3" lower="-1.4835298641951802" upper="1.4835298641951802" />
   </joint>
   <link name="L_link6_cover_link">
-    </link>
+    <visual name="L_link6_cover_link_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link6_cover_link_00.stl" />
+      </geometry>
+      <material name="cad_color_02" />
+    </visual>
+    <collision name="L_link6_cover_link_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link6_cover_link_00.stl" />
+      </geometry>
+    </collision>
+  </link>
   <joint name="L_link6_cover_fixed" type="fixed">
     <parent link="L_link5" />
     <child link="L_link6_cover_link" />
     <origin xyz="0 0 -0.0645" rpy="0 0 0" />
   </joint>
   <link name="L_link6">
-    </link>
+    <visual name="L_link6_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link6_00.stl" />
+      </geometry>
+      <material name="cad_color_02" />
+    </visual>
+    <collision name="L_link6_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link6_00.stl" />
+      </geometry>
+    </collision>
+    <visual name="L_link6_01">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link6_01.stl" />
+      </geometry>
+      <material name="cad_color_08" />
+    </visual>
+    <collision name="L_link6_01">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link6_01.stl" />
+      </geometry>
+    </collision>
+    <visual name="L_link6_02">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link6_02.stl" />
+      </geometry>
+      <material name="cad_color_11" />
+    </visual>
+    <collision name="L_link6_02">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link6_02.stl" />
+      </geometry>
+    </collision>
+    <visual name="L_link6_03">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link6_03.stl" />
+      </geometry>
+      <material name="cad_color_23" />
+    </visual>
+    <collision name="L_link6_03">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link6_03.stl" />
+      </geometry>
+    </collision>
+  </link>
   <joint name="L_joint6" type="revolute">
     <parent link="L_link5" />
     <child link="L_link6" />
@@ -156,7 +1060,33 @@
     <limit lower="-1.7453292519943295" upper="1.7453292519943295" effort="6" velocity="3" />
   </joint>
   <link name="L_link7">
-    </link>
+    <visual name="L_link7_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link7_00.stl" />
+      </geometry>
+      <material name="cad_color_02" />
+    </visual>
+    <collision name="L_link7_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link7_00.stl" />
+      </geometry>
+    </collision>
+    <visual name="L_link7_01">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link7_01.stl" />
+      </geometry>
+      <material name="cad_color_11" />
+    </visual>
+    <collision name="L_link7_01">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_link7_01.stl" />
+      </geometry>
+    </collision>
+  </link>
   <joint name="L_joint7" type="revolute">
     <parent link="L_link6" />
     <child link="L_link7" />
@@ -165,21 +1095,112 @@
     <limit lower="-1.7453292519943295" upper="1.7453292519943295" effort="6" velocity="3" />
   </joint>
   <link name="L_joint7_cover_link">
-    </link>
+    <visual name="L_joint7_cover_link_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_joint7_cover_link_00.stl" />
+      </geometry>
+      <material name="cad_color_02" />
+    </visual>
+    <collision name="L_joint7_cover_link_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_joint7_cover_link_00.stl" />
+      </geometry>
+    </collision>
+  </link>
   <joint name="L_joint7_cover_fixed" type="fixed">
     <parent link="L_link6" />
     <child link="L_joint7_cover_link" />
     <origin xyz="-0.000195616396 0.001335752307 -0.06325" rpy="0 0 -1.57079632679" />
   </joint>
   <link name="L_gripper_base">
-    </link>
+    <visual name="L_gripper_base_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_gripper_base_00.stl" />
+      </geometry>
+      <material name="cad_color_08" />
+    </visual>
+    <collision name="L_gripper_base_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_gripper_base_00.stl" />
+      </geometry>
+    </collision>
+    <visual name="L_gripper_base_01">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_gripper_base_01.stl" />
+      </geometry>
+      <material name="cad_color_15" />
+    </visual>
+    <collision name="L_gripper_base_01">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_gripper_base_01.stl" />
+      </geometry>
+    </collision>
+    <visual name="L_gripper_base_02">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_gripper_base_02.stl" />
+      </geometry>
+      <material name="cad_color_23" />
+    </visual>
+    <collision name="L_gripper_base_02">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_gripper_base_02.stl" />
+      </geometry>
+    </collision>
+  </link>
   <joint name="L_gripper_base_fixed" type="fixed">
     <parent link="L_link7" />
     <child link="L_gripper_base" />
     <origin xyz="0 0 -0.028" rpy="0 0 0" />
   </joint>
   <link name="L_finger_left">
-    </link>
+    <visual name="L_finger_left_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_finger_left_00.stl" />
+      </geometry>
+      <material name="cad_color_08" />
+    </visual>
+    <collision name="L_finger_left_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_finger_left_00.stl" />
+      </geometry>
+    </collision>
+    <visual name="L_finger_left_01">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_finger_left_01.stl" />
+      </geometry>
+      <material name="cad_color_15" />
+    </visual>
+    <collision name="L_finger_left_01">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_finger_left_01.stl" />
+      </geometry>
+    </collision>
+    <visual name="L_finger_left_02">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_finger_left_02.stl" />
+      </geometry>
+      <material name="red_FF5544" />
+    </visual>
+    <collision name="L_finger_left_02">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_finger_left_02.stl" />
+      </geometry>
+    </collision>
+  </link>
   <joint name="L_gripper_joint" type="revolute">
     <parent link="L_gripper_base" />
     <child link="L_finger_left" />
@@ -188,7 +1209,33 @@
     <limit lower="-1.2217304763960306" upper="0.08726646259971647" effort="20" velocity="1" />
   </joint>
   <link name="L_finger_right">
-    </link>
+    <visual name="L_finger_right_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_finger_right_00.stl" />
+      </geometry>
+      <material name="cad_color_08" />
+    </visual>
+    <collision name="L_finger_right_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_finger_right_00.stl" />
+      </geometry>
+    </collision>
+    <visual name="L_finger_right_01">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_finger_right_01.stl" />
+      </geometry>
+      <material name="red_FF5544" />
+    </visual>
+    <collision name="L_finger_right_01">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/L_finger_right_01.stl" />
+      </geometry>
+    </collision>
+  </link>
   <joint name="L_gripper_mimic" type="revolute">
     <parent link="L_gripper_base" />
     <child link="L_finger_right" />
@@ -210,7 +1257,46 @@
     <origin xyz="0 -0.0715 0.15" rpy="0 0 0" />
   </joint>
   <link name="R_link1">
-    </link>
+    <visual name="R_link1_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link1_00.stl" />
+      </geometry>
+      <material name="cad_color_09" />
+    </visual>
+    <collision name="R_link1_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link1_00.stl" />
+      </geometry>
+    </collision>
+    <visual name="R_link1_01">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link1_01.stl" />
+      </geometry>
+      <material name="cad_color_11" />
+    </visual>
+    <collision name="R_link1_01">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link1_01.stl" />
+      </geometry>
+    </collision>
+    <visual name="R_link1_02">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link1_02.stl" />
+      </geometry>
+      <material name="cad_color_23" />
+    </visual>
+    <collision name="R_link1_02">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link1_02.stl" />
+      </geometry>
+    </collision>
+  </link>
   <joint name="R_joint1" type="revolute">
     <parent link="R_shoulder_mount" />
     <child link="R_link1" />
@@ -219,14 +1305,105 @@
     <limit effort="6" velocity="3" lower="-1.0471975511965976" upper="1.9198621771937625" />
   </joint>
   <link name="R_XM540_cover_link">
-    </link>
+    <visual name="R_XM540_cover_link_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_XM540_cover_link_00.stl" />
+      </geometry>
+      <material name="cad_color_02" />
+    </visual>
+    <collision name="R_XM540_cover_link_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_XM540_cover_link_00.stl" />
+      </geometry>
+    </collision>
+  </link>
   <joint name="R_XM540_cover_fixed" type="fixed">
     <parent link="R_link1" />
     <child link="R_XM540_cover_link" />
     <origin xyz="0 -0.06725 0" rpy="0 0 0" />
   </joint>
   <link name="R_link2">
-    </link>
+    <visual name="R_link2_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link2_00.stl" />
+      </geometry>
+      <material name="cad_color_02" />
+    </visual>
+    <collision name="R_link2_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link2_00.stl" />
+      </geometry>
+    </collision>
+    <visual name="R_link2_01">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link2_01.stl" />
+      </geometry>
+      <material name="cad_color_08" />
+    </visual>
+    <collision name="R_link2_01">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link2_01.stl" />
+      </geometry>
+    </collision>
+    <visual name="R_link2_02">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link2_02.stl" />
+      </geometry>
+      <material name="cad_color_11" />
+    </visual>
+    <collision name="R_link2_02">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link2_02.stl" />
+      </geometry>
+    </collision>
+    <visual name="R_link2_03">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link2_03.stl" />
+      </geometry>
+      <material name="cad_color_15" />
+    </visual>
+    <collision name="R_link2_03">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link2_03.stl" />
+      </geometry>
+    </collision>
+    <visual name="R_link2_04">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link2_04.stl" />
+      </geometry>
+      <material name="cad_color_17" />
+    </visual>
+    <collision name="R_link2_04">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link2_04.stl" />
+      </geometry>
+    </collision>
+    <visual name="R_link2_05">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link2_05.stl" />
+      </geometry>
+      <material name="cad_color_23" />
+    </visual>
+    <collision name="R_link2_05">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link2_05.stl" />
+      </geometry>
+    </collision>
+  </link>
   <joint name="R_joint2" type="revolute">
     <parent link="R_link1" />
     <child link="R_link2" />
@@ -235,7 +1412,59 @@
     <limit lower="-1.7453292519943295" upper="1.7453292519943295" effort="6" velocity="3" />
   </joint>
   <link name="R_link3">
-    </link>
+    <visual name="R_link3_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link3_00.stl" />
+      </geometry>
+      <material name="cad_color_02" />
+    </visual>
+    <collision name="R_link3_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link3_00.stl" />
+      </geometry>
+    </collision>
+    <visual name="R_link3_01">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link3_01.stl" />
+      </geometry>
+      <material name="cad_color_08" />
+    </visual>
+    <collision name="R_link3_01">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link3_01.stl" />
+      </geometry>
+    </collision>
+    <visual name="R_link3_02">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link3_02.stl" />
+      </geometry>
+      <material name="cad_color_11" />
+    </visual>
+    <collision name="R_link3_02">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link3_02.stl" />
+      </geometry>
+    </collision>
+    <visual name="R_link3_03">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link3_03.stl" />
+      </geometry>
+      <material name="cad_color_23" />
+    </visual>
+    <collision name="R_link3_03">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link3_03.stl" />
+      </geometry>
+    </collision>
+  </link>
   <joint name="R_joint3" type="revolute">
     <parent link="R_link2" />
     <child link="R_link3" />
@@ -244,14 +1473,92 @@
     <limit effort="6" velocity="3" lower="-1.4835298641951802" upper="1.4835298641951802" />
   </joint>
   <link name="R_link4_cover_link">
-    </link>
+    <visual name="R_link4_cover_link_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link4_cover_link_00.stl" />
+      </geometry>
+      <material name="cad_color_02" />
+    </visual>
+    <collision name="R_link4_cover_link_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link4_cover_link_00.stl" />
+      </geometry>
+    </collision>
+  </link>
   <joint name="R_link4_cover_fixed" type="fixed">
     <parent link="R_link3" />
     <child link="R_link4_cover_link" />
     <origin xyz="0 0 -0.068" rpy="0 0 0" />
   </joint>
   <link name="R_link4">
-    </link>
+    <visual name="R_link4_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link4_00.stl" />
+      </geometry>
+      <material name="cad_color_02" />
+    </visual>
+    <collision name="R_link4_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link4_00.stl" />
+      </geometry>
+    </collision>
+    <visual name="R_link4_01">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link4_01.stl" />
+      </geometry>
+      <material name="cad_color_03" />
+    </visual>
+    <collision name="R_link4_01">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link4_01.stl" />
+      </geometry>
+    </collision>
+    <visual name="R_link4_02">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link4_02.stl" />
+      </geometry>
+      <material name="cad_color_08" />
+    </visual>
+    <collision name="R_link4_02">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link4_02.stl" />
+      </geometry>
+    </collision>
+    <visual name="R_link4_03">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link4_03.stl" />
+      </geometry>
+      <material name="cad_color_11" />
+    </visual>
+    <collision name="R_link4_03">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link4_03.stl" />
+      </geometry>
+    </collision>
+    <visual name="R_link4_04">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link4_04.stl" />
+      </geometry>
+      <material name="cad_color_23" />
+    </visual>
+    <collision name="R_link4_04">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link4_04.stl" />
+      </geometry>
+    </collision>
+  </link>
   <joint name="R_joint4" type="revolute">
     <parent link="R_link3" />
     <child link="R_link4" />
@@ -260,7 +1567,59 @@
     <limit lower="-0.8726646259971648" upper="1.7453292519943295" effort="6" velocity="3" />
   </joint>
   <link name="R_link5">
-    </link>
+    <visual name="R_link5_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link5_00.stl" />
+      </geometry>
+      <material name="cad_color_02" />
+    </visual>
+    <collision name="R_link5_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link5_00.stl" />
+      </geometry>
+    </collision>
+    <visual name="R_link5_01">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link5_01.stl" />
+      </geometry>
+      <material name="cad_color_08" />
+    </visual>
+    <collision name="R_link5_01">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link5_01.stl" />
+      </geometry>
+    </collision>
+    <visual name="R_link5_02">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link5_02.stl" />
+      </geometry>
+      <material name="cad_color_11" />
+    </visual>
+    <collision name="R_link5_02">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link5_02.stl" />
+      </geometry>
+    </collision>
+    <visual name="R_link5_03">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link5_03.stl" />
+      </geometry>
+      <material name="cad_color_23" />
+    </visual>
+    <collision name="R_link5_03">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link5_03.stl" />
+      </geometry>
+    </collision>
+  </link>
   <joint name="R_joint5" type="revolute">
     <parent link="R_link4" />
     <child link="R_link5" />
@@ -269,14 +1628,79 @@
     <limit effort="6" velocity="3" lower="-1.4835298641951802" upper="1.4835298641951802" />
   </joint>
   <link name="R_link6_cover_link">
-    </link>
+    <visual name="R_link6_cover_link_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link6_cover_link_00.stl" />
+      </geometry>
+      <material name="cad_color_02" />
+    </visual>
+    <collision name="R_link6_cover_link_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link6_cover_link_00.stl" />
+      </geometry>
+    </collision>
+  </link>
   <joint name="R_link6_cover_fixed" type="fixed">
     <parent link="R_link5" />
     <child link="R_link6_cover_link" />
     <origin xyz="0 0 -0.0645" rpy="0 0 0" />
   </joint>
   <link name="R_link6">
-    </link>
+    <visual name="R_link6_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link6_00.stl" />
+      </geometry>
+      <material name="cad_color_02" />
+    </visual>
+    <collision name="R_link6_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link6_00.stl" />
+      </geometry>
+    </collision>
+    <visual name="R_link6_01">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link6_01.stl" />
+      </geometry>
+      <material name="cad_color_08" />
+    </visual>
+    <collision name="R_link6_01">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link6_01.stl" />
+      </geometry>
+    </collision>
+    <visual name="R_link6_02">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link6_02.stl" />
+      </geometry>
+      <material name="cad_color_11" />
+    </visual>
+    <collision name="R_link6_02">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link6_02.stl" />
+      </geometry>
+    </collision>
+    <visual name="R_link6_03">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link6_03.stl" />
+      </geometry>
+      <material name="cad_color_23" />
+    </visual>
+    <collision name="R_link6_03">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link6_03.stl" />
+      </geometry>
+    </collision>
+  </link>
   <joint name="R_joint6" type="revolute">
     <parent link="R_link5" />
     <child link="R_link6" />
@@ -285,7 +1709,33 @@
     <limit lower="-1.7453292519943295" upper="1.7453292519943295" effort="6" velocity="3" />
   </joint>
   <link name="R_link7">
-    </link>
+    <visual name="R_link7_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link7_00.stl" />
+      </geometry>
+      <material name="cad_color_02" />
+    </visual>
+    <collision name="R_link7_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link7_00.stl" />
+      </geometry>
+    </collision>
+    <visual name="R_link7_01">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link7_01.stl" />
+      </geometry>
+      <material name="cad_color_11" />
+    </visual>
+    <collision name="R_link7_01">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_link7_01.stl" />
+      </geometry>
+    </collision>
+  </link>
   <joint name="R_joint7" type="revolute">
     <parent link="R_link6" />
     <child link="R_link7" />
@@ -294,21 +1744,112 @@
     <limit lower="-1.7453292519943295" upper="1.7453292519943295" effort="6" velocity="3" />
   </joint>
   <link name="R_joint7_cover_link">
-    </link>
+    <visual name="R_joint7_cover_link_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_joint7_cover_link_00.stl" />
+      </geometry>
+      <material name="cad_color_02" />
+    </visual>
+    <collision name="R_joint7_cover_link_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_joint7_cover_link_00.stl" />
+      </geometry>
+    </collision>
+  </link>
   <joint name="R_joint7_cover_fixed" type="fixed">
     <parent link="R_link6" />
     <child link="R_joint7_cover_link" />
     <origin xyz="0 0 -0.06325" rpy="0 0 -1.57079632679" />
   </joint>
   <link name="R_gripper_base">
-    </link>
+    <visual name="R_gripper_base_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_gripper_base_00.stl" />
+      </geometry>
+      <material name="cad_color_08" />
+    </visual>
+    <collision name="R_gripper_base_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_gripper_base_00.stl" />
+      </geometry>
+    </collision>
+    <visual name="R_gripper_base_01">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_gripper_base_01.stl" />
+      </geometry>
+      <material name="cad_color_15" />
+    </visual>
+    <collision name="R_gripper_base_01">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_gripper_base_01.stl" />
+      </geometry>
+    </collision>
+    <visual name="R_gripper_base_02">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_gripper_base_02.stl" />
+      </geometry>
+      <material name="cad_color_23" />
+    </visual>
+    <collision name="R_gripper_base_02">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_gripper_base_02.stl" />
+      </geometry>
+    </collision>
+    <visual name="R_gripper_usb_cable_lock">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_gripper_usb_cable_lock.stl" />
+      </geometry>
+      <material name="frame_endcap_black" />
+    </visual>
+    <collision name="R_gripper_usb_cable_lock">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_gripper_usb_cable_lock.stl" />
+      </geometry>
+    </collision>
+  </link>
   <joint name="R_gripper_base_fixed" type="fixed">
     <parent link="R_link7" />
     <child link="R_gripper_base" />
     <origin xyz="0 0 -0.028" rpy="0 0 0" />
   </joint>
   <link name="R_finger_left">
-    </link>
+    <visual name="R_finger_left_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_finger_left_00.stl" />
+      </geometry>
+      <material name="cad_color_08" />
+    </visual>
+    <collision name="R_finger_left_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_finger_left_00.stl" />
+      </geometry>
+    </collision>
+    <visual name="R_finger_left_01">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_finger_left_01.stl" />
+      </geometry>
+      <material name="red_FF5544" />
+    </visual>
+    <collision name="R_finger_left_01">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_finger_left_01.stl" />
+      </geometry>
+    </collision>
+  </link>
   <joint name="R_gripper_joint" type="revolute">
     <parent link="R_gripper_base" />
     <child link="R_finger_left" />
@@ -317,7 +1858,46 @@
     <limit lower="-0.10471975511965978" upper="1.2915436464758039" effort="20" velocity="1" />
   </joint>
   <link name="R_finger_right">
-    </link>
+    <visual name="R_finger_right_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_finger_right_00.stl" />
+      </geometry>
+      <material name="cad_color_08" />
+    </visual>
+    <collision name="R_finger_right_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_finger_right_00.stl" />
+      </geometry>
+    </collision>
+    <visual name="R_finger_right_01">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_finger_right_01.stl" />
+      </geometry>
+      <material name="cad_color_15" />
+    </visual>
+    <collision name="R_finger_right_01">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_finger_right_01.stl" />
+      </geometry>
+    </collision>
+    <visual name="R_finger_right_02">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_finger_right_02.stl" />
+      </geometry>
+      <material name="red_FF5544" />
+    </visual>
+    <collision name="R_finger_right_02">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/R_finger_right_02.stl" />
+      </geometry>
+    </collision>
+  </link>
   <joint name="R_gripper_mimic" type="revolute">
     <parent link="R_gripper_base" />
     <child link="R_finger_right" />
@@ -333,17 +1913,124 @@
     <origin xyz="0.0173 0 -0.0815" rpy="0 0 0" />
   </joint>
   <link name="main_column_link">
-    </link>
+    <visual name="main_column_link_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/main_column_link_00.stl" />
+      </geometry>
+      <material name="cad_color_04" />
+    </visual>
+    <collision name="main_column_link_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/main_column_link_00.stl" />
+      </geometry>
+    </collision>
+  </link>
   <joint name="main_column_fixed" type="fixed">
     <parent link="base_link" />
     <child link="main_column_link" />
     <origin xyz="0 0 0" rpy="0 0 0" />
   </joint>
   <link name="lower_frame_link">
-    </link>
+    <visual name="lower_frame_220mm">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/lower_frame_220mm.stl" />
+      </geometry>
+      <material name="cad_color_04" />
+    </visual>
+    <collision name="lower_frame_220mm">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/lower_frame_220mm.stl" />
+      </geometry>
+    </collision>
+    <visual name="lower_frame_endcap_right">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/lower_frame_endcap_right.stl" />
+      </geometry>
+      <material name="frame_endcap_black" />
+    </visual>
+    <collision name="lower_frame_endcap_right">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/lower_frame_endcap_right.stl" />
+      </geometry>
+    </collision>
+    <visual name="lower_frame_endcap_left">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/lower_frame_endcap_left.stl" />
+      </geometry>
+      <material name="frame_endcap_black" />
+    </visual>
+    <collision name="lower_frame_endcap_left">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/lower_frame_endcap_left.stl" />
+      </geometry>
+    </collision>
+  </link>
   <joint name="lower_frame_fixed" type="fixed">
     <parent link="base_link" />
     <child link="lower_frame_link" />
     <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <material name="jt128_housing">
+    <color rgba="0.09 0.10 0.12 1" />
+  </material>
+  <material name="jt128_mount_green">
+    <color rgba="0 1 0 1" />
+  </material>
+  <material name="frame_endcap_black">
+    <color rgba="0.04 0.04 0.04 1" />
+  </material>
+  <link name="jt128_mount_link">
+    <visual name="jt128_mount">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/jt128_mount.stl" />
+      </geometry>
+      <material name="jt128_mount_green" />
+    </visual>
+    <collision name="jt128_mount">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/jt128_mount.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="jt128_body_link">
+    <visual name="jt128_body">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/jt128_body.stl" />
+      </geometry>
+      <material name="jt128_housing" />
+    </visual>
+    <collision name="jt128_body">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/jt128_body.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="hesai_lidar" />
+  <joint name="jt128_mount_fixed" type="fixed">
+    <parent link="main_column_link" />
+    <child link="jt128_mount_link" />
+    <origin xyz="0.02 0 0.15" rpy="0 0 0" />
+  </joint>
+  <joint name="jt128_body_fixed" type="fixed">
+    <parent link="jt128_mount_link" />
+    <child link="jt128_body_link" />
+    <origin xyz="0.0077 0 0" rpy="-1.5707963267948966 0 -1.5707963267948966" />
+  </joint>
+  <joint name="jt128_lidar_fixed" type="fixed">
+    <parent link="jt128_body_link" />
+    <child link="hesai_lidar" />
+    <origin xyz="0 0 0.04784" rpy="0 0 0" />
   </joint>
 </robot>

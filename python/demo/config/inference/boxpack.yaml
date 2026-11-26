@@ -1,0 +1,7 @@
+# パスはこのYAMLからの相対指定。
+task: Pack the black box into the box
+checkpoint: ../../outputs/boxpack-act/best
+robot: ../../data/mac-hardware/device.yaml
+cameras: ../../data/mac-hardware/cameras.yaml
+device: mps
+replan_hz: 10

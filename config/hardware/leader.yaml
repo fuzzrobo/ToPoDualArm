@@ -1,1 +1,26 @@
-follower.yaml
+# XL330リーダーのひな形。ポートと個体の校正を確認してから hardware_verified を true にする。
+hardware_verified: false
+connection: {port: /dev/topoarm-leader-unconfigured, baud_rate: 2000000, latency_timer: 2}
+model: ../../models/300mm/robot.urdf
+options: {startup_configuration: apply, return_delay_time: 10}  # 1刻みは2 µs。10で20 µs。
+input_transform: {neck_tilt_negative_scale: 2.1}
+actuator_profiles: ../models/servos.yaml
+joints:
+  R_joint1: {profile: leader_arm, id: 1, operating_mode: 5, multiplier: 1.0, offset: 0.0, min: -6.283185307179586, max: 6.283185307179586, current_cap: 0.1, initial_current_limit: 0.1}
+  R_joint2: {profile: leader_arm, id: 2, operating_mode: 5, multiplier: 1.0, offset: 0.0, min: -6.283185307179586, max: 6.283185307179586, current_cap: 0.1, initial_current_limit: 0.1}
+  R_joint3: {profile: leader_arm, id: 3, operating_mode: 5, multiplier: 1.0, offset: 0.0, min: -6.283185307179586, max: 6.283185307179586, current_cap: 0.1, initial_current_limit: 0.1}
+  R_joint4: {profile: leader_arm, id: 4, operating_mode: 5, multiplier: 1.0, offset: 0.0, min: -6.283185307179586, max: 6.283185307179586, current_cap: 0.1, initial_current_limit: 0.1}
+  R_joint5: {profile: leader_arm, id: 5, operating_mode: 5, multiplier: 1.0, offset: 0.0, min: -6.283185307179586, max: 6.283185307179586, current_cap: 0.1, initial_current_limit: 0.1}
+  R_joint6: {profile: leader_arm, id: 6, operating_mode: 5, multiplier: 1.0, offset: 0.0, min: -6.283185307179586, max: 6.283185307179586, current_cap: 0.1, initial_current_limit: 0.1}
+  R_joint7: {profile: leader_arm, id: 7, operating_mode: 5, multiplier: 1.0, offset: 0.0, min: -6.283185307179586, max: 6.283185307179586, current_cap: 0.1, initial_current_limit: 0.1}
+  R_gripper_joint: {profile: leader_arm, id: 8, operating_mode: 5, multiplier: 0.398521113057015, offset: 0.5830194422511356, min: -6.283185307179586, max: 6.283185307179586, current_cap: 0.1, initial_current_limit: 0.1}
+  L_joint1: {profile: leader_arm, id: 11, operating_mode: 5, multiplier: 1.0, offset: 0.0, min: -6.283185307179586, max: 6.283185307179586, current_cap: 0.1, initial_current_limit: 0.1}
+  L_joint2: {profile: leader_arm, id: 12, operating_mode: 5, multiplier: 1.0, offset: 0.0, min: -6.283185307179586, max: 6.283185307179586, current_cap: 0.1, initial_current_limit: 0.1}
+  L_joint3: {profile: leader_arm, id: 13, operating_mode: 5, multiplier: 1.0, offset: 0.0, min: -6.283185307179586, max: 6.283185307179586, current_cap: 0.1, initial_current_limit: 0.1}
+  L_joint4: {profile: leader_arm, id: 14, operating_mode: 5, multiplier: 1.0, offset: 0.0, min: -6.283185307179586, max: 6.283185307179586, current_cap: 0.1, initial_current_limit: 0.1}
+  L_joint5: {profile: leader_arm, id: 15, operating_mode: 5, multiplier: 1.0, offset: 0.0, min: -6.283185307179586, max: 6.283185307179586, current_cap: 0.1, initial_current_limit: 0.1}
+  L_joint6: {profile: leader_arm, id: 16, operating_mode: 5, multiplier: 1.0, offset: 0.0, min: -6.283185307179586, max: 6.283185307179586, current_cap: 0.1, initial_current_limit: 0.1}
+  L_joint7: {profile: leader_arm, id: 17, operating_mode: 5, multiplier: 1.0, offset: 0.0, min: -6.283185307179586, max: 6.283185307179586, current_cap: 0.1, initial_current_limit: 0.1}
+  L_gripper_joint: {profile: leader_arm, id: 18, operating_mode: 5, multiplier: 0.37377719375091256, offset: -0.5577714508344559, min: -6.283185307179586, max: 6.283185307179586, current_cap: 0.1, initial_current_limit: 0.1}
+  neck_pan_joint: {profile: leader_neck, id: 21, operating_mode: 3, multiplier: 1.0, offset: 0.0, min: -6.283185307179586, max: 6.283185307179586, current_cap: 0.1, initial_current_limit: 0.1}
+  neck_tilt_joint: {profile: leader_neck, id: 22, operating_mode: 3, multiplier: 1.0, offset: 0.0, min: -6.283185307179586, max: 6.283185307179586, current_cap: 0.1, initial_current_limit: 0.1}

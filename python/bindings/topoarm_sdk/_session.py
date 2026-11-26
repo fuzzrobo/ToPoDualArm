@@ -51,7 +51,6 @@ class PositionSession:
         self._connected()
         if self.read_only or self._enabled:
             raise RuntimeError("読み取り専用または既に有効です")
-        self.read()
         self._enable()
         self._enabled = True
         self._stamp = None
