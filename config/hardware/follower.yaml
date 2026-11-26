@@ -1,8 +1,8 @@
 # シミュレーション用。実機には個体ごとの確認済み設定を指定する。
 hardware_verified: false
-connection: {port: /dev/topoarm-unconfigured}
+connection: {port: /dev/topoarm-unconfigured, baud_rate: 2000000}
 model: ../../models/300mm/robot.urdf
-options: {clip_to_limits: true, floor_config: ../floor.yaml}
+options: {clip_to_limits: true, floor_config: ../floor.yaml, startup_configuration: apply, return_delay_time: 10}  # 1刻みは2 µs。10で20 µs。
 actuator_profiles: ../models/servos.yaml
 joints:
   R_joint1: {profile: arm, id: 31, operating_mode: 3, multiplier: 1, offset: 0, min: -2, max: 2, current_cap: 0.1, initial_current_limit: 0}

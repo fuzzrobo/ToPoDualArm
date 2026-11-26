@@ -44,14 +44,22 @@ HardwareConfig load_config(const std::string &path, const std::vector<std::strin
         if (auto o = root["options"]) {
             keys(o,
                  {"torque_retention", "clip_to_limits", "write_pid_on_connect", "return_delay_time", "auto_reset",
-                  "neck_envelope", "neck_limits", "floor_config", "read_profile"},
+                  "neck_envelope", "neck_limits", "floor_config", "read_profile", "startup_configuration"},
                  "options");
             read(o, "torque_retention", config.options.retention);
             read(o, "clip_to_limits", config.options.clip_to_limits);
             read(o, "write_pid_on_connect", config.options.write_pid_on_connect);
             read(o, "return_delay_time", config.options.return_delay_time);
             read(o, "read_profile", config.options.read_profile);
-            read(o, "auto_reset", config.options.auto_reset);
+            if (auto value = o["startup_configuration"]) {
+                const auto policy = value.as<std::string>();
+                if (policy != "verify" && policy != "apply")
+                    throw std::invalid_argument("startup_configurationはverifyまたはapplyを指定してください");
+                config.options.apply_startup_configuration = policy == "apply";
+            }
+            // 旧YAMLとの互換用。値の型だけ検査し、自動復旧は常時有効とする。
+            if (o["auto_reset"])
+                (void)o["auto_reset"].as<bool>();
             read(o, "neck_envelope", config.options.neck_envelope);
             if (auto n = o["neck_limits"]) {
                 keys(n, {"pan_abs_at_outer", "tilt_min_at_outer", "outward_margin"}, "neck_limits");

@@ -1,0 +1,11 @@
+# パスはこのYAMLを置いたディレクトリからの相対指定。
+task: Move the box from right to left
+robot: data/mac-hardware/device.yaml
+cameras: data/mac-hardware/cameras-wrists.yaml
+checkpoint: outputs/right_to_left_act/checkpoints/last/pretrained_model
+initial_pose_file: outputs/right_to_left_act/checkpoints/last/pretrained_model/initial_pose.json
+device: cpu
+replan_hz: 10
+one_shot:
+  first_source: right
+  kinematics: data/mac-hardware/quest.json

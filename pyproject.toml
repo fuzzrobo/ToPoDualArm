@@ -11,13 +11,9 @@ requires-python = ">=3.12,<3.14"
 license = "Apache-2.0"
 dependencies = ["PyYAML>=6,<7"]
 
-[project.optional-dependencies]
-act = ["lerobot[training]==0.6.1"]
-record = ["lerobot[dataset]==0.6.1", "mujoco==3.8.1", "mink==1.2.0", "better-actuator-models==1.0.2", "pyserial>=3.5,<4", "scipy", "PyYAML>=6,<7"]
-
 [tool.scikit-build]
 cmake.source-dir = "python/bindings"
-wheel.packages = ["python/bindings/topoarm_sdk", "python/mujoco/topoarm_mujoco", "python/lerobot/topoarm_recording", "python/lerobot/teleop/lerobot_teleoperator_yubi", "python/teleop/topoarm_leader_follower"]
+wheel.packages = ["python/bindings/topoarm_sdk", "python/teleop/topoarm_leader_follower"]
 wheel.license-files = ["LICENSE", "sdk/third_party/lib_dynamixel/LICENSE-ROBOTIS", "sdk/third_party/lib_dynamixel/README.md"]
 install.components = ["python"]
-sdist.exclude = ["/dev/", "/data/", "/outputs/", "/logs/", "/.venv/", "/build/", "/install/", "/log/", "/dist/", "__pycache__/", "*.pyc"]
+sdist.exclude = ["/python/demo/", "/models/300mm/mujoco/", "/dev/", "/tests/", "/data/", "/outputs/", "/logs/", "/.venv/", "/build/", "/install/", "/log/", "/dist/", "__pycache__/", "*.pyc"]

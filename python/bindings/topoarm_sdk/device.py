@@ -31,7 +31,10 @@ class Device(PositionSession):
             raise ValueError("実機フォロワーには床保護の設定が必要です")
         o.verified, o.torque, o.configure_devices = True, not self.read_only, False
         self.device = Driver(c.port, c.baud_rate, c.latency_timer, c.joints, o)
-        self.device.open_passive()
+        if self.read_only and o.apply_startup_configuration:
+            self.device.connect()
+        else:
+            self.device.open_passive()
 
     def _read(self):
         states = self.device.read()

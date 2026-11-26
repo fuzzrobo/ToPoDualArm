@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 #include "topoarm_hardware/dynamixel_handler.hpp"
 #include <initializer_list>
+#include <iostream>
 #include <fcntl.h>
 #include <set>
 #include <stdexcept>
@@ -9,9 +10,14 @@
 #include <unistd.h>
 #include <chrono>
 #include <thread>
+#include <tuple>
 
 namespace fuzzrobo::topoarm_hardware {
 namespace {
+std::string register_values(const std::string &name, int64_t expected, int64_t actual) {
+    return name + " expected=" + std::to_string(expected) + " actual=" + std::to_string(actual);
+}
+
 // 上限値を生値へ戻す際のceil誤差と、1カウント未満の切上げによる上限超過を避ける。
 int64_t bounded_current_raw(const Joint &d) {
     auto raw = AddrX::goal_current.val2pulse(d.command.current_limit * 1000, d.state.model_number);
@@ -91,8 +97,10 @@ bool DynamixelHandler::write_verified(DynamixelAddress address, uint8_t id, int6
     if (!transport_->write(address, id, value))
         return fail(BusError::Communication, id, context + "書込み失敗");
     const auto actual = transport_->read(address, id);
-    if (!transport_->healthy() || (check_alert && transport_->hardware_error()) || actual != value)
-        return fail(BusError::Communication, id, context + "読戻し不一致");
+    if (!transport_->healthy() || (check_alert && transport_->hardware_error()))
+        return fail(BusError::Communication, id, context + "読戻し失敗");
+    if (actual != value)
+        return fail(BusError::Communication, id, register_values(context + "読戻し不一致", value, actual));
     return true;
 }
 bool DynamixelHandler::open_port() { return transport_->open(); }
@@ -176,6 +184,67 @@ bool DynamixelHandler::write_position_pid() {
     }
     return true;
 }
+bool DynamixelHandler::apply_startup_configuration(int return_delay_time, bool allow_holding) {
+    last_result_ = {};
+    struct Change {
+        uint8_t id;
+        DynamixelAddress address;
+        const char *name;
+        int64_t desired, actual;
+    };
+    std::vector<Change> eeprom;
+    // 全軸でEEPROM差分とTorque状態を確認してから、最初の書込みを行う。
+    for (const auto &joint : dxls) {
+        const auto id = joint.config.id;
+        const auto torque = transport_->read(AddrX::torque_enable, id);
+        if (!transport_->healthy() || transport_->hardware_error() || (torque != 0 && torque != 1))
+            return fail(BusError::Communication, id, "Torque状態読出し失敗");
+        if (torque != 0 && !allow_holding)
+            return fail(BusError::Configuration, id, "リーダーの起動設定にはTorque OFFが必要です");
+
+        const auto mode = transport_->read(AddrX::operating_mode, id);
+        if (!transport_->healthy() || transport_->hardware_error())
+            return fail(BusError::Communication, id, "Operating Mode読出し失敗");
+        const auto drive = transport_->read(AddrX::drive_mode, id);
+        if (!transport_->healthy() || transport_->hardware_error())
+            return fail(BusError::Communication, id, "Drive Mode読出し失敗");
+        if (drive & 8)
+            return fail(BusError::Configuration, id, "Drive Modeの目標指令による自動Torque ONが有効です");
+        const auto desired_drive = (drive & ~4) | (joint.config.profile_duration_ms >= 0 ? 4 : 0);
+        const auto delay = return_delay_time >= 0 ? transport_->read(AddrX::return_delay_time, id) : -1;
+        if (return_delay_time >= 0 && (!transport_->healthy() || transport_->hardware_error()))
+            return fail(BusError::Communication, id, "Return Delay Time読出し失敗");
+
+        for (const auto &change : {
+                 Change{id, AddrX::operating_mode, "Operating Mode", joint.config.operating_mode, mode},
+                 Change{id, AddrX::drive_mode, "Drive Mode", desired_drive, drive},
+                 Change{id, AddrX::return_delay_time, "Return Delay Time", return_delay_time, delay}}) {
+            if (change.actual == change.desired)
+                continue;
+            if (torque != 0)
+                return fail(BusError::Configuration, id, register_values(change.name, change.desired, change.actual) +
+                            "。設定変更にはTorque OFFが必要です");
+            eeprom.push_back(change);
+        }
+    }
+    for (const auto &change : eeprom) {
+        const auto torque = transport_->read(AddrX::torque_enable, change.id);
+        if (!transport_->healthy() || transport_->hardware_error() || torque != 0)
+            return fail(BusError::Configuration, change.id,
+                        register_values(change.name, change.desired, change.actual) +
+                            "。書込み直前にTorque OFFを確認できません");
+        if (!write_verified(change.address, change.id, change.desired, change.name))
+            return false;
+        std::clog << "起動設定適用: ID=" << static_cast<int>(change.id) << " "
+                  << register_values(change.name, change.desired, change.actual) << std::endl;
+    }
+    // 先に動作モードを揃え、モード変更で初期化されるRAM設定を最後に合わせる。
+    for (auto &joint : dxls)
+        if (!configure_joint(joint, true, true))
+            return false;
+    return true;
+}
+
 BusResult DynamixelHandler::configure(bool allow_changes) {
     last_result_ = {};
     for (auto &d : dxls)
@@ -183,28 +252,28 @@ BusResult DynamixelHandler::configure(bool allow_changes) {
             break;
     return last_result_;
 }
-bool DynamixelHandler::configure_joint(Joint &d, bool allow_changes) {
+bool DynamixelHandler::configure_joint(Joint &d, bool allow_changes, bool startup) {
     // 設定照合だけならTorque保持中でも再接続できる。設定変更時だけOFFを要求する。
     const auto torque = transport_->read(AddrX::torque_enable, d.config.id);
     if (!transport_->healthy())
         return fail(BusError::Communication, d.config.id, "Torque状態読出し失敗");
-    if (torque != 0 && allow_changes)
+    if (torque != 0 && allow_changes && !startup)
         return fail(BusError::Configuration, d.config.id, "設定変更にはTorque OFFが必要です");
-    for (const auto &[address, desired] : std::initializer_list<std::pair<DynamixelAddress, int64_t>>{
-             {AddrX::operating_mode, d.config.operating_mode},
-             {AddrX::position_p_gain, d.config.position_kp},
-             {AddrX::position_i_gain, d.config.position_ki},
-             {AddrX::position_d_gain, d.config.position_kd}}) {
+    for (const auto &[address, desired, name] :
+         std::initializer_list<std::tuple<DynamixelAddress, int64_t, const char *>>{
+             {AddrX::operating_mode, d.config.operating_mode, "Operating Mode"},
+             {AddrX::position_p_gain, d.config.position_kp, "Position P Gain"},
+             {AddrX::position_i_gain, d.config.position_ki, "Position I Gain"},
+             {AddrX::position_d_gain, d.config.position_kd, "Position D Gain"}}) {
         const auto actual = transport_->read(address, d.config.id);
-        if (!transport_->healthy())
+        if (!transport_->healthy() || (startup && transport_->hardware_error()))
             return fail(BusError::Communication, d.config.id, "設定読出し失敗");
         if (actual == desired)
             continue;
-        if (!allow_changes || !transport_->write(address, d.config.id, desired))
-            return fail(BusError::Configuration, d.config.id, "設定不一致。自動変更は既定で禁止です");
-        const auto confirmed = transport_->read(address, d.config.id);
-        if (!transport_->healthy() || confirmed != desired)
-            return fail(BusError::Communication, d.config.id, "設定読戻し不一致");
+        if (!allow_changes || (startup && address.address() == AddrX::operating_mode.address()))
+            return fail(BusError::Configuration, d.config.id, register_values(name, desired, actual));
+        if (!write_verified(address, d.config.id, desired, name))
+            return false;
     }
     const auto raw_limit = transport_->read(AddrX::current_limit, d.config.id);
     if (!transport_->healthy() || raw_limit <= 0)
@@ -218,6 +287,9 @@ bool DynamixelHandler::configure_joint(Joint &d, bool allow_changes) {
     if (!transport_->healthy() || transport_->hardware_error())
         return fail(BusError::Communication, d.config.id, "Drive Mode読取り失敗");
     const bool timed = d.config.profile_duration_ms >= 0;
+    if (startup && timed != bool(drive & 4))
+        return fail(BusError::Configuration, d.config.id,
+                    register_values("Drive Mode", (drive & ~4) | (timed ? 4 : 0), drive));
     if (timed && !(drive & 4)) {
         // 明示的な時間設定に対応するbitだけ変更する。自動Torque OFF/ONは行わない。
         if (torque != 0)
@@ -237,14 +309,16 @@ bool DynamixelHandler::configure_joint(Joint &d, bool allow_changes) {
              {AddrX::profile_acceleration, timed ? d.config.profile_acceleration_ms :
                  AddrX::profile_acceleration.val2pulse(d.config.profile_acc, d.state.model_number)}}) {
         const auto previous = transport_->read(address, d.config.id);
-        if (!transport_->healthy() || raw < 0)
+        if (!transport_->healthy() || transport_->hardware_error() || raw < 0)
             return fail(BusError::Communication, d.config.id, "プロファイル読出し失敗");
-        if (previous != raw &&
-            (!(allow_changes || timed) || !transport_->write(address, d.config.id, raw)))
-            return fail(BusError::Configuration, d.config.id, "プロファイル設定失敗");
-        const auto actual = transport_->read(address, d.config.id);
-        if (!transport_->healthy() || transport_->hardware_error() || actual != raw)
-            return fail(BusError::Communication, d.config.id, "プロファイル読戻し不一致");
+        if (previous == raw)
+            continue;
+        const char *name = address.address() == AddrX::profile_velocity.address() ?
+            "Profile Velocity" : "Profile Acceleration";
+        if (!(allow_changes || timed))
+            return fail(BusError::Configuration, d.config.id, register_values(name, raw, previous));
+        if (!write_verified(address, d.config.id, raw, name))
+            return false;
     }
     return true;
 }
@@ -361,7 +435,7 @@ bool DynamixelHandler::reset_conditions(uint8_t id, bool expect_clear) {
         return fail(BusError::Hardware, id, "自動復旧対象外の異常・電圧・温度・自動Torque設定");
     return true;
 }
-bool DynamixelHandler::recover_faults() {
+bool DynamixelHandler::recover_faults(bool restore_torque) {
     if (faults_.empty())
         return fail(BusError::Hardware, -1, "自動復旧対象のIDがありません");
     const auto faults = faults_;
@@ -395,6 +469,11 @@ bool DynamixelHandler::recover_faults() {
             !write_verified(AddrX::goal_current, id, bounded_current_raw(d), "復旧電流上限"))
             return false;
     }
+    // 起動中ならactivate()が全軸を一括で現在位置に合わせてからTorque ONする。
+    if (!restore_torque) {
+        last_result_ = {};
+        return true;
+    }
     // 他IDのREBOOT待機中にも脱力姿勢は変わるため、各ONの直前に位置を読み直す。
     for (const auto &fault : faults) {
         auto &d = *std::find_if(dxls.begin(), dxls.end(), [&](const Joint &j) { return j.config.id == fault.id; });
@@ -404,8 +483,12 @@ bool DynamixelHandler::recover_faults() {
         const auto raw = transport_->read(AddrX::present_position, id);
         if (!transport_->healthy() || transport_->hardware_error() || raw < 0 || raw > 4095)
             return fail(BusError::Hardware, id, "復旧時の現在位置を確認できません");
-        if (!write_verified(AddrX::goal_position, id, raw, "復旧時の現在位置保持"))
-            return false;
+        if (!transport_->sync_write(AddrX::goal_position, {id}, {raw}))
+            return fail(BusError::Communication, id, "復旧時の現在位置のSyncWrite失敗");
+        const auto goal = transport_->read(AddrX::goal_position, id);
+        if (!transport_->healthy() || transport_->hardware_error() || goal != raw)
+            return fail(BusError::Communication, id, "復旧時の保持目標不一致: ID=" + std::to_string(id) +
+                        " expected=" + std::to_string(raw) + " actual=" + std::to_string(goal));
         // 旧目標・旧量子化キャッシュを再利用しない。
         d.command.position = AddrX::present_position.pulse2val(raw, d.state.model_number) *
                                  d.config.multiplier + d.config.offset;
@@ -433,6 +516,25 @@ bool DynamixelHandler::set_joints_current() {
     last_result_ = {};
     return true;
 }
+bool DynamixelHandler::apply_startup_current() {
+    last_result_ = {};
+    for (const auto &joint : dxls) {
+        if (joint.config.operating_mode != 5)
+            continue;
+        const auto id = joint.config.id;
+        if (!std::isfinite(joint.command.current_limit) || joint.command.current_limit < 0 ||
+            joint.command.current_limit > joint.config.current_cap)
+            return fail(BusError::InvalidCommand, id, "電流上限が承認範囲外です");
+        const auto desired = bounded_current_raw(joint);
+        const auto actual = transport_->read(AddrX::goal_current, id);
+        if (!transport_->healthy() || transport_->hardware_error())
+            return fail(BusError::Communication, id, "Goal Current読出し失敗");
+        if (actual != desired && !write_verified(AddrX::goal_current, id, desired, "Goal Current"))
+            return false;
+    }
+    return true;
+}
+
 bool DynamixelHandler::check_torque_off_target_write() {
     // 目標更新による自動Torque ONが有効な機器には、診断指令も送らない。
     for (auto id : dxl_ids) {

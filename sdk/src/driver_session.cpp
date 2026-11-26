@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 #include "topoarm_hardware/driver_session.hpp"
 #include "topoarm_hardware/settings.hpp"
+#include <iostream>
 #include <limits>
 #include <stdexcept>
 
@@ -39,6 +40,19 @@ bool DriverSession::positions_valid() const {
             return false;
     return true;
 }
+std::string DriverSession::servo_error(const std::string &context) const {
+    const auto &result = handler_.last_result();
+    return context + (result.id >= 0 ? " ID=" + std::to_string(result.id) : "") + ": " + result.detail;
+}
+bool DriverSession::configure_servos() {
+    if (options_.apply_startup_configuration)
+        return handler_.apply_startup_configuration(options_.return_delay_time, options_.torque);
+    const bool pid_override =
+        options_.xm540_p >= 0 || options_.xm540_d >= 0 || options_.xm430_p >= 0 || options_.xm430_d >= 0;
+    return (options_.return_delay_time < 0 || handler_.configure_return_delay_time(options_.return_delay_time)) &&
+           (!(options_.torque && (options_.write_pid_on_connect || pid_override)) || handler_.write_position_pid()) &&
+           (!(options_.torque || options_.configure_devices) || handler_.configure(options_.configure_devices));
+}
 bool DriverSession::configure(bool passive) {
     if (connected_) {
         error_ = "接続済みです";
@@ -50,7 +64,6 @@ bool DriverSession::configure(bool passive) {
     }
     if (!handler_.open_port())
         return fail("ポートを開けません（使用中または権限不足）");
-    reset_attempted_.clear();
     last_reset_ids_.clear();
     reset_count_ = 0;
     reset_pending_ = false;
@@ -59,7 +72,7 @@ bool DriverSession::configure(bool passive) {
         names.push_back(d.config.joint_name);
     if (!handler_.scan(handler_.dxl_ids, names)) {
         handler_.close_port();
-        return fail("機種確認失敗: " + handler_.last_result().detail);
+        return fail(servo_error("機種確認失敗"));
     }
     apply_model_overrides(handler_.dxls, options_);
     // YAMLと部分指定を合成した結果も、レジスタ書込み前に検証する。
@@ -69,35 +82,36 @@ bool DriverSession::configure(bool passive) {
         handler_.close_port();
         return fail(e.what());
     }
-    const bool pid_override =
-        options_.xm540_p >= 0 || options_.xm540_d >= 0 || options_.xm430_p >= 0 || options_.xm430_d >= 0;
-    // 明示指定されたReturn Delay Timeは読み取り接続でも設定する。
-    // PID・時間設定は明示指定に従い、それ以外の変更はconfigure_devices指定時だけ行う。
-    if ((!passive && options_.return_delay_time >= 0 &&
-         !handler_.configure_return_delay_time(options_.return_delay_time)) ||
-        (!passive && options_.torque && (options_.write_pid_on_connect || pid_override) &&
-         !handler_.write_position_pid()) ||
-        (!passive && (options_.torque || options_.configure_devices) &&
-         !handler_.configure(options_.configure_devices)) ||
-        !handler_.read_all() || !positions_valid()) {
+    // 駆動用の初期設定を送る前に、前回の停止から残った異常も診断する。
+    if (!passive && options_.torque && !read_with_recovery(true, true)) {
         handler_.close_port();
-        return fail("初期状態・設定の確認失敗: " + handler_.last_result().detail);
+        return fail("初期状態の確認失敗: " + handler_.last_result().detail);
+    }
+    if (!passive && !configure_servos()) {
+        handler_.close_port();
+        return fail(servo_error("サーボ設定失敗"));
+    }
+    const bool received = handler_.read_all();
+    // 受動接続ではレジスタを書かない。ラッチ済みの異常は駆動開始時に診断する。
+    const bool deferred = passive && options_.torque &&
+                          handler_.last_result().error == BusError::Hardware && !handler_.faults().empty();
+    if (received ? !positions_valid() : !deferred) {
+        handler_.close_port();
+        return fail("初期状態の確認失敗: " + handler_.last_result().detail);
     }
     next_diagnostic_ = 0;
     connected_ = true;
-    fresh_ = true;
+    fresh_ = received;
     error_.clear();
     return true;
 }
 bool DriverSession::enable_passive() {
     if (!connected_ || active_ || !options_.verified || !options_.torque || options_.configure_devices)
         return fail("駆動開始には確認済みの受動接続が必要です");
-    const bool pid_override = options_.xm540_p >= 0 || options_.xm540_d >= 0 ||
-                              options_.xm430_p >= 0 || options_.xm430_d >= 0;
-    if ((options_.return_delay_time >= 0 && !handler_.configure_return_delay_time(options_.return_delay_time)) ||
-        ((options_.write_pid_on_connect || pid_override) && !handler_.write_position_pid()) ||
-        !handler_.configure(false))
-        return fail("サーボ設定の検証失敗: " + handler_.last_result().detail);
+    if (!read_with_recovery(true, true) || !positions_valid())
+        return fail("駆動開始前の状態確認失敗: " + handler_.last_result().detail);
+    if (!configure_servos())
+        return fail(servo_error("サーボ設定失敗"));
     return activate();
 }
 bool DriverSession::activate() {
@@ -105,8 +119,8 @@ bool DriverSession::activate() {
         return fail("接続されていません");
     if (active_)
         return true;
-    if (!handler_.read_all() || !positions_valid())
-        return fail("起動時の状態確認失敗");
+    if (!read_with_recovery(true, options_.torque) || !positions_valid())
+        return fail("起動時の状態確認失敗: " + handler_.last_result().detail);
     for (auto &d : handler_.dxls)
         d.command.position = options_.clip_to_limits ? std::clamp(d.state.position, d.config.limit_pos_min,
                                                                   d.config.limit_pos_max)
@@ -114,9 +128,9 @@ bool DriverSession::activate() {
     // 現在位置を目標にしてTorque ONする。以後はleader由来の目標を送る。
     // 可動域制限は以後の指令に適用し、起動時に境界へ移動させない。
     if (options_.torque &&
-        (!handler_.set_joints_current() || !handler_.set_goal_to_present() || !handler_.set_torque(true)))
-        return fail("現在位置設定・Torque ON失敗: ID=" + std::to_string(handler_.last_result().id) + " " +
-                    handler_.last_result().detail);
+        (!(options_.apply_startup_configuration ? handler_.apply_startup_current() : handler_.set_joints_current()) ||
+         !handler_.set_goal_to_present() || !handler_.set_torque(true)))
+        return fail(servo_error("現在位置設定・Torque ON失敗"));
     limiter_->reset(handler_.dxls);
     next_diagnostic_ = 0;
     active_ = true;
@@ -143,42 +157,37 @@ void DriverSession::abort() {
     fail("外部エラーにより停止しました");
     close();
 }
+bool DriverSession::read_with_recovery(bool full, bool allow_reset) {
+    if (handler_.read_all(full))
+        return true;
+    if (!allow_reset || handler_.last_result().error != BusError::Hardware ||
+        handler_.faults().empty())
+        return false;
+    std::vector<uint8_t> ids;
+    for (const auto &fault : handler_.faults())
+        ids.push_back(fault.id);
+    fresh_ = false;
+    write_ok = 0;
+    if (!handler_.recover_faults(active_) || !handler_.read_all())
+        return false;
+    hold_present();
+    last_reset_ids_ = std::move(ids);
+    ++reset_count_;
+    reset_pending_ = active_;
+    for (const auto id : last_reset_ids_)
+        std::clog << "サーボ自動復旧: ID=" << static_cast<int>(id) << " (接続中の復旧 "
+                  << reset_count_ << " 回目)" << std::endl;
+    return true;
+}
 bool DriverSession::read() {
     if (!connected_)
         return fail("接続されていません");
     read_start = seconds();
     // Torque OFF診断とリーダーでは、各周期にTorqueの実測が必要。
     const bool full = options_.read_profile == "bam" || !options_.torque || read_start >= next_diagnostic_;
-    bool ok = handler_.read_all(full);
+    const bool ok = read_with_recovery(full, active_ && options_.torque);
     if (full && ok)
         next_diagnostic_ = read_start + 0.25;
-    if (!ok && options_.auto_reset && options_.torque && active_ &&
-        handler_.last_result().error == BusError::Hardware && !handler_.faults().empty()) {
-        std::vector<uint8_t> ids;
-        for (const auto &fault : handler_.faults()) {
-            if (reset_attempted_.count(fault.id))
-                return fail("同じIDの異常が再発しました。自動復旧は接続中1回だけです: ID=" +
-                            std::to_string(fault.id));
-            ids.push_back(fault.id);
-        }
-        reset_attempted_.insert(ids.begin(), ids.end());
-        fresh_ = false;
-        write_ok = 0;
-        if (!handler_.recover_faults())
-            return fail("自動復旧失敗: ID=" + std::to_string(handler_.last_result().id) + " " +
-                        handler_.last_result().detail);
-        ok = handler_.read_all();
-        if (ok) {
-            for (auto &d : handler_.dxls) {
-                d.command.position = d.state.position;
-                d.sent = {};
-            }
-            limiter_->reset(handler_.dxls);
-            last_reset_ids_ = std::move(ids);
-            ++reset_count_;
-            reset_pending_ = true;
-        }
-    }
     read_end = seconds();
     if (!ok) {
         return fail(handler_.last_result().detail);
@@ -193,16 +202,18 @@ bool DriverSession::read() {
     error_.clear();
     return true;
 }
+void DriverSession::hold_present() {
+    for (auto &d : handler_.dxls) {
+        d.command.position = d.state.position;
+        d.sent = {};
+    }
+    limiter_->reset(handler_.dxls);
+}
 bool DriverSession::resume_after_reset() {
     if (!connected_ || !active_ || !fresh_)
         return fail("復旧後の再開には起動中の新しい実測値が必要です");
-    if (reset_pending_) {
-        for (auto &d : handler_.dxls) {
-            d.command.position = d.state.position;
-            d.sent = {};
-        }
-        limiter_->reset(handler_.dxls);
-    }
+    if (reset_pending_)
+        hold_present();
     reset_pending_ = false;
     return true;
 }
@@ -224,8 +235,6 @@ bool DriverSession::write_impl(bool torque_off_diagnostic) {
     write_ok = 0;
     if (!connected_ || !active_)
         return fail("起動されていません");
-    if (reset_pending_)
-        return fail("自動復旧後は現在位置で保持中です。追従再開を明示してください");
     if (torque_off_diagnostic) {
         if (options_.torque || options_.configure_devices)
             return fail("Torque OFF診断には書込み設定なし・torque=falseの接続が必要です");
@@ -238,6 +247,9 @@ bool DriverSession::write_impl(bool torque_off_diagnostic) {
         return true;
     if (!fresh_)
         return fail("有効な状態を読み直してください");
+    // 復旧後の最初の書込みは旧目標を破棄する。保持の送信成功後に追従へ戻る。
+    if (reset_pending_)
+        hold_present();
     for (size_t i = 0; i < handler_.dxls.size(); ++i) {
         const auto &d = handler_.dxls[i];
         if (!std::isfinite(d.command.position) ||
@@ -260,6 +272,7 @@ bool DriverSession::write_impl(bool torque_off_diagnostic) {
     write_end = seconds();
     if (!ok)
         return fail(handler_.last_result().detail);
+    reset_pending_ = false;
     write_ok = 1;
     error_.clear();
     limiter_->commit(handler_.dxls);

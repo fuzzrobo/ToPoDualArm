@@ -53,16 +53,18 @@ class DynamixelHandler {
     virtual BusResult scan(const std::vector<uint8_t> &ids, const std::vector<std::string> &names);
     virtual BusResult set_torque(bool enabled);
     virtual BusResult configure(bool allow_changes);
+    bool apply_startup_configuration(int return_delay_time, bool allow_holding);
     bool configure_return_delay_time(int raw);
     bool write_position_pid();
     virtual bool read_all(bool full = true);
     virtual bool set_joints_current();
+    bool apply_startup_current();
     bool check_torque_off_target_write();
     virtual bool set_joints_position(bool acknowledged = false);
     virtual bool verify_hold();
     bool set_goal_to_present();
     const std::vector<ServoFault> &faults() const { return faults_; }
-    bool recover_faults();
+    bool recover_faults(bool restore_torque = true);
     static int64_t position_goal_pulse(const Joint &joint, double position);
     const BusResult &last_result() const { return last_result_; }
 
@@ -74,6 +76,6 @@ class DynamixelHandler {
     bool fail(BusError code, int id, const std::string &detail);
     bool write_verified(DynamixelAddress address, uint8_t id, int64_t value,
                         const std::string &context, bool check_alert = true);
-    bool configure_joint(Joint &joint, bool allow_changes);
+    bool configure_joint(Joint &joint, bool allow_changes, bool startup = false);
 };
 } // namespace fuzzrobo::topoarm_hardware

@@ -133,8 +133,9 @@ PYBIND11_MODULE(_native, m) {
         .def_readwrite("verified", &SessionOptions::verified)
         .def_readwrite("torque", &SessionOptions::torque)
         .def_readwrite("clip_to_limits", &SessionOptions::clip_to_limits)
+        .def_readonly("apply_startup_configuration", &SessionOptions::apply_startup_configuration)
         .def_readwrite("write_pid_on_connect", &SessionOptions::write_pid_on_connect)
-        .def_readwrite("auto_reset", &SessionOptions::auto_reset)
+        .def_property_readonly("auto_reset", [](const SessionOptions &) { return SessionOptions::auto_reset; })
         .def_readwrite("return_delay_time", &SessionOptions::return_delay_time)
         .def_readwrite("retention", &SessionOptions::retention)
         .def_readwrite("configure_devices", &SessionOptions::configure_devices);

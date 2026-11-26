@@ -46,8 +46,9 @@ CallbackReturn ToPoArmSystemHardware::on_init(const hardware_interface::Hardware
         if (read_only_) {
             if (options.torque || options.configure_devices)
                 throw std::invalid_argument("リーダーの読取り専用モードではTorque・機器設定を変更できません");
-            // 読取り専用モードではReturn Delay Timeのレジスタも変更しない。
-            options.return_delay_time = -1;
+            // リーダーでもYAMLで明示した起動設定は適用する。
+            if (!options.apply_startup_configuration)
+                options.return_delay_time = -1;
         }
         options.verified = verified_;
         if (options.torque && !options.floor_enabled)
@@ -137,7 +138,7 @@ CallbackReturn ToPoArmSystemHardware::on_cleanup(const rclcpp_lifecycle::State &
     return CallbackReturn::SUCCESS;
 }
 CallbackReturn ToPoArmSystemHardware::on_error(const rclcpp_lifecycle::State &) {
-    // ROS側はエラーを受けて接続終了。自動reboot・Torque再投入はしない。
+    // SDKで復旧できなかった異常はROSのエラー処理で接続を終了する。
     session_->abort();
     return CallbackReturn::FAILURE;
 }

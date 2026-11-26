@@ -51,12 +51,9 @@ write_basic_package_version_file(${CMAKE_CURRENT_BINARY_DIR}/topoarm_sdkConfigVe
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/topoarm_sdkConfig.cmake ${CMAKE_CURRENT_BINARY_DIR}/topoarm_sdkConfigVersion.cmake
   cmake/TopoArmSdkDependencies.cmake
   DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/topoarm_sdk)
-if(TOPOARM_TEST_DRIVER)
+if(TOPOARM_TEST_DRIVER AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/../tests/servo_recovery.cpp")
   enable_testing()
-  if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/../dev/sdk/passive.cpp")
-    message(FATAL_ERROR "TOPOARM_TEST_DRIVERにはローカルのdev/sdk/passive.cppが必要です")
-  endif()
-  add_executable(test_passive ../dev/sdk/passive.cpp)
-  target_link_libraries(test_passive PRIVATE topoarm::sdk)
-  add_test(NAME passive_driver COMMAND test_passive)
+  add_executable(test_servo_recovery ../tests/servo_recovery.cpp)
+  target_link_libraries(test_servo_recovery PRIVATE topoarm::sdk)
+  add_test(NAME servo_recovery COMMAND test_servo_recovery)
 endif()
