@@ -8,6 +8,9 @@ ToPoDualArm-Maxは、フィジカルAIの研究開発向けに、左右それぞ
 
 YUBI Gloveと組み合わせて導入する場合は、[ToPoDualArm-Max フィジカルAIキット](https://fuzzrobo-shop.i17.bcart.jp/product.php?id=137)をご覧ください。
 
-- [ROS 2](ros2/README.md)
-- [デモ](demo/README.md)
-- [製品ページ](https://fuzzrobo-shop.i17.bcart.jp/product.php?id=129)
+## サンプル
+
+- [ACT模倣学習デモ](demo/README.md)
+- [ROS2](ros2/README.md)
+
+[製品ページ](https://fuzzrobo-shop.i17.bcart.jp/product.php?id=129)
