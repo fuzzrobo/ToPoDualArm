@@ -1,0 +1,667 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mujoco model="topoarm">
+  <compiler angle="radian" autolimits="true" fusestatic="false" inertiafromgeom="true" inertiagrouprange="3 3" />
+  <option timestep="0.001" integrator="implicitfast" />
+  <default>
+    <joint armature="0.01" damping="0.05" />
+    <geom friction="0.8 0.005 0.0001" condim="3" />
+  </default>
+  <asset>
+    <mesh name="mesh_0" file="../meshes/base_link_00.stl" scale="1 1 1" />
+    <mesh name="mesh_1" file="../meshes/base_link_01.stl" scale="1 1 1" />
+    <mesh name="mesh_2" file="../meshes/base_link_02.stl" scale="1 1 1" />
+    <mesh name="mesh_4" file="../meshes/base_link_04.stl" scale="1 1 1" />
+    <mesh name="mesh_5" file="../meshes/base_link_05.stl" scale="1 1 1" />
+    <mesh name="mesh_6" file="../meshes/base_link_06.stl" scale="1 1 1" />
+    <mesh name="mesh_8" file="../meshes/base_link_08.stl" scale="1 1 1" />
+    <mesh name="mesh_9" file="../meshes/base_link_09.stl" scale="1 1 1" />
+    <mesh name="mesh_10" file="../meshes/base_link_10.stl" scale="1 1 1" />
+    <mesh name="mesh_11" file="../meshes/base_link_11.stl" scale="1 1 1" />
+    <mesh name="mesh_12" file="../meshes/base_link_12.stl" scale="1 1 1" />
+    <mesh name="mesh_13" file="../meshes/base_link_13.stl" scale="1 1 1" />
+    <mesh name="mesh_14" file="../meshes/base_link_14.stl" scale="1 1 1" />
+    <mesh name="mesh_15" file="../meshes/L_shoulder_cover_link_00.stl" scale="1 1 1" />
+    <mesh name="mesh_16" file="../meshes/R_shoulder_cover_link_00.stl" scale="1 1 1" />
+    <mesh name="mesh_34" file="../meshes/L_link1_00.stl" scale="1 1 1" />
+    <mesh name="mesh_35" file="../meshes/L_link1_01.stl" scale="1 1 1" />
+    <mesh name="mesh_36" file="../meshes/L_link1_02.stl" scale="1 1 1" />
+    <mesh name="mesh_37" file="../meshes/L_XM540_cover_link_00.stl" scale="1 1 1" />
+    <mesh name="mesh_38" file="../meshes/L_link2_00.stl" scale="1 1 1" />
+    <mesh name="mesh_39" file="../meshes/L_link2_01.stl" scale="1 1 1" />
+    <mesh name="mesh_40" file="../meshes/L_link2_02.stl" scale="1 1 1" />
+    <mesh name="mesh_41" file="../meshes/L_link2_03.stl" scale="1 1 1" />
+    <mesh name="mesh_42" file="../meshes/L_link2_04.stl" scale="1 1 1" />
+    <mesh name="mesh_43" file="../meshes/L_link2_05.stl" scale="1 1 1" />
+    <mesh name="mesh_44" file="../meshes/L_link3_00.stl" scale="1 1 1" />
+    <mesh name="mesh_45" file="../meshes/L_link3_01.stl" scale="1 1 1" />
+    <mesh name="mesh_46" file="../meshes/L_link3_02.stl" scale="1 1 1" />
+    <mesh name="mesh_47" file="../meshes/L_link3_03.stl" scale="1 1 1" />
+    <mesh name="mesh_48" file="../meshes/L_link4_cover_link_00.stl" scale="1 1 1" />
+    <mesh name="mesh_49" file="../meshes/L_link4_00.stl" scale="1 1 1" />
+    <mesh name="mesh_50" file="../meshes/L_link4_01.stl" scale="1 1 1" />
+    <mesh name="mesh_51" file="../meshes/L_link4_02.stl" scale="1 1 1" />
+    <mesh name="mesh_52" file="../meshes/L_link4_03.stl" scale="1 1 1" />
+    <mesh name="mesh_53" file="../meshes/L_link4_04.stl" scale="1 1 1" />
+    <mesh name="mesh_54" file="../meshes/L_link5_00.stl" scale="1 1 1" />
+    <mesh name="mesh_55" file="../meshes/L_link5_01.stl" scale="1 1 1" />
+    <mesh name="mesh_56" file="../meshes/L_link5_02.stl" scale="1 1 1" />
+    <mesh name="mesh_57" file="../meshes/L_link5_03.stl" scale="1 1 1" />
+    <mesh name="mesh_58" file="../meshes/L_link6_cover_link_00.stl" scale="1 1 1" />
+    <mesh name="mesh_59" file="../meshes/L_link6_00.stl" scale="1 1 1" />
+    <mesh name="mesh_60" file="../meshes/L_link6_01.stl" scale="1 1 1" />
+    <mesh name="mesh_61" file="../meshes/L_link6_02.stl" scale="1 1 1" />
+    <mesh name="mesh_62" file="../meshes/L_link6_03.stl" scale="1 1 1" />
+    <mesh name="mesh_63" file="../meshes/L_link7_00.stl" scale="1 1 1" />
+    <mesh name="mesh_64" file="../meshes/L_link7_01.stl" scale="1 1 1" />
+    <mesh name="mesh_65" file="../meshes/L_gripper_base_00.stl" scale="1 1 1" />
+    <mesh name="mesh_66" file="../meshes/L_gripper_base_01.stl" scale="1 1 1" />
+    <mesh name="mesh_67" file="../meshes/L_gripper_base_02.stl" scale="1 1 1" />
+    <mesh name="mesh_68" file="../meshes/L_finger_left_00.stl" scale="1 1 1" />
+    <mesh name="mesh_69" file="../meshes/L_finger_left_01.stl" scale="1 1 1" />
+    <mesh name="mesh_70" file="../meshes/L_finger_left_02.stl" scale="1 1 1" />
+    <mesh name="mesh_71" file="../meshes/L_finger_right_00.stl" scale="1 1 1" />
+    <mesh name="mesh_72" file="../meshes/L_finger_right_01.stl" scale="1 1 1" />
+    <mesh name="mesh_73" file="../meshes/L_joint7_cover_link_00.stl" scale="1 1 1" />
+    <mesh name="mesh_74" file="../meshes/R_link1_00.stl" scale="1 1 1" />
+    <mesh name="mesh_75" file="../meshes/R_link1_01.stl" scale="1 1 1" />
+    <mesh name="mesh_76" file="../meshes/R_link1_02.stl" scale="1 1 1" />
+    <mesh name="mesh_77" file="../meshes/R_XM540_cover_link_00.stl" scale="1 1 1" />
+    <mesh name="mesh_78" file="../meshes/R_link2_00.stl" scale="1 1 1" />
+    <mesh name="mesh_79" file="../meshes/R_link2_01.stl" scale="1 1 1" />
+    <mesh name="mesh_80" file="../meshes/R_link2_02.stl" scale="1 1 1" />
+    <mesh name="mesh_81" file="../meshes/R_link2_03.stl" scale="1 1 1" />
+    <mesh name="mesh_82" file="../meshes/R_link2_04.stl" scale="1 1 1" />
+    <mesh name="mesh_83" file="../meshes/R_link2_05.stl" scale="1 1 1" />
+    <mesh name="mesh_84" file="../meshes/R_link3_00.stl" scale="1 1 1" />
+    <mesh name="mesh_85" file="../meshes/R_link3_01.stl" scale="1 1 1" />
+    <mesh name="mesh_86" file="../meshes/R_link3_02.stl" scale="1 1 1" />
+    <mesh name="mesh_87" file="../meshes/R_link3_03.stl" scale="1 1 1" />
+    <mesh name="mesh_88" file="../meshes/R_link4_cover_link_00.stl" scale="1 1 1" />
+    <mesh name="mesh_89" file="../meshes/R_link4_00.stl" scale="1 1 1" />
+    <mesh name="mesh_90" file="../meshes/R_link4_01.stl" scale="1 1 1" />
+    <mesh name="mesh_91" file="../meshes/R_link4_02.stl" scale="1 1 1" />
+    <mesh name="mesh_92" file="../meshes/R_link4_03.stl" scale="1 1 1" />
+    <mesh name="mesh_93" file="../meshes/R_link4_04.stl" scale="1 1 1" />
+    <mesh name="mesh_94" file="../meshes/R_link5_00.stl" scale="1 1 1" />
+    <mesh name="mesh_95" file="../meshes/R_link5_01.stl" scale="1 1 1" />
+    <mesh name="mesh_96" file="../meshes/R_link5_02.stl" scale="1 1 1" />
+    <mesh name="mesh_97" file="../meshes/R_link5_03.stl" scale="1 1 1" />
+    <mesh name="mesh_98" file="../meshes/R_link6_cover_link_00.stl" scale="1 1 1" />
+    <mesh name="mesh_99" file="../meshes/R_link6_00.stl" scale="1 1 1" />
+    <mesh name="mesh_100" file="../meshes/R_link6_01.stl" scale="1 1 1" />
+    <mesh name="mesh_101" file="../meshes/R_link6_02.stl" scale="1 1 1" />
+    <mesh name="mesh_102" file="../meshes/R_link6_03.stl" scale="1 1 1" />
+    <mesh name="mesh_103" file="../meshes/R_link7_00.stl" scale="1 1 1" />
+    <mesh name="mesh_104" file="../meshes/R_link7_01.stl" scale="1 1 1" />
+    <mesh name="mesh_105" file="../meshes/R_gripper_base_00.stl" scale="1 1 1" />
+    <mesh name="mesh_106" file="../meshes/R_gripper_base_01.stl" scale="1 1 1" />
+    <mesh name="mesh_107" file="../meshes/R_gripper_base_02.stl" scale="1 1 1" />
+    <mesh name="mesh_108" file="../meshes/R_gripper_usb_cable_lock.stl" scale="1 1 1" />
+    <mesh name="mesh_109" file="../meshes/R_finger_left_00.stl" scale="1 1 1" />
+    <mesh name="mesh_110" file="../meshes/R_finger_left_01.stl" scale="1 1 1" />
+    <mesh name="mesh_111" file="../meshes/R_finger_right_00.stl" scale="1 1 1" />
+    <mesh name="mesh_112" file="../meshes/R_finger_right_01.stl" scale="1 1 1" />
+    <mesh name="mesh_113" file="../meshes/R_finger_right_02.stl" scale="1 1 1" />
+    <mesh name="mesh_114" file="../meshes/R_joint7_cover_link_00.stl" scale="1 1 1" />
+    <mesh name="mesh_115" file="../meshes/main_column_link_00.stl" scale="1 1 1" />
+    <mesh name="mesh_118" file="../meshes/lower_frame_220mm.stl" scale="1 1 1" />
+    <mesh name="mesh_119" file="../meshes/lower_frame_endcap_right.stl" scale="1 1 1" />
+    <mesh name="mesh_120" file="../meshes/lower_frame_endcap_left.stl" scale="1 1 1" />
+    <mesh name="mesh_0_visual" file="visual/base_link_00.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_1_visual" file="visual/base_link_01.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_2_visual" file="visual/base_link_02.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_4_visual" file="visual/base_link_04.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_5_visual" file="visual/base_link_05.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_6_visual" file="visual/base_link_06.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_8_visual" file="visual/base_link_08.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_9_visual" file="visual/base_link_09.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_10_visual" file="visual/base_link_10.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_11_visual" file="visual/base_link_11.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_12_visual" file="visual/base_link_12.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_13_visual" file="visual/base_link_13.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_14_visual" file="visual/base_link_14.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_15_visual" file="visual/L_shoulder_cover_link_00.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_16_visual" file="visual/R_shoulder_cover_link_00.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_34_visual" file="visual/L_link1_00.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_35_visual" file="visual/L_link1_01.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_36_visual" file="visual/L_link1_02.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_37_visual" file="visual/L_XM540_cover_link_00.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_38_visual" file="visual/L_link2_00.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_39_visual" file="visual/L_link2_01.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_40_visual" file="visual/L_link2_02.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_41_visual" file="visual/L_link2_03.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_42_visual" file="visual/L_link2_04.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_43_visual" file="visual/L_link2_05.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_44_visual" file="visual/L_link3_00.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_45_visual" file="visual/L_link3_01.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_46_visual" file="visual/L_link3_02.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_47_visual" file="visual/L_link3_03.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_48_visual" file="visual/L_link4_cover_link_00.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_49_visual" file="visual/L_link4_00.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_50_visual" file="visual/L_link4_01.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_51_visual" file="visual/L_link4_02.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_52_visual" file="visual/L_link4_03.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_53_visual" file="visual/L_link4_04.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_54_visual" file="visual/L_link5_00.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_55_visual" file="visual/L_link5_01.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_56_visual" file="visual/L_link5_02.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_57_visual" file="visual/L_link5_03.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_58_visual" file="visual/L_link6_cover_link_00.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_59_visual" file="visual/L_link6_00.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_60_visual" file="visual/L_link6_01.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_61_visual" file="visual/L_link6_02.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_62_visual" file="visual/L_link6_03.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_63_visual" file="visual/L_link7_00.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_64_visual" file="visual/L_link7_01.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_65_visual" file="visual/L_gripper_base_00.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_66_visual" file="visual/L_gripper_base_01.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_67_visual" file="visual/L_gripper_base_02.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_68_visual" file="visual/L_finger_left_00.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_69_visual" file="visual/L_finger_left_01.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_70_visual" file="visual/L_finger_left_02.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_71_visual" file="visual/L_finger_right_00.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_72_visual" file="visual/L_finger_right_01.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_73_visual" file="visual/L_joint7_cover_link_00.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_74_visual" file="visual/R_link1_00.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_75_visual" file="visual/R_link1_01.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_76_visual" file="visual/R_link1_02.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_77_visual" file="visual/R_XM540_cover_link_00.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_78_visual" file="visual/R_link2_00.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_79_visual" file="visual/R_link2_01.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_80_visual" file="visual/R_link2_02.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_81_visual" file="visual/R_link2_03.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_82_visual" file="visual/R_link2_04.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_83_visual" file="visual/R_link2_05.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_84_visual" file="visual/R_link3_00.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_85_visual" file="visual/R_link3_01.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_86_visual" file="visual/R_link3_02.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_87_visual" file="visual/R_link3_03.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_88_visual" file="visual/R_link4_cover_link_00.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_89_visual" file="visual/R_link4_00.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_90_visual" file="visual/R_link4_01.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_91_visual" file="visual/R_link4_02.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_92_visual" file="visual/R_link4_03.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_93_visual" file="visual/R_link4_04.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_94_visual" file="visual/R_link5_00.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_95_visual" file="visual/R_link5_01.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_96_visual" file="visual/R_link5_02.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_97_visual" file="visual/R_link5_03.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_98_visual" file="visual/R_link6_cover_link_00.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_99_visual" file="visual/R_link6_00.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_100_visual" file="visual/R_link6_01.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_101_visual" file="visual/R_link6_02.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_102_visual" file="visual/R_link6_03.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_103_visual" file="visual/R_link7_00.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_104_visual" file="visual/R_link7_01.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_105_visual" file="visual/R_gripper_base_00.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_106_visual" file="visual/R_gripper_base_01.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_107_visual" file="visual/R_gripper_base_02.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_108_visual" file="visual/R_gripper_usb_cable_lock.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_109_visual" file="visual/R_finger_left_00.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_110_visual" file="visual/R_finger_left_01.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_111_visual" file="visual/R_finger_right_00.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_112_visual" file="visual/R_finger_right_01.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_113_visual" file="visual/R_finger_right_02.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_114_visual" file="visual/R_joint7_cover_link_00.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_115_visual" file="visual/main_column_link_00.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_118_visual" file="visual/lower_frame_220mm.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_119_visual" file="visual/lower_frame_endcap_right.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_120_visual" file="visual/lower_frame_endcap_left.msh" scale="1 1 1" inertia="convex" />
+  </asset>
+  <worldbody>
+    <light pos="1 -1 2" dir="-1 1 -2" diffuse="0.8 0.8 0.8" />
+    <geom name="floor" type="plane" size="2 2 .1" pos="0 0 -0.05" rgba=".25 .25 .25 1" contype="1" conaffinity="1" />
+    <body name="base_footprint">
+      <body name="base_link" pos="0 0 0.02" quat="1 0 0 0">
+        <geom name="base_link_visual_0" type="mesh" mesh="mesh_0_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.000000000 0.000000000 0.351532608 1" pos="0 0 0" quat="1 0 0 0" />
+        <geom name="base_link_visual_1" type="mesh" mesh="mesh_1_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.000000000 0.070360094 0.386429429 1" pos="0 0 0" quat="1 0 0 0" />
+        <geom name="base_link_visual_2" type="mesh" mesh="mesh_2_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.000000000 1.000000000 0.000000000 1" pos="0 0 0" quat="1 0 0 0" />
+        <geom name="base_link_visual_4" type="mesh" mesh="mesh_4_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.021219010 0.021219010 0.021219010 1" pos="0 0 0" quat="1 0 0 0" />
+        <geom name="base_link_visual_5" type="mesh" mesh="mesh_5_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.051269457 0.051269457 0.051269457 1" pos="0 0 0" quat="1 0 0 0" />
+        <geom name="base_link_visual_6" type="mesh" mesh="mesh_6_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.057805430 0.184474990 0.132868320 1" pos="0 0 0" quat="1 0 0 0" />
+        <geom name="base_link_visual_8" type="mesh" mesh="mesh_8_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.127437681 0.127437681 0.127437681 1" pos="0 0 0" quat="1 0 0 0" />
+        <geom name="base_link_visual_9" type="mesh" mesh="mesh_9_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.318546772 0.318546772 0.318546772 1" pos="0 0 0" quat="1 0 0 0" />
+        <geom name="base_link_visual_10" type="mesh" mesh="mesh_10_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.351532608 0.351532608 0.351532608 1" pos="0 0 0" quat="1 0 0 0" />
+        <geom name="base_link_visual_11" type="mesh" mesh="mesh_11_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.577580452 0.270497799 0.002124689 1" pos="0 0 0" quat="1 0 0 0" />
+        <geom name="base_link_visual_12" type="mesh" mesh="mesh_12_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.590618849 0.637596846 0.854992628 1" pos="0 0 0" quat="1 0 0 0" />
+        <geom name="base_link_visual_13" type="mesh" mesh="mesh_13_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.597201765 0.644479692 0.863157213 1" pos="0 0 0" quat="1 0 0 0" />
+        <geom name="base_link_visual_14" type="mesh" mesh="mesh_14_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.913098633 0.913098633 0.921581864 1" pos="0 0 0" quat="1 0 0 0" />
+        <geom name="base_link_collision_0" type="mesh" mesh="mesh_0" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+        <geom name="base_link_collision_1" type="mesh" mesh="mesh_1" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+        <geom name="base_link_collision_2" type="mesh" mesh="mesh_2" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+        <geom name="base_link_collision_4" type="mesh" mesh="mesh_4" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+        <geom name="base_link_collision_5" type="mesh" mesh="mesh_5" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+        <geom name="base_link_collision_6" type="mesh" mesh="mesh_6" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+        <geom name="base_link_collision_8" type="mesh" mesh="mesh_8" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+        <geom name="base_link_collision_9" type="mesh" mesh="mesh_9" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+        <geom name="base_link_collision_10" type="mesh" mesh="mesh_10" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+        <geom name="base_link_collision_11" type="mesh" mesh="mesh_11" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+        <geom name="base_link_collision_12" type="mesh" mesh="mesh_12" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+        <geom name="base_link_collision_13" type="mesh" mesh="mesh_13" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+        <geom name="base_link_collision_14" type="mesh" mesh="mesh_14" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+        <body name="torso_link" pos="0 0 0.1225" quat="1 0 0 0">
+          <body name="L_shoulder_cover_link" pos="0 0.025 0.15" quat="1 0 0 0">
+            <geom name="L_shoulder_cover_link_visual_0" type="mesh" mesh="mesh_15_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.000000000 1.000000000 0.000000000 1" pos="0 0 0" quat="1 0 0 0" />
+            <geom name="L_shoulder_cover_link_collision_0" type="mesh" mesh="mesh_15" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+          </body>
+          <body name="R_shoulder_cover_link" pos="0 -0.025 0.15" quat="1 0 0 0">
+            <geom name="R_shoulder_cover_link_visual_0" type="mesh" mesh="mesh_16_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.000000000 1.000000000 0.000000000 1" pos="0 0 0" quat="1 0 0 0" />
+            <geom name="R_shoulder_cover_link_collision_0" type="mesh" mesh="mesh_16" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+          </body>
+          <body name="L_shoulder_mount" pos="0 0.0715 0.15" quat="1 0 0 0">
+            <body name="L_link1" pos="0 0 0" quat="1 0 0 0">
+              <joint name="L_joint1" type="hinge" axis="0 1 0" range="-1.9198621771937625 1.0471975511965976" />
+              <geom name="L_link1_visual_0" type="mesh" mesh="mesh_34_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.102241732 0.102241732 0.102241732 1" pos="0 0 0" quat="1 0 0 0" />
+              <geom name="L_link1_visual_1" type="mesh" mesh="mesh_35_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.127437681 0.127437681 0.127437681 1" pos="0 0 0" quat="1 0 0 0" />
+              <geom name="L_link1_visual_2" type="mesh" mesh="mesh_36_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.913098633 0.913098633 0.921581864 1" pos="0 0 0" quat="1 0 0 0" />
+              <geom name="L_link1_collision_0" type="mesh" mesh="mesh_34" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+              <geom name="L_link1_collision_1" type="mesh" mesh="mesh_35" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+              <geom name="L_link1_collision_2" type="mesh" mesh="mesh_36" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+              <body name="L_XM540_cover_link" pos="0 0.06725 0" quat="1 0 0 0">
+                <geom name="L_XM540_cover_link_visual_0" type="mesh" mesh="mesh_37_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.000000000 1.000000000 0.000000000 1" pos="0 0 0" quat="1 0 0 0" />
+                <geom name="L_XM540_cover_link_collision_0" type="mesh" mesh="mesh_37" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+              </body>
+              <body name="L_link2" pos="0 0.06725 0" quat="0.70710678118654624 0.70710678118654879 0 0">
+                <joint name="L_joint2" type="hinge" axis="1 0 0" range="-1.7453292519943295 1.7453292519943295" />
+                <geom name="L_link2_visual_0" type="mesh" mesh="mesh_38_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.000000000 1.000000000 0.000000000 1" pos="0 0 0" quat="1 0 0 0" />
+                <geom name="L_link2_visual_1" type="mesh" mesh="mesh_39_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.080219820 0.080219820 0.080219820 1" pos="0 0 0" quat="1 0 0 0" />
+                <geom name="L_link2_visual_2" type="mesh" mesh="mesh_40_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.127437681 0.127437681 0.127437681 1" pos="0 0 0" quat="1 0 0 0" />
+                <geom name="L_link2_visual_3" type="mesh" mesh="mesh_41_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.351532608 0.351532608 0.351532608 1" pos="0 0 0" quat="1 0 0 0" />
+                <geom name="L_link2_visual_4" type="mesh" mesh="mesh_42_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.434153646 0.434153646 0.434153646 1" pos="0 0 0" quat="1 0 0 0" />
+                <geom name="L_link2_visual_5" type="mesh" mesh="mesh_43_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.913098633 0.913098633 0.921581864 1" pos="0 0 0" quat="1 0 0 0" />
+                <geom name="L_link2_collision_0" type="mesh" mesh="mesh_38" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                <geom name="L_link2_collision_1" type="mesh" mesh="mesh_39" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                <geom name="L_link2_collision_2" type="mesh" mesh="mesh_40" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                <geom name="L_link2_collision_3" type="mesh" mesh="mesh_41" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                <geom name="L_link2_collision_4" type="mesh" mesh="mesh_42" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                <geom name="L_link2_collision_5" type="mesh" mesh="mesh_43" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                <body name="L_link3" pos="0.0155 0 -0.0825" quat="1 0 0 0">
+                  <joint name="L_joint3" type="hinge" axis="0 0 -1" range="-1.4835298641951802 1.4835298641951802" />
+                  <geom name="L_link3_visual_0" type="mesh" mesh="mesh_44_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.000000000 1.000000000 0.000000000 1" pos="0 0 0" quat="1 0 0 0" />
+                  <geom name="L_link3_visual_1" type="mesh" mesh="mesh_45_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.080219820 0.080219820 0.080219820 1" pos="0 0 0" quat="1 0 0 0" />
+                  <geom name="L_link3_visual_2" type="mesh" mesh="mesh_46_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.127437681 0.127437681 0.127437681 1" pos="0 0 0" quat="1 0 0 0" />
+                  <geom name="L_link3_visual_3" type="mesh" mesh="mesh_47_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.913098633 0.913098633 0.921581864 1" pos="0 0 0" quat="1 0 0 0" />
+                  <geom name="L_link3_collision_0" type="mesh" mesh="mesh_44" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                  <geom name="L_link3_collision_1" type="mesh" mesh="mesh_45" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                  <geom name="L_link3_collision_2" type="mesh" mesh="mesh_46" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                  <geom name="L_link3_collision_3" type="mesh" mesh="mesh_47" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                  <body name="L_link4_cover_link" pos="-0.00135 0 -0.068" quat="1 0 0 0">
+                    <geom name="L_link4_cover_link_visual_0" type="mesh" mesh="mesh_48_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.000000000 1.000000000 0.000000000 1" pos="0 0 0" quat="1 0 0 0" />
+                    <geom name="L_link4_cover_link_collision_0" type="mesh" mesh="mesh_48" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                  </body>
+                  <body name="L_link4" pos="-0.00135 0 -0.068" quat="1 0 0 0">
+                    <joint name="L_joint4" type="hinge" axis="0 1 0" range="-1.7453292519943295 0.8726646259971648" />
+                    <geom name="L_link4_visual_0" type="mesh" mesh="mesh_49_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.000000000 1.000000000 0.000000000 1" pos="0 0 0" quat="1 0 0 0" />
+                    <geom name="L_link4_visual_1" type="mesh" mesh="mesh_50_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.020288562 0.020288562 0.020288562 1" pos="0 0 0" quat="1 0 0 0" />
+                    <geom name="L_link4_visual_2" type="mesh" mesh="mesh_51_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.080219820 0.080219820 0.080219820 1" pos="0 0 0" quat="1 0 0 0" />
+                    <geom name="L_link4_visual_3" type="mesh" mesh="mesh_52_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.127437681 0.127437681 0.127437681 1" pos="0 0 0" quat="1 0 0 0" />
+                    <geom name="L_link4_visual_4" type="mesh" mesh="mesh_53_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.913098633 0.913098633 0.921581864 1" pos="0 0 0" quat="1 0 0 0" />
+                    <geom name="L_link4_collision_0" type="mesh" mesh="mesh_49" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                    <geom name="L_link4_collision_1" type="mesh" mesh="mesh_50" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                    <geom name="L_link4_collision_2" type="mesh" mesh="mesh_51" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                    <geom name="L_link4_collision_3" type="mesh" mesh="mesh_52" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                    <geom name="L_link4_collision_4" type="mesh" mesh="mesh_53" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                    <body name="L_link5" pos="0 0 -0.064" quat="1 0 0 0">
+                      <joint name="L_joint5" type="hinge" axis="0 0 -1" range="-1.4835298641951802 1.4835298641951802" />
+                      <geom name="L_link5_visual_0" type="mesh" mesh="mesh_54_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.000000000 1.000000000 0.000000000 1" pos="0 0 0" quat="1 0 0 0" />
+                      <geom name="L_link5_visual_1" type="mesh" mesh="mesh_55_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.080219820 0.080219820 0.080219820 1" pos="0 0 0" quat="1 0 0 0" />
+                      <geom name="L_link5_visual_2" type="mesh" mesh="mesh_56_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.127437681 0.127437681 0.127437681 1" pos="0 0 0" quat="1 0 0 0" />
+                      <geom name="L_link5_visual_3" type="mesh" mesh="mesh_57_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.913098633 0.913098633 0.921581864 1" pos="0 0 0" quat="1 0 0 0" />
+                      <geom name="L_link5_collision_0" type="mesh" mesh="mesh_54" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                      <geom name="L_link5_collision_1" type="mesh" mesh="mesh_55" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                      <geom name="L_link5_collision_2" type="mesh" mesh="mesh_56" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                      <geom name="L_link5_collision_3" type="mesh" mesh="mesh_57" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                      <body name="L_link6_cover_link" pos="0 0 -0.0645" quat="1 0 0 0">
+                        <geom name="L_link6_cover_link_visual_0" type="mesh" mesh="mesh_58_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.000000000 1.000000000 0.000000000 1" pos="0 0 0" quat="1 0 0 0" />
+                        <geom name="L_link6_cover_link_collision_0" type="mesh" mesh="mesh_58" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                      </body>
+                      <body name="L_link6" pos="0 0 -0.0645" quat="1 0 0 0">
+                        <joint name="L_joint6" type="hinge" axis="0 1 0" range="-1.7453292519943295 1.7453292519943295" />
+                        <geom name="L_link6_visual_0" type="mesh" mesh="mesh_59_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.000000000 1.000000000 0.000000000 1" pos="0 0 0" quat="1 0 0 0" />
+                        <geom name="L_link6_visual_1" type="mesh" mesh="mesh_60_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.080219820 0.080219820 0.080219820 1" pos="0 0 0" quat="1 0 0 0" />
+                        <geom name="L_link6_visual_2" type="mesh" mesh="mesh_61_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.127437681 0.127437681 0.127437681 1" pos="0 0 0" quat="1 0 0 0" />
+                        <geom name="L_link6_visual_3" type="mesh" mesh="mesh_62_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.913098633 0.913098633 0.921581864 1" pos="0 0 0" quat="1 0 0 0" />
+                        <geom name="L_link6_collision_0" type="mesh" mesh="mesh_59" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                        <geom name="L_link6_collision_1" type="mesh" mesh="mesh_60" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                        <geom name="L_link6_collision_2" type="mesh" mesh="mesh_61" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                        <geom name="L_link6_collision_3" type="mesh" mesh="mesh_62" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                        <body name="L_link7" pos="-0.000195616396 0.001335752307 -0.06325" quat="1 0 0 0">
+                          <joint name="L_joint7" type="hinge" axis="1 0 0" range="-1.7453292519943295 1.7453292519943295" />
+                          <geom name="L_link7_visual_0" type="mesh" mesh="mesh_63_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.000000000 1.000000000 0.000000000 1" pos="0 0 0" quat="1 0 0 0" />
+                          <geom name="L_link7_visual_1" type="mesh" mesh="mesh_64_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.127437681 0.127437681 0.127437681 1" pos="0 0 0" quat="1 0 0 0" />
+                          <geom name="L_link7_collision_0" type="mesh" mesh="mesh_63" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                          <geom name="L_link7_collision_1" type="mesh" mesh="mesh_64" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                          <body name="L_gripper_base" pos="0 0 -0.028" quat="1 0 0 0">
+                            <geom name="L_gripper_base_visual_0" type="mesh" mesh="mesh_65_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.080219820 0.080219820 0.080219820 1" pos="0 0 0" quat="1 0 0 0" />
+                            <geom name="L_gripper_base_visual_1" type="mesh" mesh="mesh_66_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.351532608 0.351532608 0.351532608 1" pos="0 0 0" quat="1 0 0 0" />
+                            <geom name="L_gripper_base_visual_2" type="mesh" mesh="mesh_67_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.913098633 0.913098633 0.921581864 1" pos="0 0 0" quat="1 0 0 0" />
+                            <geom name="L_gripper_base_collision_0" type="mesh" mesh="mesh_65" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                            <geom name="L_gripper_base_collision_1" type="mesh" mesh="mesh_66" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                            <geom name="L_gripper_base_collision_2" type="mesh" mesh="mesh_67" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                            <body name="L_finger_left" pos="0 0.015 -0.01815" quat="0.99989497655424031 -0.014492614035953861 0 0">
+                              <joint name="L_gripper_joint" type="hinge" axis="-1 0 0" range="-1.2217304763960306 0.08726646259971647" />
+                              <geom name="L_finger_left_visual_0" type="mesh" mesh="mesh_68_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.080219820 0.080219820 0.080219820 1" pos="0 0 0" quat="1 0 0 0" />
+                              <geom name="L_finger_left_visual_1" type="mesh" mesh="mesh_69_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.351532608 0.351532608 0.351532608 1" pos="0 0 0" quat="1 0 0 0" />
+                              <geom name="L_finger_left_visual_2" type="mesh" mesh="mesh_70_visual" group="2" density="0" contype="0" conaffinity="0" rgba="1.000000000 0.333333333 0.266666667 1" pos="0 0 0" quat="1 0 0 0" />
+                              <geom name="L_finger_left_collision_0" type="mesh" mesh="mesh_68" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                              <geom name="L_finger_left_collision_1" type="mesh" mesh="mesh_69" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                              <geom name="L_finger_left_collision_2" type="mesh" mesh="mesh_70" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                            </body>
+                            <body name="L_finger_right" pos="0 -0.015 -0.01815" quat="0.99989497655424031 0.014492614035953861 0 0">
+                              <joint name="L_gripper_mimic" type="hinge" axis="-1 0 0" range="-0.08726646259971647 1.2217304763960306" />
+                              <geom name="L_finger_right_visual_0" type="mesh" mesh="mesh_71_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.080219820 0.080219820 0.080219820 1" pos="0 0 0" quat="1 0 0 0" />
+                              <geom name="L_finger_right_visual_1" type="mesh" mesh="mesh_72_visual" group="2" density="0" contype="0" conaffinity="0" rgba="1.000000000 0.333333333 0.266666667 1" pos="0 0 0" quat="1 0 0 0" />
+                              <geom name="L_finger_right_collision_0" type="mesh" mesh="mesh_71" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                              <geom name="L_finger_right_collision_1" type="mesh" mesh="mesh_72" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                            </body>
+                            <body name="L_tcp" pos="0.0173 0 -0.0814" quat="1 0 0 0" />
+                          </body>
+                        </body>
+                        <body name="L_joint7_cover_link" pos="-0.000195616396 0.001335752307 -0.06325" quat="0.70710678118827874 0 0 -0.70710678118481629">
+                          <geom name="L_joint7_cover_link_visual_0" type="mesh" mesh="mesh_73_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.000000000 1.000000000 0.000000000 1" pos="0 0 0" quat="1 0 0 0" />
+                          <geom name="L_joint7_cover_link_collision_0" type="mesh" mesh="mesh_73" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                        </body>
+                      </body>
+                    </body>
+                  </body>
+                </body>
+              </body>
+            </body>
+          </body>
+          <body name="R_shoulder_mount" pos="0 -0.0715 0.15" quat="1 0 0 0">
+            <body name="R_link1" pos="0 0 0" quat="1 0 0 0">
+              <joint name="R_joint1" type="hinge" axis="0 -1 0" range="-1.0471975511965976 1.9198621771937625" />
+              <geom name="R_link1_visual_0" type="mesh" mesh="mesh_74_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.102241732 0.102241732 0.102241732 1" pos="0 0 0" quat="1 0 0 0" />
+              <geom name="R_link1_visual_1" type="mesh" mesh="mesh_75_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.127437681 0.127437681 0.127437681 1" pos="0 0 0" quat="1 0 0 0" />
+              <geom name="R_link1_visual_2" type="mesh" mesh="mesh_76_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.913098633 0.913098633 0.921581864 1" pos="0 0 0" quat="1 0 0 0" />
+              <geom name="R_link1_collision_0" type="mesh" mesh="mesh_74" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+              <geom name="R_link1_collision_1" type="mesh" mesh="mesh_75" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+              <geom name="R_link1_collision_2" type="mesh" mesh="mesh_76" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+              <body name="R_XM540_cover_link" pos="0 -0.06725 0" quat="1 0 0 0">
+                <geom name="R_XM540_cover_link_visual_0" type="mesh" mesh="mesh_77_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.000000000 1.000000000 0.000000000 1" pos="0 0 0" quat="1 0 0 0" />
+                <geom name="R_XM540_cover_link_collision_0" type="mesh" mesh="mesh_77" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+              </body>
+              <body name="R_link2" pos="0 -0.06725 0" quat="0.70710678118654624 -0.70710678118654879 0 0">
+                <joint name="R_joint2" type="hinge" axis="1 0 0" range="-1.7453292519943295 1.7453292519943295" />
+                <geom name="R_link2_visual_0" type="mesh" mesh="mesh_78_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.000000000 1.000000000 0.000000000 1" pos="0 0 0" quat="1 0 0 0" />
+                <geom name="R_link2_visual_1" type="mesh" mesh="mesh_79_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.080219820 0.080219820 0.080219820 1" pos="0 0 0" quat="1 0 0 0" />
+                <geom name="R_link2_visual_2" type="mesh" mesh="mesh_80_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.127437681 0.127437681 0.127437681 1" pos="0 0 0" quat="1 0 0 0" />
+                <geom name="R_link2_visual_3" type="mesh" mesh="mesh_81_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.351532608 0.351532608 0.351532608 1" pos="0 0 0" quat="1 0 0 0" />
+                <geom name="R_link2_visual_4" type="mesh" mesh="mesh_82_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.434153646 0.434153646 0.434153646 1" pos="0 0 0" quat="1 0 0 0" />
+                <geom name="R_link2_visual_5" type="mesh" mesh="mesh_83_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.913098633 0.913098633 0.921581864 1" pos="0 0 0" quat="1 0 0 0" />
+                <geom name="R_link2_collision_0" type="mesh" mesh="mesh_78" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                <geom name="R_link2_collision_1" type="mesh" mesh="mesh_79" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                <geom name="R_link2_collision_2" type="mesh" mesh="mesh_80" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                <geom name="R_link2_collision_3" type="mesh" mesh="mesh_81" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                <geom name="R_link2_collision_4" type="mesh" mesh="mesh_82" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                <geom name="R_link2_collision_5" type="mesh" mesh="mesh_83" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                <body name="R_link3" pos="0.0155 0 -0.0825" quat="1 0 0 0">
+                  <joint name="R_joint3" type="hinge" axis="0 0 -1" range="-1.4835298641951802 1.4835298641951802" />
+                  <geom name="R_link3_visual_0" type="mesh" mesh="mesh_84_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.000000000 1.000000000 0.000000000 1" pos="0 0 0" quat="1 0 0 0" />
+                  <geom name="R_link3_visual_1" type="mesh" mesh="mesh_85_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.080219820 0.080219820 0.080219820 1" pos="0 0 0" quat="1 0 0 0" />
+                  <geom name="R_link3_visual_2" type="mesh" mesh="mesh_86_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.127437681 0.127437681 0.127437681 1" pos="0 0 0" quat="1 0 0 0" />
+                  <geom name="R_link3_visual_3" type="mesh" mesh="mesh_87_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.913098633 0.913098633 0.921581864 1" pos="0 0 0" quat="1 0 0 0" />
+                  <geom name="R_link3_collision_0" type="mesh" mesh="mesh_84" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                  <geom name="R_link3_collision_1" type="mesh" mesh="mesh_85" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                  <geom name="R_link3_collision_2" type="mesh" mesh="mesh_86" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                  <geom name="R_link3_collision_3" type="mesh" mesh="mesh_87" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                  <body name="R_link4_cover_link" pos="0 0 -0.068" quat="1 0 0 0">
+                    <geom name="R_link4_cover_link_visual_0" type="mesh" mesh="mesh_88_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.000000000 1.000000000 0.000000000 1" pos="0 0 0" quat="1 0 0 0" />
+                    <geom name="R_link4_cover_link_collision_0" type="mesh" mesh="mesh_88" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                  </body>
+                  <body name="R_link4" pos="0 0 -0.068" quat="1 0 0 0">
+                    <joint name="R_joint4" type="hinge" axis="0 -1 0" range="-0.8726646259971648 1.7453292519943295" />
+                    <geom name="R_link4_visual_0" type="mesh" mesh="mesh_89_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.000000000 1.000000000 0.000000000 1" pos="0 0 0" quat="1 0 0 0" />
+                    <geom name="R_link4_visual_1" type="mesh" mesh="mesh_90_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.020288562 0.020288562 0.020288562 1" pos="0 0 0" quat="1 0 0 0" />
+                    <geom name="R_link4_visual_2" type="mesh" mesh="mesh_91_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.080219820 0.080219820 0.080219820 1" pos="0 0 0" quat="1 0 0 0" />
+                    <geom name="R_link4_visual_3" type="mesh" mesh="mesh_92_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.127437681 0.127437681 0.127437681 1" pos="0 0 0" quat="1 0 0 0" />
+                    <geom name="R_link4_visual_4" type="mesh" mesh="mesh_93_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.913098633 0.913098633 0.921581864 1" pos="0 0 0" quat="1 0 0 0" />
+                    <geom name="R_link4_collision_0" type="mesh" mesh="mesh_89" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                    <geom name="R_link4_collision_1" type="mesh" mesh="mesh_90" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                    <geom name="R_link4_collision_2" type="mesh" mesh="mesh_91" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                    <geom name="R_link4_collision_3" type="mesh" mesh="mesh_92" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                    <geom name="R_link4_collision_4" type="mesh" mesh="mesh_93" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                    <body name="R_link5" pos="0 0 -0.064" quat="1 0 0 0">
+                      <joint name="R_joint5" type="hinge" axis="0 0 -1" range="-1.4835298641951802 1.4835298641951802" />
+                      <geom name="R_link5_visual_0" type="mesh" mesh="mesh_94_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.000000000 1.000000000 0.000000000 1" pos="0 0 0" quat="1 0 0 0" />
+                      <geom name="R_link5_visual_1" type="mesh" mesh="mesh_95_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.080219820 0.080219820 0.080219820 1" pos="0 0 0" quat="1 0 0 0" />
+                      <geom name="R_link5_visual_2" type="mesh" mesh="mesh_96_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.127437681 0.127437681 0.127437681 1" pos="0 0 0" quat="1 0 0 0" />
+                      <geom name="R_link5_visual_3" type="mesh" mesh="mesh_97_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.913098633 0.913098633 0.921581864 1" pos="0 0 0" quat="1 0 0 0" />
+                      <geom name="R_link5_collision_0" type="mesh" mesh="mesh_94" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                      <geom name="R_link5_collision_1" type="mesh" mesh="mesh_95" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                      <geom name="R_link5_collision_2" type="mesh" mesh="mesh_96" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                      <geom name="R_link5_collision_3" type="mesh" mesh="mesh_97" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                      <body name="R_link6_cover_link" pos="0 0 -0.0645" quat="1 0 0 0">
+                        <geom name="R_link6_cover_link_visual_0" type="mesh" mesh="mesh_98_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.000000000 1.000000000 0.000000000 1" pos="0 0 0" quat="1 0 0 0" />
+                        <geom name="R_link6_cover_link_collision_0" type="mesh" mesh="mesh_98" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                      </body>
+                      <body name="R_link6" pos="0 0 -0.0645" quat="1 0 0 0">
+                        <joint name="R_joint6" type="hinge" axis="0 -1 0" range="-1.7453292519943295 1.7453292519943295" />
+                        <geom name="R_link6_visual_0" type="mesh" mesh="mesh_99_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.000000000 1.000000000 0.000000000 1" pos="0 0 0" quat="1 0 0 0" />
+                        <geom name="R_link6_visual_1" type="mesh" mesh="mesh_100_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.080219820 0.080219820 0.080219820 1" pos="0 0 0" quat="1 0 0 0" />
+                        <geom name="R_link6_visual_2" type="mesh" mesh="mesh_101_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.127437681 0.127437681 0.127437681 1" pos="0 0 0" quat="1 0 0 0" />
+                        <geom name="R_link6_visual_3" type="mesh" mesh="mesh_102_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.913098633 0.913098633 0.921581864 1" pos="0 0 0" quat="1 0 0 0" />
+                        <geom name="R_link6_collision_0" type="mesh" mesh="mesh_99" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                        <geom name="R_link6_collision_1" type="mesh" mesh="mesh_100" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                        <geom name="R_link6_collision_2" type="mesh" mesh="mesh_101" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                        <geom name="R_link6_collision_3" type="mesh" mesh="mesh_102" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                        <body name="R_link7" pos="0 0 -0.06325" quat="1 0 0 0">
+                          <joint name="R_joint7" type="hinge" axis="1 0 0" range="-1.7453292519943295 1.7453292519943295" />
+                          <geom name="R_link7_visual_0" type="mesh" mesh="mesh_103_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.000000000 1.000000000 0.000000000 1" pos="0 0 0" quat="1 0 0 0" />
+                          <geom name="R_link7_visual_1" type="mesh" mesh="mesh_104_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.127437681 0.127437681 0.127437681 1" pos="0 0 0" quat="1 0 0 0" />
+                          <geom name="R_link7_collision_0" type="mesh" mesh="mesh_103" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                          <geom name="R_link7_collision_1" type="mesh" mesh="mesh_104" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                          <body name="R_gripper_base" pos="0 0 -0.028" quat="1 0 0 0">
+                            <geom name="R_gripper_base_visual_0" type="mesh" mesh="mesh_105_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.080219820 0.080219820 0.080219820 1" pos="0 0 0" quat="1 0 0 0" />
+                            <geom name="R_gripper_base_visual_1" type="mesh" mesh="mesh_106_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.351532608 0.351532608 0.351532608 1" pos="0 0 0" quat="1 0 0 0" />
+                            <geom name="R_gripper_base_visual_2" type="mesh" mesh="mesh_107_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.913098633 0.913098633 0.921581864 1" pos="0 0 0" quat="1 0 0 0" />
+                            <geom name="R_gripper_base_visual_3" type="mesh" mesh="mesh_108_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.04 0.04 0.04 1" pos="0 0 0" quat="1 0 0 0" />
+                            <geom name="R_gripper_base_collision_0" type="mesh" mesh="mesh_105" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                            <geom name="R_gripper_base_collision_1" type="mesh" mesh="mesh_106" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                            <geom name="R_gripper_base_collision_2" type="mesh" mesh="mesh_107" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                            <geom name="R_gripper_base_collision_3" type="mesh" mesh="mesh_108" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                            <body name="R_finger_left" pos="0 0.015 -0.01825" quat="1 0 0 0">
+                              <joint name="R_gripper_joint" type="hinge" axis="1 0 0" range="-0.10471975511965978 1.2915436464758039" />
+                              <geom name="R_finger_left_visual_0" type="mesh" mesh="mesh_109_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.080219820 0.080219820 0.080219820 1" pos="0 0 0" quat="1 0 0 0" />
+                              <geom name="R_finger_left_visual_1" type="mesh" mesh="mesh_110_visual" group="2" density="0" contype="0" conaffinity="0" rgba="1.000000000 0.333333333 0.266666667 1" pos="0 0 0" quat="1 0 0 0" />
+                              <geom name="R_finger_left_collision_0" type="mesh" mesh="mesh_109" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                              <geom name="R_finger_left_collision_1" type="mesh" mesh="mesh_110" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                            </body>
+                            <body name="R_finger_right" pos="0 -0.015 -0.01825" quat="1 0 0 0">
+                              <joint name="R_gripper_mimic" type="hinge" axis="1 0 0" range="-1.2915436464758039 0.10471975511965978" />
+                              <geom name="R_finger_right_visual_0" type="mesh" mesh="mesh_111_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.080219820 0.080219820 0.080219820 1" pos="0 0 0" quat="1 0 0 0" />
+                              <geom name="R_finger_right_visual_1" type="mesh" mesh="mesh_112_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.351532608 0.351532608 0.351532608 1" pos="0 0 0" quat="1 0 0 0" />
+                              <geom name="R_finger_right_visual_2" type="mesh" mesh="mesh_113_visual" group="2" density="0" contype="0" conaffinity="0" rgba="1.000000000 0.333333333 0.266666667 1" pos="0 0 0" quat="1 0 0 0" />
+                              <geom name="R_finger_right_collision_0" type="mesh" mesh="mesh_111" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                              <geom name="R_finger_right_collision_1" type="mesh" mesh="mesh_112" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                              <geom name="R_finger_right_collision_2" type="mesh" mesh="mesh_113" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                            </body>
+                            <body name="R_tcp" pos="0.0173 0 -0.0815" quat="1 0 0 0" />
+                          </body>
+                        </body>
+                        <body name="R_joint7_cover_link" pos="0 0 -0.06325" quat="0.70710678118827874 0 0 -0.70710678118481629">
+                          <geom name="R_joint7_cover_link_visual_0" type="mesh" mesh="mesh_114_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.000000000 1.000000000 0.000000000 1" pos="0 0 0" quat="1 0 0 0" />
+                          <geom name="R_joint7_cover_link_collision_0" type="mesh" mesh="mesh_114" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+                        </body>
+                      </body>
+                    </body>
+                  </body>
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+        <body name="main_column_link" pos="0 0 0" quat="1 0 0 0">
+          <geom name="main_column_link_visual_0" type="mesh" mesh="mesh_115_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.021219010 0.021219010 0.021219010 1" pos="0 0 0" quat="1 0 0 0" />
+          <geom name="main_column_link_collision_0" type="mesh" mesh="mesh_115" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+        </body>
+        <body name="lower_frame_link" pos="0 0 0" quat="1 0 0 0">
+          <geom name="lower_frame_link_visual_0" type="mesh" mesh="mesh_118_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.021219010 0.021219010 0.021219010 1" pos="0 0 0" quat="1 0 0 0" />
+          <geom name="lower_frame_link_visual_1" type="mesh" mesh="mesh_119_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.04 0.04 0.04 1" pos="0 0 0" quat="1 0 0 0" />
+          <geom name="lower_frame_link_visual_2" type="mesh" mesh="mesh_120_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.04 0.04 0.04 1" pos="0 0 0" quat="1 0 0 0" />
+          <geom name="lower_frame_link_collision_0" type="mesh" mesh="mesh_118" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+          <geom name="lower_frame_link_collision_1" type="mesh" mesh="mesh_119" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+          <geom name="lower_frame_link_collision_2" type="mesh" mesh="mesh_120" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+        </body>
+      </body>
+    </body>
+  </worldbody>
+  <equality>
+    <joint joint1="L_gripper_mimic" joint2="L_gripper_joint" polycoef="0 -1 0 0 0" />
+    <joint joint1="R_gripper_mimic" joint2="R_gripper_joint" polycoef="0 -1 0 0 0" />
+  </equality>
+  <actuator>
+    <position name="L_joint1" joint="L_joint1" kp="10" ctrlrange="-1.9198621771937625 1.0471975511965976" />
+    <position name="L_joint2" joint="L_joint2" kp="10" ctrlrange="-1.7453292519943295 1.7453292519943295" />
+    <position name="L_joint3" joint="L_joint3" kp="10" ctrlrange="-1.4835298641951802 1.4835298641951802" />
+    <position name="L_joint4" joint="L_joint4" kp="10" ctrlrange="-1.7453292519943295 0.8726646259971648" />
+    <position name="L_joint5" joint="L_joint5" kp="10" ctrlrange="-1.4835298641951802 1.4835298641951802" />
+    <position name="L_joint6" joint="L_joint6" kp="10" ctrlrange="-1.7453292519943295 1.7453292519943295" />
+    <position name="L_joint7" joint="L_joint7" kp="10" ctrlrange="-1.7453292519943295 1.7453292519943295" />
+    <position name="L_gripper_joint" joint="L_gripper_joint" kp="10" ctrlrange="-1.2217304763960306 0.08726646259971647" />
+    <position name="R_joint1" joint="R_joint1" kp="10" ctrlrange="-1.0471975511965976 1.9198621771937625" />
+    <position name="R_joint2" joint="R_joint2" kp="10" ctrlrange="-1.7453292519943295 1.7453292519943295" />
+    <position name="R_joint3" joint="R_joint3" kp="10" ctrlrange="-1.4835298641951802 1.4835298641951802" />
+    <position name="R_joint4" joint="R_joint4" kp="10" ctrlrange="-0.8726646259971648 1.7453292519943295" />
+    <position name="R_joint5" joint="R_joint5" kp="10" ctrlrange="-1.4835298641951802 1.4835298641951802" />
+    <position name="R_joint6" joint="R_joint6" kp="10" ctrlrange="-1.7453292519943295 1.7453292519943295" />
+    <position name="R_joint7" joint="R_joint7" kp="10" ctrlrange="-1.7453292519943295 1.7453292519943295" />
+    <position name="R_gripper_joint" joint="R_gripper_joint" kp="10" ctrlrange="-0.10471975511965978 1.2915436464758039" />
+  </actuator>
+  <contact>
+    <exclude body1="L_XM540_cover_link" body2="L_link1" />
+    <exclude body1="L_XM540_cover_link" body2="L_link2" />
+    <exclude body1="L_XM540_cover_link" body2="L_shoulder_cover_link" />
+    <exclude body1="L_XM540_cover_link" body2="L_shoulder_mount" />
+    <exclude body1="L_XM540_cover_link" body2="R_shoulder_cover_link" />
+    <exclude body1="L_XM540_cover_link" body2="R_shoulder_mount" />
+    <exclude body1="L_XM540_cover_link" body2="base_footprint" />
+    <exclude body1="L_XM540_cover_link" body2="base_link" />
+    <exclude body1="L_XM540_cover_link" body2="lower_frame_link" />
+    <exclude body1="L_XM540_cover_link" body2="main_column_link" />
+    <exclude body1="L_XM540_cover_link" body2="torso_link" />
+    <exclude body1="L_finger_left" body2="L_gripper_base" />
+    <exclude body1="L_finger_left" body2="L_link7" />
+    <exclude body1="L_finger_left" body2="L_tcp" />
+    <exclude body1="L_finger_right" body2="L_gripper_base" />
+    <exclude body1="L_finger_right" body2="L_link7" />
+    <exclude body1="L_finger_right" body2="L_tcp" />
+    <exclude body1="L_gripper_base" body2="L_joint7_cover_link" />
+    <exclude body1="L_gripper_base" body2="L_link6" />
+    <exclude body1="L_gripper_base" body2="L_link7" />
+    <exclude body1="L_gripper_base" body2="L_tcp" />
+    <exclude body1="L_joint7_cover_link" body2="L_link5" />
+    <exclude body1="L_joint7_cover_link" body2="L_link6" />
+    <exclude body1="L_joint7_cover_link" body2="L_link6_cover_link" />
+    <exclude body1="L_joint7_cover_link" body2="L_link7" />
+    <exclude body1="L_joint7_cover_link" body2="L_tcp" />
+    <exclude body1="L_link1" body2="L_link2" />
+    <exclude body1="L_link1" body2="L_shoulder_cover_link" />
+    <exclude body1="L_link1" body2="L_shoulder_mount" />
+    <exclude body1="L_link1" body2="R_shoulder_cover_link" />
+    <exclude body1="L_link1" body2="R_shoulder_mount" />
+    <exclude body1="L_link1" body2="base_footprint" />
+    <exclude body1="L_link1" body2="base_link" />
+    <exclude body1="L_link1" body2="lower_frame_link" />
+    <exclude body1="L_link1" body2="main_column_link" />
+    <exclude body1="L_link1" body2="torso_link" />
+    <exclude body1="L_link2" body2="L_link3" />
+    <exclude body1="L_link2" body2="L_link4_cover_link" />
+    <exclude body1="L_link3" body2="L_link4" />
+    <exclude body1="L_link3" body2="L_link4_cover_link" />
+    <exclude body1="L_link4" body2="L_link4_cover_link" />
+    <exclude body1="L_link4" body2="L_link5" />
+    <exclude body1="L_link4" body2="L_link6_cover_link" />
+    <exclude body1="L_link5" body2="L_link6" />
+    <exclude body1="L_link5" body2="L_link6_cover_link" />
+    <exclude body1="L_link6" body2="L_link6_cover_link" />
+    <exclude body1="L_link6" body2="L_link7" />
+    <exclude body1="L_link6" body2="L_tcp" />
+    <exclude body1="L_link7" body2="L_tcp" />
+    <exclude body1="L_shoulder_cover_link" body2="L_shoulder_mount" />
+    <exclude body1="L_shoulder_cover_link" body2="R_XM540_cover_link" />
+    <exclude body1="L_shoulder_cover_link" body2="R_link1" />
+    <exclude body1="L_shoulder_cover_link" body2="R_shoulder_cover_link" />
+    <exclude body1="L_shoulder_cover_link" body2="R_shoulder_mount" />
+    <exclude body1="L_shoulder_cover_link" body2="base_footprint" />
+    <exclude body1="L_shoulder_cover_link" body2="base_link" />
+    <exclude body1="L_shoulder_cover_link" body2="lower_frame_link" />
+    <exclude body1="L_shoulder_cover_link" body2="main_column_link" />
+    <exclude body1="L_shoulder_cover_link" body2="torso_link" />
+    <exclude body1="L_shoulder_mount" body2="R_XM540_cover_link" />
+    <exclude body1="L_shoulder_mount" body2="R_link1" />
+    <exclude body1="L_shoulder_mount" body2="R_shoulder_cover_link" />
+    <exclude body1="L_shoulder_mount" body2="R_shoulder_mount" />
+    <exclude body1="L_shoulder_mount" body2="base_footprint" />
+    <exclude body1="L_shoulder_mount" body2="base_link" />
+    <exclude body1="L_shoulder_mount" body2="lower_frame_link" />
+    <exclude body1="L_shoulder_mount" body2="main_column_link" />
+    <exclude body1="L_shoulder_mount" body2="torso_link" />
+    <exclude body1="R_XM540_cover_link" body2="R_link1" />
+    <exclude body1="R_XM540_cover_link" body2="R_link2" />
+    <exclude body1="R_XM540_cover_link" body2="R_shoulder_cover_link" />
+    <exclude body1="R_XM540_cover_link" body2="R_shoulder_mount" />
+    <exclude body1="R_XM540_cover_link" body2="base_footprint" />
+    <exclude body1="R_XM540_cover_link" body2="base_link" />
+    <exclude body1="R_XM540_cover_link" body2="lower_frame_link" />
+    <exclude body1="R_XM540_cover_link" body2="main_column_link" />
+    <exclude body1="R_XM540_cover_link" body2="torso_link" />
+    <exclude body1="R_finger_left" body2="R_gripper_base" />
+    <exclude body1="R_finger_left" body2="R_link7" />
+    <exclude body1="R_finger_left" body2="R_tcp" />
+    <exclude body1="R_finger_right" body2="R_gripper_base" />
+    <exclude body1="R_finger_right" body2="R_link7" />
+    <exclude body1="R_finger_right" body2="R_tcp" />
+    <exclude body1="R_gripper_base" body2="R_joint7_cover_link" />
+    <exclude body1="R_gripper_base" body2="R_link6" />
+    <exclude body1="R_gripper_base" body2="R_link7" />
+    <exclude body1="R_gripper_base" body2="R_tcp" />
+    <exclude body1="R_joint7_cover_link" body2="R_link5" />
+    <exclude body1="R_joint7_cover_link" body2="R_link6" />
+    <exclude body1="R_joint7_cover_link" body2="R_link6_cover_link" />
+    <exclude body1="R_joint7_cover_link" body2="R_link7" />
+    <exclude body1="R_joint7_cover_link" body2="R_tcp" />
+    <exclude body1="R_link1" body2="R_link2" />
+    <exclude body1="R_link1" body2="R_shoulder_cover_link" />
+    <exclude body1="R_link1" body2="R_shoulder_mount" />
+    <exclude body1="R_link1" body2="base_footprint" />
+    <exclude body1="R_link1" body2="base_link" />
+    <exclude body1="R_link1" body2="lower_frame_link" />
+    <exclude body1="R_link1" body2="main_column_link" />
+    <exclude body1="R_link1" body2="torso_link" />
+    <exclude body1="R_link2" body2="R_link3" />
+    <exclude body1="R_link2" body2="R_link4_cover_link" />
+    <exclude body1="R_link3" body2="R_link4" />
+    <exclude body1="R_link3" body2="R_link4_cover_link" />
+    <exclude body1="R_link4" body2="R_link4_cover_link" />
+    <exclude body1="R_link4" body2="R_link5" />
+    <exclude body1="R_link4" body2="R_link6_cover_link" />
+    <exclude body1="R_link5" body2="R_link6" />
+    <exclude body1="R_link5" body2="R_link6_cover_link" />
+    <exclude body1="R_link6" body2="R_link6_cover_link" />
+    <exclude body1="R_link6" body2="R_link7" />
+    <exclude body1="R_link6" body2="R_tcp" />
+    <exclude body1="R_link7" body2="R_tcp" />
+    <exclude body1="R_shoulder_cover_link" body2="R_shoulder_mount" />
+    <exclude body1="R_shoulder_cover_link" body2="base_footprint" />
+    <exclude body1="R_shoulder_cover_link" body2="base_link" />
+    <exclude body1="R_shoulder_cover_link" body2="lower_frame_link" />
+    <exclude body1="R_shoulder_cover_link" body2="main_column_link" />
+    <exclude body1="R_shoulder_cover_link" body2="torso_link" />
+    <exclude body1="R_shoulder_mount" body2="base_footprint" />
+    <exclude body1="R_shoulder_mount" body2="base_link" />
+    <exclude body1="R_shoulder_mount" body2="lower_frame_link" />
+    <exclude body1="R_shoulder_mount" body2="main_column_link" />
+    <exclude body1="R_shoulder_mount" body2="torso_link" />
+    <exclude body1="base_footprint" body2="base_link" />
+    <exclude body1="base_footprint" body2="lower_frame_link" />
+    <exclude body1="base_footprint" body2="main_column_link" />
+    <exclude body1="base_footprint" body2="torso_link" />
+    <exclude body1="base_link" body2="lower_frame_link" />
+    <exclude body1="base_link" body2="main_column_link" />
+    <exclude body1="base_link" body2="torso_link" />
+    <exclude body1="lower_frame_link" body2="main_column_link" />
+    <exclude body1="lower_frame_link" body2="torso_link" />
+    <exclude body1="main_column_link" body2="torso_link" />
+  </contact>
+</mujoco>

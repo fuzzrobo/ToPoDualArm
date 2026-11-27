@@ -1,0 +1,209 @@
+# XL330リーダーの共通設定。接続先と校正確認は起動側で指定する。
+hardware_verified: false
+connection:
+  port: /dev/topoarm-leader-unconfigured
+  baud_rate: 2000000
+  latency_timer: 2
+model: 300mm
+modules: []  # パンチルト付きは [pan_tilt]
+options:
+  startup_configuration: apply
+  return_delay_time: 10
+input_transform:
+  neck_tilt_negative_scale: 2.1
+actuator_profiles:
+  leader_arm:
+    position_kp: 800
+    position_ki: 0
+    position_kd: 0
+    profile_velocity: 0.5
+    profile_acceleration: 7.5
+  leader_neck:
+    position_kp: 400
+    position_ki: 0
+    position_kd: 0
+    profile_velocity: 0
+    profile_acceleration: 0
+joints:
+  R_joint1:
+    id: 1
+    profile: leader_arm
+    operating_mode: 5
+    multiplier: 1.0
+    offset: 0.0
+    min: -6.283185307179586
+    max: 6.283185307179586
+    current_cap: 0.1
+    initial_current_limit: 0.1
+  R_joint2:
+    id: 2
+    profile: leader_arm
+    operating_mode: 5
+    multiplier: 1.0
+    offset: 0.0
+    min: -6.283185307179586
+    max: 6.283185307179586
+    current_cap: 0.1
+    initial_current_limit: 0.1
+  R_joint3:
+    id: 3
+    profile: leader_arm
+    operating_mode: 5
+    multiplier: 1.0
+    offset: 0.0
+    min: -6.283185307179586
+    max: 6.283185307179586
+    current_cap: 0.1
+    initial_current_limit: 0.1
+  R_joint4:
+    id: 4
+    profile: leader_arm
+    operating_mode: 5
+    multiplier: 1.0
+    offset: 0.0
+    min: -6.283185307179586
+    max: 6.283185307179586
+    current_cap: 0.1
+    initial_current_limit: 0.1
+  R_joint5:
+    id: 5
+    profile: leader_arm
+    operating_mode: 5
+    multiplier: 1.0
+    offset: 0.0
+    min: -6.283185307179586
+    max: 6.283185307179586
+    current_cap: 0.1
+    initial_current_limit: 0.1
+  R_joint6:
+    id: 6
+    profile: leader_arm
+    operating_mode: 5
+    multiplier: 1.0
+    offset: 0.0
+    min: -6.283185307179586
+    max: 6.283185307179586
+    current_cap: 0.1
+    initial_current_limit: 0.1
+  R_joint7:
+    id: 7
+    profile: leader_arm
+    operating_mode: 5
+    multiplier: 1.0
+    offset: 0.0
+    min: -6.283185307179586
+    max: 6.283185307179586
+    current_cap: 0.1
+    initial_current_limit: 0.1
+  R_gripper_joint:
+    id: 8
+    profile: leader_arm
+    operating_mode: 5
+    multiplier: 0.398521113057015
+    offset: 0.5830194422511356
+    min: -6.283185307179586
+    max: 6.283185307179586
+    current_cap: 0.1
+    initial_current_limit: 0.1
+  L_joint1:
+    id: 11
+    profile: leader_arm
+    operating_mode: 5
+    multiplier: 1.0
+    offset: 0.0
+    min: -6.283185307179586
+    max: 6.283185307179586
+    current_cap: 0.1
+    initial_current_limit: 0.1
+  L_joint2:
+    id: 12
+    profile: leader_arm
+    operating_mode: 5
+    multiplier: 1.0
+    offset: 0.0
+    min: -6.283185307179586
+    max: 6.283185307179586
+    current_cap: 0.1
+    initial_current_limit: 0.1
+  L_joint3:
+    id: 13
+    profile: leader_arm
+    operating_mode: 5
+    multiplier: 1.0
+    offset: 0.0
+    min: -6.283185307179586
+    max: 6.283185307179586
+    current_cap: 0.1
+    initial_current_limit: 0.1
+  L_joint4:
+    id: 14
+    profile: leader_arm
+    operating_mode: 5
+    multiplier: 1.0
+    offset: 0.0
+    min: -6.283185307179586
+    max: 6.283185307179586
+    current_cap: 0.1
+    initial_current_limit: 0.1
+  L_joint5:
+    id: 15
+    profile: leader_arm
+    operating_mode: 5
+    multiplier: 1.0
+    offset: 0.0
+    min: -6.283185307179586
+    max: 6.283185307179586
+    current_cap: 0.1
+    initial_current_limit: 0.1
+  L_joint6:
+    id: 16
+    profile: leader_arm
+    operating_mode: 5
+    multiplier: 1.0
+    offset: 0.0
+    min: -6.283185307179586
+    max: 6.283185307179586
+    current_cap: 0.1
+    initial_current_limit: 0.1
+  L_joint7:
+    id: 17
+    profile: leader_arm
+    operating_mode: 5
+    multiplier: 1.0
+    offset: 0.0
+    min: -6.283185307179586
+    max: 6.283185307179586
+    current_cap: 0.1
+    initial_current_limit: 0.1
+  L_gripper_joint:
+    id: 18
+    profile: leader_arm
+    operating_mode: 5
+    multiplier: 0.37377719375091256
+    offset: -0.5577714508344559
+    min: -6.283185307179586
+    max: 6.283185307179586
+    current_cap: 0.1
+    initial_current_limit: 0.1
+pan_tilt:
+  joints:
+    neck_pan_joint:
+      id: 21
+      profile: leader_neck
+      operating_mode: 3
+      multiplier: 1.0
+      offset: 0.0
+      min: -6.283185307179586
+      max: 6.283185307179586
+      current_cap: 0.1
+      initial_current_limit: 0.1
+    neck_tilt_joint:
+      id: 22
+      profile: leader_neck
+      operating_mode: 3
+      multiplier: 1.0
+      offset: 0.0
+      min: -6.283185307179586
+      max: 6.283185307179586
+      current_cap: 0.1
+      initial_current_limit: 0.1

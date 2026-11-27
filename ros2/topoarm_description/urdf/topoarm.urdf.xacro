@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="topoarm">
+  <xacro:arg name="use_fake_hardware" default="true"/>
+  <xacro:arg name="backend" default="u2d2"/>
+  <xacro:arg name="vsido_peer_address" default=""/>
+  <xacro:arg name="vsido_bind_address" default=""/>
+  <xacro:arg name="config_file" default="$(find topoarm_description)/config/hardware/follower.yaml"/>
+  <xacro:arg name="read_only" default="false"/>
+  <xacro:arg name="torque" default="false"/>
+  <xacro:arg name="hardware_verified" default="false"/>
+  <xacro:arg name="configure_devices" default="false"/>
+  <xacro:property name="hardware_file" value="$(arg config_file)"/>
+  <xacro:property name="hardware" value="${xacro.load_yaml(hardware_file)}"/>
+  <xacro:property name="modules" value="${hardware.get('modules', [])}"/>
+  <xacro:property name="legacy_pan_tilt" value="${'modules' not in hardware and 'neck_pan_joint' in hardware['joints'] and 'neck_tilt_joint' in hardware['joints']}"/>
+  <xacro:property name="module_set" value="${['', 'pan_tilt'].index(','.join(modules))}"/>
+  <xacro:include filename="$(find topoarm_description)/models/300mm/robot.urdf"/>
+  <xacro:if value="${legacy_pan_tilt or module_set != 0}">
+    <xacro:include filename="$(find topoarm_description)/models/300mm/pan_tilt.urdf"/>
+  </xacro:if>
+  <xacro:include filename="ros2_control.xacro"/>
+  <link name="world"/>
+  <joint name="world_to_base_footprint" type="fixed">
+    <parent link="world"/>
+    <child link="base_footprint"/>
+  </joint>
+  <xacro:topoarm_control config_file="$(arg config_file)" use_fake_hardware="$(arg use_fake_hardware)" backend="$(arg backend)"
+      settings="${hardware['joints']}" pan_tilt="${len(modules) > 0}"
+      pan_tilt_settings="${hardware['pan_tilt']['joints'] if modules else hardware['joints']}"
+      read_only="$(arg read_only)" torque="$(arg torque)" hardware_verified="$(arg hardware_verified)"
+      configure_devices="$(arg configure_devices)"
+      vsido_peer_address="$(arg vsido_peer_address)" vsido_bind_address="$(arg vsido_bind_address)"/>
+</robot>

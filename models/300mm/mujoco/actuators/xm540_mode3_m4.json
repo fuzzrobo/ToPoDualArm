@@ -1,0 +1,15 @@
+{
+  "kt": 3.7645595526919737,
+  "R": 1.4443616247727813,
+  "armature": 0.06024677306029261,
+  "q_offset": -0.019210973037561127,
+  "friction_base": 1.4012746107743688e-05,
+  "friction_stribeck": 0.002653315731176809,
+  "load_friction_base": 0.021951603491530795,
+  "load_friction_stribeck": 0.1070234722773209,
+  "dtheta_stribeck": 0.41726611376954514,
+  "alpha": 1.9730730101073017,
+  "friction_viscous": 0.1165766184909949,
+  "model": "m4",
+  "actuator": "xm540"
+}

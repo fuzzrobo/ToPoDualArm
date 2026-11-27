@@ -1,0 +1,6 @@
+/data/
+/outputs/
+/*-local.yaml
+/config/*-local.yaml
+/scratch/
+/tests/

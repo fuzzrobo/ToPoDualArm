@@ -1,0 +1,14 @@
+@PACKAGE_INIT@
+include(CMakeFindDependencyMacro)
+find_dependency(yaml-cpp CONFIG)
+if(APPLE)
+  find_program(_topoarm_brew brew)
+  if(_topoarm_brew)
+    execute_process(COMMAND "${_topoarm_brew}" --prefix eigen@3
+      OUTPUT_VARIABLE _topoarm_eigen_hint OUTPUT_STRIP_TRAILING_WHITESPACE ERROR_QUIET)
+  endif()
+endif()
+find_dependency(Eigen3 3.3 CONFIG HINTS ${_topoarm_eigen_hint})
+include("${CMAKE_CURRENT_LIST_DIR}/TopoArmSdkDependencies.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/topoarm_sdkTargets.cmake")
+check_required_components(topoarm_sdk)

@@ -1,0 +1,27 @@
+# 以前のIsaac設定から移植。YUBI公式PL028/PR028の校正値であり、ToPo実機の測定値ではない。
+# airoa-org/yubi-go (Apache-2.0)
+source: https://github.com/airoa-org/yubi-go/blob/600cb67330a56b122d0f15443ce644c079c2674d/assets/calib/default.json
+revision: 600cb67330a56b122d0f15443ce644c079c2674d
+rig: [PL028, PR028]
+resolution: [640, 480]
+projection: opencv_fisheye
+finger_pivot_midpoint_m: [-0.016, 0, 0]
+camera_link_m: [0, 0, 0.0426]
+wrist:
+  left:
+    f: 280.73
+    c: [331.44, 208.73]
+    k1: -0.0901
+    k2: 0.0202
+    theta_max: 1.53
+    mount: {t: [-0.00593, 0.00004, -0.0002], q_xyzw: [0.53035, -0.541232, 0.4731, 0.449414]}
+    # packing.yamlで実画像との比較に使っていた診断用補正。
+    correction: {xyz_m: [0.0009121329, -0.0170187086, -0.0010934638], rpy_deg: [-1.34061623, 1.21541156, -0.22823467]}
+  right:
+    f: 273.06
+    c: [322.31, 231.97]
+    k1: -0.0401
+    k2: -0.0041
+    theta_max: 1.65
+    mount: {t: [-0.00503, 0.00045, -0.00227], q_xyzw: [0.532756, -0.5474, 0.466645, 0.445831]}
+    correction: {xyz_m: [0.0008833471, -0.0171818539, -0.0030714074], rpy_deg: [-3.78856684, -0.53655896, -0.51865296]}

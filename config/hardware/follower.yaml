@@ -1,0 +1,244 @@
+# 300 mmフォロワーの共通設定。接続先と校正確認は起動側で指定する。
+hardware_verified: false
+connection:
+  port: /dev/topoarm-unconfigured
+  baud_rate: 2000000
+  latency_timer: 2
+model: 300mm
+modules: []  # パンチルト付きは [pan_tilt]
+options:
+  startup_configuration: apply
+  clip_to_limits: true
+  floor_config: ../floor.yaml
+  neck_envelope: true
+  neck_limits:
+    outward_margin: 0.008726646259971648
+    pan_abs_at_outer: 0.7853981633974483
+    tilt_min_at_outer: -0.8726646259971648
+  return_delay_time: 10
+  torque_retention: true
+  write_pid_on_connect: true
+actuator_profiles:
+  follower_xm430:
+    position_kp: 400
+    position_ki: 0
+    position_kd: 4000
+    profile_velocity: 0
+    profile_acceleration: 0
+    profile_duration_ms: 120
+    profile_acceleration_ms: 60
+  follower_xm540:
+    position_kp: 1000
+    position_ki: 0
+    position_kd: 8000
+    profile_velocity: 0
+    profile_acceleration: 0
+    profile_duration_ms: 60
+    profile_acceleration_ms: 20
+joints:
+  L_gripper_joint:
+    id: 48
+    profile: follower_xm430
+    operating_mode: 5
+    multiplier: 1.0
+    offset: 0.0
+    min: -1.2217304763960306
+    max: 0.08726646259971647
+    current_cap: 0.5
+    initial_current_limit: 0.5
+  L_joint1:
+    id: 41
+    profile: follower_xm540
+    operating_mode: 5
+    multiplier: 1.0
+    offset: 0.0
+    min: -1.9198621771937625
+    max: 1.0471975511965976
+    current_cap: 5.506430000000001
+    initial_current_limit: 5.506430000000001
+  L_joint2:
+    id: 42
+    profile: follower_xm540
+    operating_mode: 5
+    multiplier: 1.0
+    offset: 0.0
+    min: -1.7453292519943295
+    max: 1.7453292519943295
+    current_cap: 5.506430000000001
+    initial_current_limit: 5.506430000000001
+  L_joint3:
+    id: 43
+    profile: follower_xm540
+    operating_mode: 5
+    multiplier: 1.0
+    offset: 0.0
+    min: -1.4835298641951802
+    max: 1.4835298641951802
+    current_cap: 5.506430000000001
+    initial_current_limit: 5.506430000000001
+  L_joint4:
+    id: 44
+    profile: follower_xm430
+    operating_mode: 5
+    multiplier: 1.0
+    offset: 0.0
+    min: -1.7453292519943295
+    max: 0.8726646259971648
+    current_cap: 3.2091700000000003
+    initial_current_limit: 3.2091700000000003
+  L_joint5:
+    id: 45
+    profile: follower_xm430
+    operating_mode: 5
+    multiplier: 1.0
+    offset: 0.0
+    min: -1.4835298641951802
+    max: 1.4835298641951802
+    current_cap: 3.20648
+    initial_current_limit: 3.20648
+  L_joint6:
+    id: 46
+    profile: follower_xm430
+    operating_mode: 5
+    multiplier: 1.0
+    offset: 0.0
+    min: -1.7453292519943295
+    max: 1.7453292519943295
+    current_cap: 3.20648
+    initial_current_limit: 3.20648
+  L_joint7:
+    id: 47
+    profile: follower_xm430
+    operating_mode: 5
+    multiplier: 1.0
+    offset: 0.0
+    min: -1.7453292519943295
+    max: 1.7453292519943295
+    current_cap: 3.20648
+    initial_current_limit: 3.20648
+  R_gripper_joint:
+    id: 38
+    profile: follower_xm430
+    operating_mode: 5
+    multiplier: 1.0
+    offset: 0.0
+    min: -0.10471975511965978
+    max: 1.2915436464758039
+    current_cap: 0.5
+    initial_current_limit: 0.5
+  R_joint1:
+    id: 31
+    profile: follower_xm540
+    operating_mode: 5
+    multiplier: 1.0
+    offset: 0.0
+    min: -1.0471975511965976
+    max: 1.9198621771937625
+    current_cap: 5.506430000000001
+    initial_current_limit: 5.506430000000001
+  R_joint2:
+    id: 32
+    profile: follower_xm540
+    operating_mode: 5
+    multiplier: 1.0
+    offset: 0.0
+    min: -1.7453292519943295
+    max: 1.7453292519943295
+    current_cap: 5.506430000000001
+    initial_current_limit: 5.506430000000001
+  R_joint3:
+    id: 33
+    profile: follower_xm540
+    operating_mode: 5
+    multiplier: 1.0
+    offset: 0.0
+    min: -1.4835298641951802
+    max: 1.4835298641951802
+    current_cap: 5.506430000000001
+    initial_current_limit: 5.506430000000001
+  R_joint4:
+    id: 34
+    profile: follower_xm430
+    operating_mode: 5
+    multiplier: 1.0
+    offset: 0.0
+    min: -0.8726646259971648
+    max: 1.7453292519943295
+    current_cap: 3.2091700000000003
+    initial_current_limit: 3.2091700000000003
+  R_joint5:
+    id: 35
+    profile: follower_xm430
+    operating_mode: 5
+    multiplier: 1.0
+    offset: 0.0
+    min: -1.4835298641951802
+    max: 1.4835298641951802
+    current_cap: 3.20648
+    initial_current_limit: 3.20648
+  R_joint6:
+    id: 36
+    profile: follower_xm430
+    operating_mode: 5
+    multiplier: 1.0
+    offset: 0.0
+    min: -1.7453292519943295
+    max: 1.7453292519943295
+    current_cap: 3.20648
+    initial_current_limit: 3.20648
+  R_joint7:
+    id: 37
+    profile: follower_xm430
+    operating_mode: 5
+    multiplier: 1.0
+    offset: 0.0
+    min: -1.7453292519943295
+    max: 1.7453292519943295
+    current_cap: 3.20648
+    initial_current_limit: 3.20648
+pan_tilt:
+  joints:
+    neck_pan_joint:
+      id: 51
+      profile: follower_xm430
+      operating_mode: 5
+      multiplier: 1.0
+      offset: 0.0
+      min: -1.5707963267948966
+      max: 1.5707963267948966
+      current_cap: 3.20648
+      initial_current_limit: 3.20648
+    neck_tilt_joint:
+      id: 52
+      profile: follower_xm430
+      operating_mode: 5
+      multiplier: 1.0
+      offset: 0.0
+      min: -1.3962634015954636
+      max: 1.8325957145940461
+      current_cap: 3.2091700000000003
+      initial_current_limit: 3.2091700000000003
+vsido:
+  receive_port: 8886
+  command_port: 8888
+  timeout_s: 0.1
+  # 既存の18軸用。16軸で送信する場合は機器側の軸構成と順序に合わせる。
+  command_order:
+  - R_joint1
+  - R_joint2
+  - R_joint3
+  - R_joint4
+  - R_joint5
+  - R_joint6
+  - R_joint7
+  - R_gripper_joint
+  - L_joint1
+  - L_joint2
+  - L_joint3
+  - L_joint4
+  - L_joint5
+  - L_joint6
+  - L_joint7
+  - L_gripper_joint
+  - neck_pan_joint
+  - neck_tilt_joint

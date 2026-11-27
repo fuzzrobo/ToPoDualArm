@@ -1,0 +1,34 @@
+[project]
+name = "topoarm-demo"
+version = "0.1.0"
+requires-python = ">=3.12,<3.14"
+dependencies = [
+    "topoarm-sdk",
+    "lerobot[dataset,training]==0.6.1",
+    "pyserial>=3.5,<4",
+    "scipy",
+    "PyYAML>=6,<7",
+    "pyobjc-framework-AVFoundation; sys_platform == 'darwin'",
+    "pyobjc-framework-CoreMedia; sys_platform == 'darwin'",
+]
+
+[project.optional-dependencies]
+# 既存の --extra act を受け付ける。学習依存は標準で入る。
+act = []
+dp = ["diffusers>=0.38,<0.40"]
+
+[project.scripts]
+demo = "topoarm_recording.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/topoarm_recording", "src/lerobot_teleoperator_yubi"]
+
+[tool.hatch.build.targets.sdist]
+exclude = ["/tests", "/scratch", "/data", "/outputs"]
+
+[tool.uv.sources]
+topoarm-sdk = { path = "..", editable = true }

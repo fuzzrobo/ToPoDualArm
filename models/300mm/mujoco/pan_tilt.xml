@@ -1,0 +1,148 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mujoco model="topoarm_pan_tilt">
+  <!-- 筐体のCADメッシュはbase_link座標のため、torsoとパン取付の高さの和を引く。 -->
+  <body name="neck_pan_servo_link" pos="0 0 0.2205">
+    <geom name="neck_pan_servo_link_visual_3" type="mesh" mesh="mesh_3_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.020288562 0.020288562 0.020288562 1" pos="0 0 -0.343" quat="1 0 0 0" />
+    <geom name="neck_pan_servo_link_visual_7" type="mesh" mesh="mesh_7_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.080219820 0.080219820 0.080219820 1" pos="0 0 -0.343" quat="1 0 0 0" />
+    <geom name="neck_pan_servo_link_collision_3" type="mesh" mesh="mesh_3" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 -0.343" quat="1 0 0 0" />
+    <geom name="neck_pan_servo_link_collision_7" type="mesh" mesh="mesh_7" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 -0.343" quat="1 0 0 0" />
+    <geom name="pan_servo_side_cover_visual" type="mesh" mesh="pan_servo_side_cover_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.000000000 1.000000000 0.000000000 1" pos="0 0 -0.343" quat="1 0 0 0" />
+    <geom name="pan_servo_side_cover_collision" type="mesh" mesh="pan_servo_side_cover" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 -0.343" quat="1 0 0 0" />
+    <geom name="pan_servo_fasteners_visual" type="mesh" mesh="pan_servo_fasteners_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.913098633 0.913098633 0.921581864 1" pos="0 0 -0.343" quat="1 0 0 0" />
+    <geom name="pan_servo_fasteners_collision" type="mesh" mesh="pan_servo_fasteners" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 -0.343" quat="1 0 0 0" />
+  </body>
+  <body name="neck_pan_link" pos="0 0 0.2205" quat="1 0 0 0">
+    <joint name="neck_pan_joint" type="hinge" axis="0 0 1" range="-1.5707963267948966 1.5707963267948966" />
+    <geom name="neck_pan_link_visual_0" type="mesh" mesh="mesh_17_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.080219820 0.080219820 0.080219820 1" pos="0 0 0" quat="1 0 0 0" />
+    <geom name="neck_pan_link_visual_1" type="mesh" mesh="mesh_18_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.127437681 0.127437681 0.127437681 1" pos="0 0 0" quat="1 0 0 0" />
+    <geom name="neck_pan_link_visual_2" type="mesh" mesh="mesh_19_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.913098633 0.913098633 0.921581864 1" pos="0 0 0" quat="1 0 0 0" />
+    <geom name="neck_pan_link_collision_0" type="mesh" mesh="mesh_17" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+    <geom name="neck_pan_link_collision_1" type="mesh" mesh="mesh_18" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+    <geom name="neck_pan_link_collision_2" type="mesh" mesh="mesh_19" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+    <body name="neck_tilt_link" pos="0.024 0 0.0195" quat="1 0 0 0">
+      <joint name="neck_tilt_joint" type="hinge" axis="0 -1 0" range="-1.3962634015954636 1.8325957145940461" />
+      <geom name="neck_tilt_link_visual_0" type="mesh" mesh="mesh_20_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.127437681 0.127437681 0.127437681 1" pos="0 0 0" quat="1 0 0 0" />
+      <geom name="neck_tilt_link_collision_0" type="mesh" mesh="mesh_20" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+      <body name="camera_link" pos="0.05775 0.0175 0" quat="1 0 0 0">
+        <geom name="camera_link_visual_0" type="mesh" mesh="mesh_21_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.043735031 0.119538426 0.456411034 1" pos="0 0 0" quat="1 0 0 0" />
+        <geom name="camera_link_visual_1" type="mesh" mesh="mesh_22_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.116970666 0.070360094 0.070360094 1" pos="0 0 0" quat="1 0 0 0" />
+        <geom name="camera_link_visual_2" type="mesh" mesh="mesh_23_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.212230757 0.212230757 0.212230757 1" pos="0 0 0" quat="1 0 0 0" />
+        <geom name="camera_link_visual_3" type="mesh" mesh="mesh_24_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.337163627 0.623960376 0.846873224 1" pos="0 0 0" quat="1 0 0 0" />
+        <geom name="camera_link_visual_4" type="mesh" mesh="mesh_25_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.376262128 0.376262128 0.376262128 1" pos="0 0 0" quat="1 0 0 0" />
+        <geom name="camera_link_visual_5" type="mesh" mesh="mesh_26_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.552011430 0.760524511 0.896269381 1" pos="0 0 0" quat="1 0 0 0" />
+        <geom name="camera_link_visual_6" type="mesh" mesh="mesh_27_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.822785735 0.822785735 0.822785735 1" pos="0 0 0" quat="1 0 0 0" />
+        <geom name="camera_link_visual_7" type="mesh" mesh="mesh_28_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.913098633 0.913098633 0.921581864 1" pos="0 0 0" quat="1 0 0 0" />
+        <geom name="camera_link_visual_8" type="mesh" mesh="mesh_29_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.938685715 0.242281124 0.000303527 1" pos="0 0 0" quat="1 0 0 0" />
+        <geom name="camera_link_visual_9" type="mesh" mesh="mesh_30_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.955973327 0.467783809 0.000303527 1" pos="0 0 0" quat="1 0 0 0" />
+        <geom name="camera_link_visual_10" type="mesh" mesh="mesh_31_visual" group="2" density="0" contype="0" conaffinity="0" rgba="1.000000000 1.000000000 1.000000000 1" pos="0 0 0" quat="1 0 0 0" />
+        <geom name="camera_link_collision_0" type="mesh" mesh="mesh_21" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+        <geom name="camera_link_collision_1" type="mesh" mesh="mesh_22" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+        <geom name="camera_link_collision_2" type="mesh" mesh="mesh_23" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+        <geom name="camera_link_collision_3" type="mesh" mesh="mesh_24" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+        <geom name="camera_link_collision_4" type="mesh" mesh="mesh_25" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+        <geom name="camera_link_collision_5" type="mesh" mesh="mesh_26" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+        <geom name="camera_link_collision_6" type="mesh" mesh="mesh_27" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+        <geom name="camera_link_collision_7" type="mesh" mesh="mesh_28" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+        <geom name="camera_link_collision_8" type="mesh" mesh="mesh_29" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+        <geom name="camera_link_collision_9" type="mesh" mesh="mesh_30" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+        <geom name="camera_link_collision_10" type="mesh" mesh="mesh_31" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+        <body name="camera_optical_frame" pos="0 0 0" quat="0.50000000000000011 -0.5 0.49999999999999989 -0.5" />
+      </body>
+      <body name="realsense_mount_link" pos="0.0295 0 0" quat="1 0 0 0">
+        <geom name="realsense_mount_link_visual_0" type="mesh" mesh="mesh_32_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.000000000 1.000000000 0.000000000 1" pos="0 0 0" quat="1 0 0 0" />
+        <geom name="realsense_mount_link_collision_0" type="mesh" mesh="mesh_32" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+      </body>
+    </body>
+    <body name="neck_tilt_cover_link" pos="0.024 0 0.0195" quat="1 0 0 0">
+      <geom name="neck_tilt_cover_link_visual_0" type="mesh" mesh="mesh_33_visual" group="2" density="0" contype="0" conaffinity="0" rgba="0.000000000 1.000000000 0.000000000 1" pos="0 0 0" quat="1 0 0 0" />
+      <geom name="neck_tilt_cover_link_collision_0" type="mesh" mesh="mesh_33" group="3" density="1000" contype="1" conaffinity="1" rgba="0.4 0.6 0.8 0" pos="0 0 0" quat="1 0 0 0" />
+    </body>
+  </body>
+  <asset>
+    <mesh name="mesh_17" file="../meshes/neck_pan_link_00.stl" scale="1 1 1" />
+    <mesh name="mesh_18" file="../meshes/neck_pan_link_01.stl" scale="1 1 1" />
+    <mesh name="mesh_19" file="../meshes/neck_pan_link_02.stl" scale="1 1 1" />
+    <mesh name="mesh_20" file="../meshes/neck_tilt_link_00.stl" scale="1 1 1" />
+    <mesh name="mesh_33" file="../meshes/neck_tilt_cover_link_00.stl" scale="1 1 1" />
+    <mesh name="mesh_17_visual" file="visual/neck_pan_link_00.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_18_visual" file="visual/neck_pan_link_01.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_19_visual" file="visual/neck_pan_link_02.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_20_visual" file="visual/neck_tilt_link_00.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_33_visual" file="visual/neck_tilt_cover_link_00.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_3" file="../meshes/base_link_03.stl" scale="1 1 1" />
+    <mesh name="mesh_7" file="../meshes/base_link_07.stl" scale="1 1 1" />
+    <mesh name="mesh_3_visual" file="visual/base_link_03.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_7_visual" file="visual/base_link_07.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="pan_servo_side_cover_visual" file="visual/pan_servo_side_cover.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="pan_servo_side_cover" file="../meshes/pan_servo_side_cover.stl" scale="1 1 1" />
+    <mesh name="pan_servo_fasteners_visual" file="visual/pan_servo_fasteners.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="pan_servo_fasteners" file="../meshes/pan_servo_fasteners.stl" scale="1 1 1" />
+    <mesh name="mesh_21" file="../meshes/camera_link_00.stl" scale="1 1 1" />
+    <mesh name="mesh_22" file="../meshes/camera_link_01.stl" scale="1 1 1" />
+    <mesh name="mesh_23" file="../meshes/camera_link_02.stl" scale="1 1 1" />
+    <mesh name="mesh_24" file="../meshes/camera_link_03.stl" scale="1 1 1" />
+    <mesh name="mesh_25" file="../meshes/camera_link_04.stl" scale="1 1 1" />
+    <mesh name="mesh_26" file="../meshes/camera_link_05.stl" scale="1 1 1" />
+    <mesh name="mesh_27" file="../meshes/camera_link_06.stl" scale="1 1 1" />
+    <mesh name="mesh_28" file="../meshes/camera_link_07.stl" scale="1 1 1" />
+    <mesh name="mesh_29" file="../meshes/camera_link_08.stl" scale="1 1 1" />
+    <mesh name="mesh_30" file="../meshes/camera_link_09.stl" scale="1 1 1" />
+    <mesh name="mesh_31" file="../meshes/camera_link_10.stl" scale="1 1 1" />
+    <mesh name="mesh_32" file="../meshes/realsense_mount_link_00.stl" scale="1 1 1" />
+    <mesh name="mesh_21_visual" file="visual/camera_link_00.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_22_visual" file="visual/camera_link_01.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_23_visual" file="visual/camera_link_02.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_24_visual" file="visual/camera_link_03.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_25_visual" file="visual/camera_link_04.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_26_visual" file="visual/camera_link_05.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_27_visual" file="visual/camera_link_06.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_28_visual" file="visual/camera_link_07.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_29_visual" file="visual/camera_link_08.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_30_visual" file="visual/camera_link_09.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_31_visual" file="visual/camera_link_10.msh" scale="1 1 1" inertia="convex" />
+    <mesh name="mesh_32_visual" file="visual/realsense_mount_link_00.msh" scale="1 1 1" inertia="convex" />
+  </asset>
+  <actuator>
+    <position name="neck_pan_joint" joint="neck_pan_joint" kp="10" ctrlrange="-1.5707963267948966 1.5707963267948966" />
+    <position name="neck_tilt_joint" joint="neck_tilt_joint" kp="10" ctrlrange="-1.3962634015954636 1.8325957145940461" />
+  </actuator>
+  <contact>
+    <exclude body1="L_shoulder_cover_link" body2="neck_pan_link" />
+    <exclude body1="L_shoulder_cover_link" body2="neck_tilt_cover_link" />
+    <exclude body1="L_shoulder_mount" body2="neck_pan_link" />
+    <exclude body1="L_shoulder_mount" body2="neck_tilt_cover_link" />
+    <exclude body1="R_shoulder_cover_link" body2="neck_pan_link" />
+    <exclude body1="R_shoulder_cover_link" body2="neck_tilt_cover_link" />
+    <exclude body1="R_shoulder_mount" body2="neck_pan_link" />
+    <exclude body1="R_shoulder_mount" body2="neck_tilt_cover_link" />
+    <exclude body1="base_footprint" body2="neck_pan_link" />
+    <exclude body1="base_footprint" body2="neck_tilt_cover_link" />
+    <exclude body1="base_link" body2="neck_pan_link" />
+    <exclude body1="base_link" body2="neck_tilt_cover_link" />
+    <exclude body1="lower_frame_link" body2="neck_pan_link" />
+    <exclude body1="lower_frame_link" body2="neck_tilt_cover_link" />
+    <exclude body1="main_column_link" body2="neck_pan_link" />
+    <exclude body1="main_column_link" body2="neck_tilt_cover_link" />
+    <exclude body1="neck_pan_link" body2="neck_tilt_cover_link" />
+    <exclude body1="neck_pan_link" body2="neck_tilt_link" />
+    <exclude body1="neck_pan_link" body2="torso_link" />
+    <exclude body1="neck_tilt_cover_link" body2="neck_tilt_link" />
+    <exclude body1="neck_tilt_cover_link" body2="torso_link" />
+    <exclude body1="neck_pan_servo_link" body2="base_link" />
+    <exclude body1="neck_pan_servo_link" body2="neck_pan_link" />
+    <exclude body1="neck_pan_servo_link" body2="neck_tilt_cover_link" />
+    <exclude body1="neck_pan_servo_link" body2="torso_link" />
+    <exclude body1="camera_link" body2="camera_optical_frame" />
+    <exclude body1="camera_link" body2="neck_pan_link" />
+    <exclude body1="camera_link" body2="neck_tilt_cover_link" />
+    <exclude body1="camera_link" body2="neck_tilt_link" />
+    <exclude body1="camera_link" body2="realsense_mount_link" />
+    <exclude body1="camera_optical_frame" body2="neck_pan_link" />
+    <exclude body1="camera_optical_frame" body2="neck_tilt_cover_link" />
+    <exclude body1="camera_optical_frame" body2="neck_tilt_link" />
+    <exclude body1="camera_optical_frame" body2="realsense_mount_link" />
+    <exclude body1="neck_pan_link" body2="realsense_mount_link" />
+    <exclude body1="neck_tilt_cover_link" body2="realsense_mount_link" />
+    <exclude body1="neck_tilt_link" body2="realsense_mount_link" />
+  </contact>
+</mujoco>

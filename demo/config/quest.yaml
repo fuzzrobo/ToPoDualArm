@@ -1,0 +1,4 @@
+input: quest
+quest:
+  quest_host: ""  # Quest本体のIPアドレスを指定する。
+  hardware_verified: true

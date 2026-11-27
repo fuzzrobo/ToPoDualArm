@@ -1,0 +1,20 @@
+[build-system]
+requires = ["scikit-build-core>=0.11,<0.12", "pybind11>=2.13,<3"]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "topoarm-sdk"
+version = "0.1.0"
+description = "ToPoDualArmのC++ SDKとPythonバインディング"
+readme = "README.md"
+requires-python = ">=3.12,<3.14"
+license = "Apache-2.0"
+dependencies = ["PyYAML>=6,<7"]
+
+[tool.scikit-build]
+cmake.source-dir = "sdk/python"
+build-dir = "sdk/build/python/{wheel_tag}"
+wheel.packages = ["sdk/python/topoarm_sdk", "sdk/python/topoarm_leader_follower"]
+wheel.license-files = ["LICENSE", "sdk/third_party/lib_dynamixel/LICENSE-ROBOTIS", "sdk/third_party/lib_dynamixel/README.md"]
+install.components = ["python"]
+sdist.exclude = ["/demo/", "/models/300mm/mujoco/", "/dev/", "/tests/", "/data/", "/outputs/", "/logs/", "/.venv/", "/build/", "/sdk/build/", "/install/", "/log/", "/dist/", "__pycache__/", "*.pyc"]

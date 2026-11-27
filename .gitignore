@@ -1,0 +1,15 @@
+.venv/
+.DS_Store
+.vscode/
+build/
+data/
+/dev/
+/tests/
+/outputs/
+/logs/
+/.pytest_cache/
+install/
+log/
+dist/
+__pycache__/
+*.egg-info/

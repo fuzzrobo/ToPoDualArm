@@ -1,0 +1,19 @@
+# パスはこのファイルからの相対指定。
+robot:
+  hardware: ../config/hardware/follower.yaml
+  port: /dev/topoarm-unconfigured  # U2D2のシリアルポートに置き換える。
+  hardware_verified: true
+cameras:
+  left: 0
+  right: 1
+task: Move the box from right to left
+
+record:
+  root: data/recordings/right_to_left_16
+
+train:
+  output: outputs/right_to_left_16_act
+
+infer:
+  device: cpu
+  replan_hz: 10
