@@ -29,7 +29,7 @@ uv sync --managed-python --python 3.12
 
 ![ToPoDualArm収録GUI。左右の映像、AとBのボタン](media/act-collection-gui.png)
 
-[demo.yaml](demo.yaml) にU2D2のポート、カメラID、タスク、収録先を指定します。実機の可動域と校正を確認してから `robot.hardware_verified: true` を設定します。
+[demo.yaml](demo.yaml) にU2D2のポート、カメラID、タスク、収録先を指定します。
 
 `demo/` で使う入力のYAMLを指定して起動します。GUIには起動時に選んだ入力と接続状態が表示されます。
 
