@@ -3,14 +3,14 @@ name: ROS 2 CI
 on:
   pull_request:
     branches: [main]
-  push:
-    branches: [main]
+    types: [closed]
 
 permissions:
   contents: read
 
 jobs:
   ros2:
+    if: github.event.pull_request.merged == true
     name: ROS 2 (${{ matrix.distro }})
     runs-on: ubuntu-24.04
     timeout-minutes: 15
