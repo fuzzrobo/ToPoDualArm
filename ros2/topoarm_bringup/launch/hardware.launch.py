@@ -52,7 +52,7 @@ def generate_launch_description():
         "use_fake_hardware": "false",
         "read_only": "false",
         "torque": "false",
-        "hardware_verified": "false",
+        "hardware_verified": "true",
         "configure_devices": "false",
         "vsido_peer_address": "",
         "vsido_bind_address": "",

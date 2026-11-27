@@ -7,7 +7,7 @@
   <xacro:arg name="config_file" default="$(find topoarm_description)/config/hardware/follower.yaml"/>
   <xacro:arg name="read_only" default="false"/>
   <xacro:arg name="torque" default="false"/>
-  <xacro:arg name="hardware_verified" default="false"/>
+  <xacro:arg name="hardware_verified" default="true"/>
   <xacro:arg name="configure_devices" default="false"/>
   <xacro:property name="hardware_file" value="$(arg config_file)"/>
   <xacro:property name="hardware" value="${xacro.load_yaml(hardware_file)}"/>

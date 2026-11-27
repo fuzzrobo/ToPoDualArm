@@ -1,13 +1,48 @@
 name: topoarm-ros2
 
+x-image: &ros2-image
+  image: topoarm-ros2:${ROS_DISTRO:-jazzy}
+  build:
+    context: ..
+    dockerfile: ros2/Dockerfile
+    args:
+      ROS_DISTRO: ${ROS_DISTRO:-jazzy}
+
+x-hardware: &ros2-hardware
+  <<: *ros2-image
+  network_mode: host
+  volumes:
+    - ../config:/workspace/config:ro
+
 services:
+  vsido:
+    <<: *ros2-hardware
+    command:
+      - ros2
+      - launch
+      - topoarm_bringup
+      - hardware.launch.py
+      - backend:=vsido
+      - config_file:=${TOPOARM_CONFIG:-/workspace/config/hardware/follower.yaml}
+      - torque:=${TORQUE:-false}
+
+  u2d2:
+    <<: *ros2-hardware
+    profiles: [u2d2]
+    devices:
+      - ${U2D2_DEVICE:-/dev/ttyUSB0}:/dev/ttyUSB0
+    command:
+      - ros2
+      - launch
+      - topoarm_bringup
+      - hardware.launch.py
+      - backend:=u2d2
+      - config_file:=${TOPOARM_CONFIG:-/workspace/config/hardware/follower.yaml}
+      - torque:=${TORQUE:-false}
+
   moveit:
-    image: topoarm-ros2:${ROS_DISTRO:-jazzy}
-    build:
-      context: ..
-      dockerfile: ros2/Dockerfile
-      args:
-        ROS_DISTRO: ${ROS_DISTRO:-jazzy}
+    <<: *ros2-image
+    profiles: [test]
     environment:
       DISPLAY: ${DISPLAY:-}
       QT_X11_NO_MITSHM: "1"

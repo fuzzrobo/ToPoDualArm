@@ -17,4 +17,3 @@ sdk/build/
 !models/300mm/meshes/**
 **/__pycache__/
 ros2/README.md
-ros2/media/

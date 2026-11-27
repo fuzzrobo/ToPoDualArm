@@ -1,5 +1,5 @@
-# 300 mmフォロワーの共通設定。接続先と校正確認は起動側で指定する。
-hardware_verified: false
+# 300 mmフォロワーの共通設定。
+hardware_verified: true
 connection:
   port: /dev/topoarm-unconfigured
   baud_rate: 2000000
@@ -219,6 +219,7 @@ pan_tilt:
       current_cap: 3.2091700000000003
       initial_current_limit: 3.2091700000000003
 vsido:
+  peer_address: 192.168.4.40
   receive_port: 8886
   command_port: 8888
   timeout_s: 0.1

@@ -1,8 +1,8 @@
 # ToPoDualArm ACTデモ
 
-![ToPoDualArmで箱を運ぶ実機デモの冒頭12秒](media/act-demo.gif)
+![ToPoDualArmで箱を運ぶ実機デモの冒頭12秒](../media/act-demo.gif)
 
-左右手首の320×240画像と関節の実測角・指令角をLeRobot形式で収録し、ACTを学習します。標準は16軸で、機体YAMLの `modules: [pan_tilt]` を有効にした場合は18軸です。構成を変更するときは新しい収録先と学習先を指定します。
+左右手首の320×240画像と関節の実測角・指令角をLeRobot形式で収録し、ACTを学習します。標準は16軸、パンチルト付きは18軸です。構成を変更するときは新しい収録先と学習先を指定します。
 
 ## 環境構築
 
@@ -16,6 +16,21 @@ cd demo
 uv sync --managed-python --python 3.12
 ```
 
+U2D2とカメラを接続し、ポート名とカメラIDを確認します。
+
+```sh
+uv run python -m serial.tools.list_ports -v
+uv run python - <<'PY'
+from AVFoundation import AVCaptureDevice, AVMediaTypeVideo, AVMediaTypeMuxed
+
+for media in (AVMediaTypeVideo, AVMediaTypeMuxed):
+    for camera in AVCaptureDevice.devicesWithMediaType_(media):
+        print(camera.localizedName(), camera.uniqueID())
+PY
+```
+
+[demo.yaml](demo.yaml) の `robot.port` にフォロワーの `/dev/cu.usbserial-…`、`cameras.left` と `cameras.right` に対応するカメラIDを文字列で指定します。
+
 ### Linuxの場合
 
 ```sh
@@ -25,26 +40,36 @@ cd demo
 uv sync --managed-python --python 3.12
 ```
 
+U2D2とカメラを接続し、デバイスパスを確認します。
+
+```sh
+ls -l /dev/serial/by-id/
+ls -l /dev/v4l/by-path/*-video-index0
+```
+
+[demo.yaml](demo.yaml) の `robot.port` にフォロワーの `/dev/serial/by-id/…`、`cameras.left` と `cameras.right` に各カメラの `/dev/v4l/by-path/…-video-index0` を指定します。
+
+### パンチルトを使う場合
+
+`demo.yaml` の `robot.hardware` が参照する機体YAML（既定は [follower.yaml](../config/hardware/follower.yaml)）で `modules: [pan_tilt]` を設定します。正面カメラも収録する場合は、`demo.yaml` に `cameras.front` を追加します。
+
 ## データ収集
 
-![ToPoDualArm収録GUI。左右の映像、AとBのボタン](media/act-collection-gui.png)
+データ収集には、**Quest、V-Sido、Glove、U2D2リーダー**の4つの方法があります。`demo/` で使う入力のコマンドを実行します。
 
-[demo.yaml](demo.yaml) にU2D2のポート、カメラID、タスク、収録先を指定します。
+![ToPoDualArm収録GUI。左右の映像、AとBのボタン](../media/act-collection-gui.png)
 
-`demo/` で使う入力のYAMLを指定して起動します。GUIには起動時に選んだ入力と接続状態が表示されます。
+`demo.yaml` の `task` と `record.root` にタスクと未使用の保存先を指定します。保存先は入力YAMLの `root` で上書きできます。GUIで左右の映像を確認し、A で開始・保存、B で棄却します。
 
-| 入力 | 起動コマンド | 設定と操作 |
-|---|---|---|
-| Quest | `uv run demo record config/quest.yaml` | YubiQuestAppの接続先を指定します。 |
-| V-Sido | `uv run demo record config/vsido.yaml` | UDPの受信ポート・受信元を指定します。 |
-| Glove | `uv run demo record config/glove.yaml` | 左右のポート・ID・開閉端を校正します。腕と首を保持し、グリッパーを操作します。 |
-| U2D2リーダー | `uv run demo record config/u2d2.yaml` | 物理リーダーのポートと校正確認を指定します。 |
+サーボ設定は [follower.yaml](../config/hardware/follower.yaml) にあります。
 
-保存先は `demo.yaml` の `record.root` で指定します。入力YAMLに `root` を指定すると、そのYAMLの場所を基準に上書きできます。各収録で未使用の保存先を使います。どの入力でもGUIの「A 開始／採用」「B 棄却」で操作できます。
+### 1. Quest
 
-共通のサーボ設定は [follower.yaml](../config/hardware/follower.yaml)、Questの座標校正は [quest.yaml](../config/teleop/quest.yaml) にあります。カメラは `left` と `right` を指定し、3視点では `front` を追加します。MacはカメラID、LinuxはV4L2デバイスパスを使います。
+`quest.quest_host` にYubiQuestAppを起動したQuestのIPを設定します。入力設定は [config/quest.yaml](config/quest.yaml)、座標校正は [config/teleop/quest.yaml](../config/teleop/quest.yaml) にあります。
 
-### Questのボタン
+```sh
+uv run demo record config/quest.yaml
+```
 
 | ボタン | 操作 |
 |---|---|
@@ -53,7 +78,33 @@ uv sync --managed-python --python 3.12
 | **A** | 待機中は収録開始、収録中は採用して保存します。 |
 | **B** | 収録中の試行を棄却します。 |
 
+### 2. V-Sido
+
+バイラテラル操作中の関節状態をUDPで収録します。 [V-Sido接続方法・通信仕様](../v-sido.md)
+
+```sh
+uv run demo record config/vsido.yaml
+```
+
+### 3. Glove
+
+左右の `encoder_port`、`encoder_id`、開閉端を設定します。腕と首を保持し、グリッパーを操作します。 [config/glove.yaml](config/glove.yaml)
+
+```sh
+uv run demo record config/glove.yaml
+```
+
+### 4. U2D2リーダー
+
+`leader.port` にリーダー側のU2D2ポートを設定します。物理リーダーを動かしてフォロワーを操作します。 [config/u2d2.yaml](config/u2d2.yaml)
+
+```sh
+uv run demo record config/u2d2.yaml
+```
+
 ## 学習
+
+収録済みデータから学習する場合は、実機の接続設定は不要です。
 
 既定では `record.root` のデータから左右手首の2視点で学習し、デモの `outputs/` 以下に学習結果を保存します。保存先は `train.output` で指定します。入力YAMLで収録先を上書きした場合は、学習時にそのパスを指定します。V-Sidoのデータセットは収録先の `vsido/` 以下に保存されます。CUDAが使える場合はGPU、それ以外はCPUを使います。
 
@@ -65,24 +116,36 @@ uv run demo train data/収録先
 
 ## 推論
 
-![ACT推論GUIで箱を右から左、左から右へ運ぶ実機デモ](media/act-inference.gif)
+![ACT推論GUIで箱を右から左、左から右へ運ぶ実機デモ](../media/act-inference.gif)
 
 `infer.models` に登録したACTモデルをGUIで選び、「推論開始」を押します。「停止」で姿勢を保持します。`infer.models` を省略すると `train.output` の学習済み重みを読み込みます。任意の単一モデルを使う場合は `infer.checkpoint` を指定します。
+
+### U2D2接続の場合
+
+`demo.yaml` の `infer.backend` を `u2d2` に設定します。
 
 ```sh
 uv run demo infer
 ```
 
-既存の18軸ACTモデルを使う場合は、機体YAMLでパンチルトを有効にし、`uv run demo infer --config config/infer-pan-tilt.yaml` で起動します。モデルと機体で関節一覧が一致する必要があります。
+既存の18軸ACTプリセットを使う場合は、機体YAMLで `modules: [pan_tilt]` を設定し、`uv run demo infer --config config/infer-pan-tilt.yaml` で起動します。ポートとカメラは `demo.yaml` から読み込みます。
+
+### V-Sido接続の場合
+
+V-Sidoを通常モードにし、`demo.yaml` の `infer.backend` を `vsido` に設定します。 [V-Sido接続方法・通信仕様](../v-sido.md)
+
+```sh
+uv run demo infer
+```
 
 ## SDK
 
-Pythonバインディングはデモの `uv sync` でビルドされます。フォロワーは `role="follower"`、リーダーは `role="leader"` で開きます。機体の校正と可動域を確認してから、個体YAMLの `hardware_verified: true` を設定してください。
+Pythonバインディングはデモの `uv sync` でビルドされます。フォロワーは `role="follower"`、リーダーは `role="leader"` で開きます。以下は校正済みの機体を使う例です。
 
 ```python
 from topoarm_sdk import Device
 
-with Device("path/to/follower.yaml", role="follower") as arm:
+with Device("path/to/follower.yaml", role="follower", hardware_verified=True) as arm:
     arm.enable()
     q = arm.read().position  # 関節名ごとの角度（rad）
     applied = arm.command(q)

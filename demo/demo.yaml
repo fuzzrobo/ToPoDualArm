@@ -15,5 +15,6 @@ train:
   output: outputs/right_to_left_16_act
 
 infer:
+  backend: u2d2  # V-Sidoを使う場合はvsidoにする。
   device: cpu
   replan_hz: 10

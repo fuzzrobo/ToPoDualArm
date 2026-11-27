@@ -10,6 +10,7 @@ YUBI Gloveと組み合わせて導入する場合は、[ToPoDualArm-Max フィ�
 
 ## サンプル
 
+- [V-Sido接続方法・通信仕様](v-sido.md)
 - [ACT模倣学習デモ](demo/README.md)
 - [ROS2](ros2/README.md)
 

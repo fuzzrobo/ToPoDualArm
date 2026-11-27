@@ -96,7 +96,7 @@ def generate_launch_description():
         "config_file": str(description / "config/hardware/follower.yaml"),
         "backend": "u2d2",
         "torque": "false",
-        "hardware_verified": "false",
+        "hardware_verified": "true",
         "vsido_peer_address": "",
         "vsido_bind_address": "",
     }

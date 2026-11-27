@@ -2,4 +2,4 @@ input: u2d2
 leader:
   hardware: ../../config/hardware/leader.yaml
   port: /dev/serial/by-id/leader
-  hardware_verified: false
+  hardware_verified: true

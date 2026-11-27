@@ -2,7 +2,7 @@
 import time
 from pathlib import Path
 import yaml
-from ._native import Driver, load_config
+from ._native import Driver, VsidoDriver, load_config, load_vsido_config
 from ._session import PositionSession
 
 
@@ -77,3 +77,39 @@ class Device(PositionSession):
         if self.device is not None:
             self.device.close()
             self.device = None
+
+
+class VsidoDevice(PositionSession):
+    """通常モードのV-SidoへUDPで接続するフォロワー。"""
+
+    def __init__(self, path, *, peer_address="", bind_address="", hardware_verified=None):
+        self.cfg = load_vsido_config(str(Path(path).resolve()), peer_address, bind_address)
+        if hardware_verified is not None:
+            if type(hardware_verified) is not bool:
+                raise ValueError("hardware_verifiedにはtrueまたはfalseを指定してください")
+            self.cfg.hardware_verified = hardware_verified
+        self.cfg.options.verified = self.cfg.hardware_verified
+        self.cfg.options.torque = True  # 有効化後の位置指令を許可する。
+        self.device = VsidoDriver(self.cfg)
+        super().__init__([j.name for j in self.cfg.joints], "follower", self.cfg.timeout_s)
+
+    def _connect(self):
+        self.device.connect()
+
+    def _read(self):
+        states = self.device.read()
+        # UDPパケットがOSに到着してからの経過時間を使う。
+        stamp = time.monotonic_ns() - round(max(j.age for j in states) * 1e9)
+        return {j.name: j.position for j in states}, stamp
+
+    def _enable(self):
+        self.device.enable()
+
+    def _disable(self):
+        self.device.disable()
+
+    def _command(self, q):
+        return dict(zip(q, self.device.command(list(q.values())), strict=True))
+
+    def _close(self):
+        self.device.close()
