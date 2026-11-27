@@ -55,6 +55,14 @@ RVizの **MotionPlanning → Planning** で操作します。
 
 参考にした構成は [TurtleBot3 LimeのMoveItパッケージ](https://github.com/ROBOTIS-JAPAN-GIT/turtlebot3_lime/tree/humble-devel/turtlebot3_lime_moveit_config) です。
 
+## 関節I/O
+
+MoveItを使わずに関節状態と軌道指令を確認する場合は、`hardware.launch.py` を起動します。`/joint_states` に関節状態が配信され、`/joint_trajectory_controller/follow_joint_trajectory` に関節名と軌道を指定できます。
+
+```sh
+ros2 launch topoarm_bringup hardware.launch.py use_fake_hardware:=true
+```
+
 ## 実機
 
 校正と可動域を確認したフォロワーYAMLに `hardware_verified: true` を設定してから起動します。V-Sidoで接続する場合は `backend:=vsido vsido_peer_address:=<機器IP>` を加えます。
@@ -63,3 +71,11 @@ RVizの **MotionPlanning → Planning** で操作します。
 ros2 launch topoarm_moveit moveit.launch.py use_fake_hardware:=false \
   config_file:=/path/to/follower.yaml hardware_verified:=true torque:=true
 ```
+
+標準の接続方式は `backend:=u2d2` です。[フォロワーYAML](../config/hardware/follower.yaml) の `actuator_profiles` にPIDと速度プロファイル、[床設定](../config/floor.yaml) に床の高さと余裕があります。機体の軸構成は [300 mmモデル](../models/300mm/README.md) を参照してください。
+
+### V-Sido
+
+V-SidoのUDPポート、タイムアウト、CSVの送信順は機体YAMLの `vsido` にあります。受信角はパケット内のIDで照合します。16軸で位置指令を送る場合は、機器側の軸数と送信順に `command_order` を合わせます。受信インターフェースは `vsido_bind_address` で指定できます。
+
+バイラテラルモードで状態だけを読む場合は、`hardware.launch.py` に `read_only:=true torque:=false` を指定します。位置指令を送信中にUDP状態が既定の100 msを超えて途絶すると、指令送信が停止します。運転再開にはハードウェアの再構成が必要です。

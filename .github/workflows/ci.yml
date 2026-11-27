@@ -1,0 +1,33 @@
+name: ROS 2 CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  ros2:
+    name: ROS 2 (${{ matrix.distro }})
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        distro: [humble, jazzy]
+    env:
+      ROS_DISTRO: ${{ matrix.distro }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: ROS 2とSDKをビルド
+        run: docker compose -f ros2/docker-compose.yaml build moveit
+      - name: 標準16軸とRealSense付き18軸を検証
+        run: |
+          docker compose -f ros2/docker-compose.yaml run --rm -T \
+            --volume "$PWD/.github/scripts/check_ros2.py:/tmp/check_ros2.py:ro" \
+            moveit python3 /tmp/check_ros2.py

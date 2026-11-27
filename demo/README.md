@@ -74,3 +74,29 @@ uv run demo infer
 ```
 
 既存の18軸ACTモデルを使う場合は、機体YAMLでパンチルトを有効にし、`uv run demo infer --config config/infer-pan-tilt.yaml` で起動します。モデルと機体で関節一覧が一致する必要があります。
+
+## SDK
+
+Pythonバインディングはデモの `uv sync` でビルドされます。フォロワーは `role="follower"`、リーダーは `role="leader"` で開きます。機体の校正と可動域を確認してから、個体YAMLの `hardware_verified: true` を設定してください。
+
+```python
+from topoarm_sdk import Device
+
+with Device("path/to/follower.yaml", role="follower") as arm:
+    arm.enable()
+    q = arm.read().position  # 関節名ごとの角度（rad）
+    applied = arm.command(q)
+```
+
+既定の通信設定は2 Mbps、Return Delay Timeはレジスタ値 `10`（20 µs）です。`startup_configuration: apply` では、全IDと型番を確認し、トルクOFFでEEPROMの差分を適用します。駆動開始時にはフォロワーの現在位置を目標にします。
+
+`connection.latency_timer` の単位はミリ秒です。MacではSDKが `IOSSDATALAT` でドライバに受信遅延を設定します。状態読み取りは `teleop` が既定です。温度や電圧を含む詳細な診断値が毎周期必要な場合は `read_profile="bam"` を指定します。
+
+C++ SDKを単体でビルドする場合は、リポジトリ直下で実行します。
+
+```sh
+cmake -S sdk -B sdk/build/cpp
+cmake --build sdk/build/cpp
+```
+
+[第三者コードの帰属](../sdk/third_party/lib_dynamixel/README.md)
