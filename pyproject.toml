@@ -12,8 +12,9 @@ license = "Apache-2.0"
 dependencies = ["PyYAML>=6,<7"]
 
 [tool.scikit-build]
-cmake.source-dir = "python/bindings"
-wheel.packages = ["python/bindings/topoarm_sdk", "python/teleop/topoarm_leader_follower"]
+cmake.source-dir = "sdk/python"
+build-dir = "sdk/build/python/{wheel_tag}"
+wheel.packages = ["sdk/python/topoarm_sdk", "sdk/python/topoarm_leader_follower"]
 wheel.license-files = ["LICENSE", "sdk/third_party/lib_dynamixel/LICENSE-ROBOTIS", "sdk/third_party/lib_dynamixel/README.md"]
 install.components = ["python"]
-sdist.exclude = ["/python/demo/", "/models/300mm/mujoco/", "/dev/", "/tests/", "/data/", "/outputs/", "/logs/", "/.venv/", "/build/", "/install/", "/log/", "/dist/", "__pycache__/", "*.pyc"]
+sdist.exclude = ["/demo/", "/models/300mm/mujoco/", "/dev/", "/tests/", "/data/", "/outputs/", "/logs/", "/.venv/", "/build/", "/sdk/build/", "/install/", "/log/", "/dist/", "__pycache__/", "*.pyc"]

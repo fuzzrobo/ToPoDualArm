@@ -1,0 +1,13 @@
+planner_configs:
+  RRTConnect:
+    type: geometric::RRTConnect
+left_arm:
+  planner_configs: [RRTConnect]
+right_arm:
+  planner_configs: [RRTConnect]
+both_arms:
+  planner_configs: [RRTConnect]
+left_gripper:
+  planner_configs: [RRTConnect]
+right_gripper:
+  planner_configs: [RRTConnect]

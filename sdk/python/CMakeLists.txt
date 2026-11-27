@@ -1,0 +1,8 @@
+cmake_minimum_required(VERSION 3.22)
+project(topoarm_python LANGUAGES CXX)
+add_subdirectory(.. sdk EXCLUDE_FROM_ALL)
+set(PYBIND11_FINDPYTHON ON)
+find_package(pybind11 CONFIG REQUIRED)
+pybind11_add_module(_native bindings.cpp)
+target_link_libraries(_native PRIVATE topoarm::sdk)
+install(TARGETS _native LIBRARY DESTINATION topoarm_sdk COMPONENT python)

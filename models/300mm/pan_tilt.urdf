@@ -1,0 +1,329 @@
+<?xml version='1.0' encoding='utf-8'?>
+<robot name="topoarm_pan_tilt">
+  <!-- CADメッシュはbase_link座標。胴体0.1225 mとパン取付0.2205 mの和を引いて元の位置に置く。 -->
+  <link name="neck_pan_servo_link">
+    <visual name="base_link_03">
+      <origin xyz="0 0 -0.343" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/base_link_03.stl" />
+      </geometry>
+      <material name="cad_color_03" />
+    </visual>
+    <collision name="base_link_03">
+      <origin xyz="0 0 -0.343" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/base_link_03.stl" />
+      </geometry>
+    </collision>
+    <visual name="base_link_07">
+      <origin xyz="0 0 -0.343" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/base_link_07.stl" />
+      </geometry>
+      <material name="cad_color_08" />
+    </visual>
+    <collision name="base_link_07">
+      <origin xyz="0 0 -0.343" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/base_link_07.stl" />
+      </geometry>
+    </collision>
+    <visual name="pan_servo_side_cover">
+      <origin xyz="0 0 -0.343" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/pan_servo_side_cover.stl" />
+      </geometry>
+      <material name="cad_color_02" />
+    </visual>
+    <collision name="pan_servo_side_cover">
+      <origin xyz="0 0 -0.343" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/pan_servo_side_cover.stl" />
+      </geometry>
+    </collision>
+    <visual name="pan_servo_fasteners">
+      <origin xyz="0 0 -0.343" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/pan_servo_fasteners.stl" />
+      </geometry>
+      <material name="cad_color_23" />
+    </visual>
+    <collision name="pan_servo_fasteners">
+      <origin xyz="0 0 -0.343" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/pan_servo_fasteners.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="neck_pan_servo_fixed" type="fixed">
+    <parent link="torso_link" />
+    <child link="neck_pan_servo_link" />
+    <origin xyz="0 0 0.2205" rpy="0 0 0" />
+  </joint>
+  <link name="neck_pan_link">
+    <visual name="neck_pan_link_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/neck_pan_link_00.stl" />
+      </geometry>
+      <material name="cad_color_08" />
+    </visual>
+    <collision name="neck_pan_link_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/neck_pan_link_00.stl" />
+      </geometry>
+    </collision>
+    <visual name="neck_pan_link_01">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/neck_pan_link_01.stl" />
+      </geometry>
+      <material name="cad_color_11" />
+    </visual>
+    <collision name="neck_pan_link_01">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/neck_pan_link_01.stl" />
+      </geometry>
+    </collision>
+    <visual name="neck_pan_link_02">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/neck_pan_link_02.stl" />
+      </geometry>
+      <material name="cad_color_23" />
+    </visual>
+    <collision name="neck_pan_link_02">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/neck_pan_link_02.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="neck_pan_joint" type="revolute">
+    <parent link="torso_link" />
+    <child link="neck_pan_link" />
+    <origin xyz="0 0 0.2205" rpy="0 0 0" />
+    <axis xyz="0 0 1" />
+    <limit effort="3" velocity="3" lower="-1.5707963267948966" upper="1.5707963267948966" />
+  </joint>
+  <link name="neck_tilt_link">
+    <visual name="neck_tilt_link_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/neck_tilt_link_00.stl" />
+      </geometry>
+      <material name="cad_color_11" />
+    </visual>
+    <collision name="neck_tilt_link_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/neck_tilt_link_00.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="neck_tilt_joint" type="revolute">
+    <parent link="neck_pan_link" />
+    <child link="neck_tilt_link" />
+    <origin xyz="0.024 0 0.0195" rpy="0 0 0" />
+    <axis xyz="0 -1 0" />
+    <limit lower="-1.3962634015954636" upper="1.8325957145940461" effort="3" velocity="3" />
+  </joint>
+  <link name="neck_tilt_cover_link">
+    <visual name="neck_tilt_cover_link_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/neck_tilt_cover_link_00.stl" />
+      </geometry>
+      <material name="cad_color_02" />
+    </visual>
+    <collision name="neck_tilt_cover_link_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/neck_tilt_cover_link_00.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="neck_tilt_cover_fixed" type="fixed">
+    <parent link="neck_pan_link" />
+    <child link="neck_tilt_cover_link" />
+    <origin xyz="0.024 0 0.0195" rpy="0 0 0" />
+  </joint>
+  <link name="camera_link">
+    <visual name="camera_link_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/camera_link_00.stl" />
+      </geometry>
+      <material name="cad_color_05" />
+    </visual>
+    <collision name="camera_link_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/camera_link_00.stl" />
+      </geometry>
+    </collision>
+    <visual name="camera_link_01">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/camera_link_01.stl" />
+      </geometry>
+      <material name="cad_color_10" />
+    </visual>
+    <collision name="camera_link_01">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/camera_link_01.stl" />
+      </geometry>
+    </collision>
+    <visual name="camera_link_02">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/camera_link_02.stl" />
+      </geometry>
+      <material name="cad_color_12" />
+    </visual>
+    <collision name="camera_link_02">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/camera_link_02.stl" />
+      </geometry>
+    </collision>
+    <visual name="camera_link_03">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/camera_link_03.stl" />
+      </geometry>
+      <material name="cad_color_14" />
+    </visual>
+    <collision name="camera_link_03">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/camera_link_03.stl" />
+      </geometry>
+    </collision>
+    <visual name="camera_link_04">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/camera_link_04.stl" />
+      </geometry>
+      <material name="cad_color_16" />
+    </visual>
+    <collision name="camera_link_04">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/camera_link_04.stl" />
+      </geometry>
+    </collision>
+    <visual name="camera_link_05">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/camera_link_05.stl" />
+      </geometry>
+      <material name="cad_color_18" />
+    </visual>
+    <collision name="camera_link_05">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/camera_link_05.stl" />
+      </geometry>
+    </collision>
+    <visual name="camera_link_06">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/camera_link_06.stl" />
+      </geometry>
+      <material name="cad_color_22" />
+    </visual>
+    <collision name="camera_link_06">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/camera_link_06.stl" />
+      </geometry>
+    </collision>
+    <visual name="camera_link_07">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/camera_link_07.stl" />
+      </geometry>
+      <material name="cad_color_23" />
+    </visual>
+    <collision name="camera_link_07">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/camera_link_07.stl" />
+      </geometry>
+    </collision>
+    <visual name="camera_link_08">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/camera_link_08.stl" />
+      </geometry>
+      <material name="cad_color_24" />
+    </visual>
+    <collision name="camera_link_08">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/camera_link_08.stl" />
+      </geometry>
+    </collision>
+    <visual name="camera_link_09">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/camera_link_09.stl" />
+      </geometry>
+      <material name="cad_color_25" />
+    </visual>
+    <collision name="camera_link_09">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/camera_link_09.stl" />
+      </geometry>
+    </collision>
+    <visual name="camera_link_10">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/camera_link_10.stl" />
+      </geometry>
+      <material name="cad_color_27" />
+    </visual>
+    <collision name="camera_link_10">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/camera_link_10.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="camera_fixed" type="fixed">
+    <parent link="neck_tilt_link" />
+    <child link="camera_link" />
+    <origin xyz="0.05775 0.0175 0" rpy="0 0 0" />
+  </joint>
+  <link name="realsense_mount_link">
+    <visual name="realsense_mount_link_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/realsense_mount_link_00.stl" />
+      </geometry>
+      <material name="cad_color_02" />
+    </visual>
+    <collision name="realsense_mount_link_00">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/realsense_mount_link_00.stl" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="realsense_mount_fixed" type="fixed">
+    <parent link="neck_tilt_link" />
+    <child link="realsense_mount_link" />
+    <origin xyz="0.0295 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="camera_optical_frame" />
+  <joint name="camera_optical_fixed" type="fixed">
+    <parent link="camera_link" />
+    <child link="camera_optical_frame" />
+    <origin xyz="0 0 0" rpy="-1.5707963267948966 0 -1.5707963267948966" />
+  </joint>
+</robot>

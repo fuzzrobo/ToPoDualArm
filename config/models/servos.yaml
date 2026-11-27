@@ -1,5 +1,0 @@
-# 機種共通の調整値。ID・向き・ゼロ点・可動域・電流上限は個体YAMLに残す。
-arm: {position_kp: 800, position_ki: 0, position_kd: 4000, profile_velocity: 0, profile_acceleration: 0}
-end: {position_kp: 0, position_ki: 0, position_kd: 0, profile_velocity: 0, profile_acceleration: 0}
-leader_arm: {position_kp: 800, position_ki: 0, position_kd: 0, profile_velocity: 0.5, profile_acceleration: 7.5}
-leader_neck: {position_kp: 400, position_ki: 0, position_kd: 0, profile_velocity: 0, profile_acceleration: 0}

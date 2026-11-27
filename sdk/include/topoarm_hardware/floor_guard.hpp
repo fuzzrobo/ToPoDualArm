@@ -15,7 +15,8 @@ class FloorGuard {
         std::array<bool, 2> recovering{{false, false}}, holding{{false, false}};
         int evaluations{0};
     };
-    FloorGuard(const std::string &path, double floor_z, double margin);
+    FloorGuard(const std::string &path, double floor_z, double margin,
+               const std::string &fragment = {});
     const std::vector<std::string> &names() const { return names_; }
     std::array<double, 2> clearance(const std::vector<double> &q) const;
     Result clip(const std::vector<double> &current, const std::vector<double> &target) const;

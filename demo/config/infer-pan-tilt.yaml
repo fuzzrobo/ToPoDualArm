@@ -1,0 +1,47 @@
+# 既存の18軸ACTを使用する設定。機体のmodulesには[pan_tilt]を指定する。
+infer:
+  device: cpu
+  replan_hz: 10
+  models:
+    右→左 ACT:
+      checkpoint: ../outputs/boxpack-act-right-to-left-87-20261126/best
+      initial_pose_rad:
+        L_gripper_joint: -0.56603891
+        L_joint1: -0.26374509
+        L_joint2: -1.25063262
+        L_joint3: 0.61719817
+        L_joint4: -0.33896991
+        L_joint5: -0.6550098
+        L_joint6: -1.29921201
+        L_joint7: -0.75829452
+        R_gripper_joint: 0.59364062
+        R_joint1: 0.11412219
+        R_joint2: 1.03804679
+        R_joint3: -0.35678999
+        R_joint4: 0.37980966
+        R_joint5: 0.74172952
+        R_joint6: 0.98041295
+        R_joint7: 0.560411
+        neck_pan_joint: 0.0
+        neck_tilt_joint: -0.78561733
+    左→右 ACT:
+      checkpoint: ../outputs/boxpack-act-left-to-right-84-20261126/best
+      initial_pose_rad:
+        L_gripper_joint: -0.56608093
+        L_joint1: -0.38612188
+        L_joint2: -1.17390506
+        L_joint3: 0.41435343
+        L_joint4: 0.00272124
+        L_joint5: -0.72689676
+        L_joint6: -1.00282418
+        L_joint7: -0.61337167
+        R_gripper_joint: 0.59386071
+        R_joint1: 0.22895189
+        R_joint2: 0.97284852
+        R_joint3: -0.61879314
+        R_joint4: 0.48113412
+        R_joint5: 0.4828152
+        R_joint6: 0.98868214
+        R_joint7: 0.39904514
+        neck_pan_joint: 0.0
+        neck_tilt_joint: -0.78555579

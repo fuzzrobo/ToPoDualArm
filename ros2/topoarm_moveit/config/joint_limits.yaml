@@ -1,0 +1,20 @@
+# 速度上限はURDFを使用。加速度上限はfakeのMoveIt計画用（rad/s²）。
+joint_limits:
+  L_joint1: &acceleration {has_acceleration_limits: true, max_acceleration: 1.0}
+  L_joint2: *acceleration
+  L_joint3: *acceleration
+  L_joint4: *acceleration
+  L_joint5: *acceleration
+  L_joint6: *acceleration
+  L_joint7: *acceleration
+  R_joint1: *acceleration
+  R_joint2: *acceleration
+  R_joint3: *acceleration
+  R_joint4: *acceleration
+  R_joint5: *acceleration
+  R_joint6: *acceleration
+  R_joint7: *acceleration
+  L_gripper_joint: *acceleration
+  R_gripper_joint: *acceleration
+  neck_pan_joint: *acceleration
+  neck_tilt_joint: *acceleration
