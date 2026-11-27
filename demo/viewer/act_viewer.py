@@ -18,7 +18,7 @@ from lerobot.configs.policies import PreTrainedConfig
 from lerobot.policies.factory import get_policy_class, make_pre_post_processors
 from topoarm_recording.config import inference_config
 from topoarm_recording.mac_cameras import CameraStreams
-from topoarm_sdk import Device
+from topoarm_sdk import Device, VsidoDevice
 
 from camera_window import CAMERA_TITLES, CameraWindow
 
@@ -154,7 +154,12 @@ class BoxpackPolicy:
 
 def run_inference(config_path):
     cfg, folder = inference_config(config_path)
-    robot = Device(**cfg["robot"], role="follower", read_profile="teleop")
+    if cfg["backend"] == "vsido":
+        robot = VsidoDevice(**cfg["robot"])
+        connection_name = "V-Sido"
+    else:
+        robot = Device(**cfg["robot"], role="follower", read_profile="teleop")
+        connection_name = "U2D2"
     if robot.read_only:
         raise ValueError("フォロワーを指定してください")
     configured_cameras = cfg["cameras"]
@@ -217,7 +222,7 @@ def run_inference(config_path):
         smooth_check = BooleanVar(master=view.root, value=ensemble)
         ttk.Checkbutton(view.controls, text="チャンク平滑化", variable=smooth_check,
                         command=lambda: controls.put(smooth_check.get())).pack(side="left")
-    status = ("接続中",False)
+    status = (f"{connection_name}接続中", False)
     display_images = {}
     connected = threading.Event()
 
@@ -244,7 +249,7 @@ def run_inference(config_path):
                 try:
                     resources.enter_context(robot)
                 except RuntimeError as exc:
-                    waiting = (f"フォロワー接続待ち　{exc}", False)
+                    waiting = (f"{connection_name}接続待ち　{exc}", False)
                     if waiting != status:
                         print(waiting[0], flush=True)
                     status = waiting
@@ -472,7 +477,10 @@ def run_inference(config_path):
                     quit_event.wait(max(0.,deadline-time.monotonic()))
             finally:
                 if active and enabled:
-                    robot.command(robot.read().position)
+                    try:
+                        robot.command(robot.read().position)
+                    except (RuntimeError, TimeoutError) as exc:
+                        print(f"終了時の保持指令を送れません: {exc}", flush=True)
 
     def worker(streams):
         nonlocal status

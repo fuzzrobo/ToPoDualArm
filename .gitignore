@@ -1,6 +1,7 @@
 .venv/
 .DS_Store
 .vscode/
+/config/hardware/*-local.yaml
 build/
 data/
 /dev/

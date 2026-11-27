@@ -164,6 +164,48 @@ PYBIND11_MODULE(_native, m) {
         .def_readwrite("joints", &HardwareConfig::joints)
         .def_readwrite("options", &HardwareConfig::options);
     m.def("load_config", &load_config, py::arg("path"), py::arg("selected") = std::vector<std::string>{});
+    py::class_<VsidoConfig>(m, "VsidoConfig")
+        .def_readwrite("hardware_verified", &VsidoConfig::hardware_verified)
+        .def_readonly("timeout_s", &VsidoConfig::timeout_s)
+        .def_readonly("joints", &VsidoConfig::joints)
+        .def_readwrite("options", &VsidoConfig::options);
+    m.def("load_vsido_config", &load_vsido_config, py::arg("path"),
+          py::arg("peer_address") = "", py::arg("bind_address") = "");
+    py::class_<VsidoSession>(m, "VsidoDriver")
+        .def(py::init<VsidoConfig>())
+        .def("connect", [](VsidoSession &session) {
+            if (!session.configure())
+                throw std::runtime_error(session.error());
+        }, py::call_guard<py::gil_scoped_release>())
+        .def("enable", [](VsidoSession &session) {
+            if (!session.activate())
+                throw std::runtime_error(session.error());
+        })
+        .def("disable", &VsidoSession::deactivate)
+        .def("close", &VsidoSession::close)
+        .def("read", [](VsidoSession &session) {
+            if (!session.read())
+                throw std::runtime_error(session.error());
+            std::vector<JointState> states;
+            states.reserve(session.joints().size());
+            for (const auto &joint : session.joints())
+                states.push_back(joint.state);
+            return states;
+        }, py::call_guard<py::gil_scoped_release>())
+        .def("command", [](VsidoSession &session, const std::vector<double> &positions) {
+            auto &joints = session.joints();
+            if (positions.size() != joints.size())
+                throw std::invalid_argument("V-Sidoの指令軸数が機体と一致しません");
+            for (size_t i = 0; i < joints.size(); ++i)
+                joints[i].command.position = positions[i];
+            if (!session.write())
+                throw std::runtime_error(session.error());
+            std::vector<double> applied;
+            applied.reserve(joints.size());
+            for (const auto &joint : joints)
+                applied.push_back(joint.command.position);
+            return applied;
+        });
     m.def("decode_vsido_status", [](const py::bytes &payload) {
         py::dict result;
         for (const auto &axis : decode_vsido_status(static_cast<std::string>(payload)))

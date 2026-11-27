@@ -1,5 +1,6 @@
 input: vsido
 vsido:
+  sender: 192.168.4.40
   port: 8886
   fps: 100
   bind: 0.0.0.0

@@ -1,81 +1,68 @@
 # ToPoDualArm ROS 2
 
-![RVizで両腕の軌道を実行したToPoDualArm](media/moveit-both-arms.png)
+![RVizで両腕の軌道を実行したToPoDualArm](../media/moveit-both-arms.png)
 
 ## 環境構築
 
-Ubuntuでは、インストールしたROS 2 HumbleまたはJazzyの環境を読み込んでから、リポジトリ直下で実行します。rosdepの初期化は未設定の環境で一度だけ行います。
+接続方式に合わせて設定してから起動します。
+
+- **V-Sido**。PCの有線LANにIPアドレスを設定します。 [V-Sido接続方法](../v-sido.md)
+- **U2D2**。機体YAMLの `connection.port` にU2D2のポートを設定します。Dockerでは `/dev/ttyUSB0` を指定します。 [フォロワーYAML](../config/hardware/follower.yaml)
+
+### Dockerで起動する場合
+
+Ubuntu上のDockerでV-Sidoの関節I/Oを起動します。
+
+```sh
+git clone https://github.com/fuzzrobo/ToPoDualArm.git
+cd ToPoDualArm
+docker compose -f ros2/docker-compose.yaml up --build
+```
+
+既定はJazzyです。Humbleを使う場合はコマンドの先頭に `ROS_DISTRO=humble` を付けます。位置指令を送る場合は、機体YAMLを実機に合わせて `TORQUE=true` を付けて起動します。個別の機体YAMLは `TOPOARM_CONFIG` で指定できます（コンテナ内では `/workspace/config/` 配下）。
+
+U2D2で起動する場合は、コマンドの末尾に `u2d2` を付けます。ホスト側のポートが `/dev/ttyUSB0` と異なる場合は `U2D2_DEVICE` を指定します。
+
+### `ros2_ws/src` にクローンして起動する場合
+
+UbuntuにROS 2 HumbleまたはJazzyをインストールしてから実行します。
 
 ```sh
 source /opt/ros/jazzy/setup.bash  # Humbleでは jazzy を humble に変更
+mkdir -p ~/ros2_ws/src
+cd ~/ros2_ws
+git clone https://github.com/fuzzrobo/ToPoDualArm.git src/ToPoDualArm
 sudo apt update
 sudo apt install build-essential cmake python3-rosdep python3-colcon-common-extensions
 sudo rosdep init  # 初回のみ
 rosdep update --rosdistro "$ROS_DISTRO"
-rosdep install --from-paths ros2 --ignore-src --rosdistro "$ROS_DISTRO" -y
-colcon build --base-paths ros2
+rosdep install --from-paths src/ToPoDualArm/ros2 --ignore-src --rosdistro "$ROS_DISTRO" -y
+colcon build --base-paths src/ToPoDualArm/ros2
 source install/setup.bash
 ```
 
-Macでは、リポジトリ直下からDocker Composeで起動します。Humbleを使う場合は `ROS_DISTRO=humble` を指定します。rosdepが各 `package.xml` を読んで依存をインストールします。
+## 実機起動
+
+### Bringup
+
+`/joint_states` で状態を受信し、`/joint_trajectory_controller/follow_joint_trajectory` で軌道を指定できます。
 
 ```sh
-ROS_DISTRO=jazzy docker compose -f ros2/docker-compose.yaml up --build
+ros2 launch topoarm_bringup hardware.launch.py backend:=vsido \
+  config_file:=/path/to/follower.yaml torque:=true
 ```
 
-Composeの既定はfakeで、RVizを表示せず起動します。MacのXサーバーがDockerからの接続を受け付ける設定なら、次のコマンドでRVizも開きます。
+BringupとMoveItの接続方式は `backend:=vsido` または `backend:=u2d2` で切り替えます。
+
+### MoveIt
+
+MoveItはBringupも起動します。MoveItを使う場合は、以下のコマンドだけを実行します。
 
 ```sh
-START_RVIZ=true DISPLAY=host.docker.internal:0 docker compose -f ros2/docker-compose.yaml up --build
+ros2 launch topoarm_moveit moveit.launch.py use_fake_hardware:=false backend:=vsido \
+  config_file:=/path/to/follower.yaml torque:=true
 ```
 
-## MoveItデモ
+RVizの **MotionPlanning** で関節グループと目標を選び、**Plan & Execute** を押します。
 
-GUIを表示できるROS 2環境で起動します。既定はfakeで、RVizが開きます。
-
-```sh
-ros2 launch topoarm_moveit moveit.launch.py
-```
-
-標準は両腕・両グリッパーの16軸です。パンチルトと正面RealSense付きの18軸では、`config/hardware/follower.yaml` と同じディレクトリに個体YAMLを置き、`modules: [pan_tilt]` を指定して起動します。
-
-```sh
-ros2 launch topoarm_moveit moveit.launch.py config_file:=config/hardware/follower_pan_tilt.yaml
-```
-
-`/joint_states` には、駆動関節に加えて左右グリッパーのmimic関節も配信されます。
-
-RVizの **MotionPlanning → Planning** で操作します。
-
-1. **片腕**　**Planning Group** を `left_arm` または `right_arm` にし、手先のマーカーを動かして **Plan & Execute** を押します。
-2. **両腕**　**Planning Group** を `both_arms`、**Goal State** を `reach` にして **Plan & Execute** を押します。
-3. **グリッパー**　`left_gripper` または `right_gripper` を選び、**Goal State** を `open` または `closed` にして実行します。
-
-![RVizでboth_armsのreachを選び、Plan & Executeで両腕を動かす](media/moveit-both-arms.gif)
-
-参考にした構成は [TurtleBot3 LimeのMoveItパッケージ](https://github.com/ROBOTIS-JAPAN-GIT/turtlebot3_lime/tree/humble-devel/turtlebot3_lime_moveit_config) です。
-
-## 関節I/O
-
-MoveItを使わずに関節状態と軌道指令を確認する場合は、`hardware.launch.py` を起動します。`/joint_states` に関節状態が配信され、`/joint_trajectory_controller/follow_joint_trajectory` に関節名と軌道を指定できます。
-
-```sh
-ros2 launch topoarm_bringup hardware.launch.py use_fake_hardware:=true
-```
-
-## 実機
-
-校正と可動域を確認したフォロワーYAMLに `hardware_verified: true` を設定してから起動します。V-Sidoで接続する場合は `backend:=vsido vsido_peer_address:=<機器IP>` を加えます。
-
-```sh
-ros2 launch topoarm_moveit moveit.launch.py use_fake_hardware:=false \
-  config_file:=/path/to/follower.yaml hardware_verified:=true torque:=true
-```
-
-標準の接続方式は `backend:=u2d2` です。[フォロワーYAML](../config/hardware/follower.yaml) の `actuator_profiles` にPIDと速度プロファイル、[床設定](../config/floor.yaml) に床の高さと余裕があります。機体の軸構成は [300 mmモデル](../models/300mm/README.md) を参照してください。
-
-### V-Sido
-
-V-SidoのUDPポート、タイムアウト、CSVの送信順は機体YAMLの `vsido` にあります。受信角はパケット内のIDで照合します。16軸で位置指令を送る場合は、機器側の軸数と送信順に `command_order` を合わせます。受信インターフェースは `vsido_bind_address` で指定できます。
-
-バイラテラルモードで状態だけを読む場合は、`hardware.launch.py` に `read_only:=true torque:=false` を指定します。位置指令を送信中にUDP状態が既定の100 msを超えて途絶すると、指令送信が停止します。運転再開にはハードウェアの再構成が必要です。
+![RVizで両腕の軌道を計画・実行する](../media/moveit-both-arms.gif)

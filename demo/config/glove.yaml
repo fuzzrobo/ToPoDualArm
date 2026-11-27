@@ -1,6 +1,6 @@
 input: glove
 glove:
-  hardware_verified: false
+  hardware_verified: true
   arms:
     right:
       encoder_port: /dev/serial/by-id/REPLACE_WITH_RIGHT_YUBI_ENCODER

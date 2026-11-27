@@ -66,5 +66,15 @@ def inference_config(path):
     robot_folder = folder if "robot" in options else default_folder
     camera_folder = folder if "cameras" in options else default_folder
     options["robot"] = device_arguments(options.get("robot", defaults.get("robot")), robot_folder)
+    backend = options.setdefault("backend", "u2d2")
+    if backend not in ("u2d2", "vsido"):
+        raise ValueError("推論のbackendにはu2d2またはvsidoを指定してください")
+    if backend == "vsido":
+        options["robot"].pop("port", None)
+        for field in ("peer_address", "bind_address"):
+            value = options.get(f"vsido_{field}", "")
+            if not isinstance(value, str):
+                raise ValueError(f"vsido_{field}にはIPv4アドレスを指定してください")
+            options["robot"][field] = value
     options["cameras"] = camera_devices(options.get("cameras", defaults.get("cameras")), camera_folder)
     return options, folder

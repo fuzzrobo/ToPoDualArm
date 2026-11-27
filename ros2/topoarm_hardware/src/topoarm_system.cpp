@@ -46,7 +46,7 @@ CallbackReturn ToPoArmSystemHardware::on_init(const hardware_interface::Hardware
         read_only_ = boolean(get("read_only", "false"));
         const bool torque = boolean(get("torque", "false"));
         const bool configure_devices = boolean(get("configure_devices", "false"));
-        const bool verified_requested = boolean(get("hardware_verified", "false"));
+        const bool verified_requested = boolean(get("hardware_verified", "true"));
         if (read_only_ && (torque || configure_devices))
             throw std::invalid_argument("読取り専用モードでは駆動・機器設定を変更できません");
         if (vsido_) {
@@ -126,7 +126,7 @@ CallbackReturn ToPoArmSystemHardware::on_init(const hardware_interface::Hardware
 }
 CallbackReturn ToPoArmSystemHardware::on_configure(const rclcpp_lifecycle::State &) {
     if (!verified_) {
-        RCLCPP_ERROR(logger_, "実機校正・可動域の確認後にhardware_verifiedを明示してください");
+        RCLCPP_ERROR(logger_, "機体YAMLまたは起動引数でhardware_verifiedが無効です");
         return CallbackReturn::FAILURE;
     }
     if (!session_->configure()) {
