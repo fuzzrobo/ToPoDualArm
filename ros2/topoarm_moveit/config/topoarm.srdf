@@ -1,0 +1,229 @@
+<?xml version='1.0' encoding='utf-8'?>
+<robot name="topoarm">
+  <group name="left_arm">
+    <chain base_link="L_shoulder_mount" tip_link="L_tcp" />
+  </group>
+  <group name="right_arm">
+    <chain base_link="R_shoulder_mount" tip_link="R_tcp" />
+  </group>
+  <group name="left_gripper">
+    <joint name="L_gripper_joint" />
+  </group>
+  <group name="right_gripper">
+    <joint name="R_gripper_joint" />
+  </group>
+  <group name="neck">
+    <joint name="neck_pan_joint" />
+    <joint name="neck_tilt_joint" />
+  </group>
+  <group name="both_arms">
+    <group name="left_arm" />
+    <group name="right_arm" />
+  </group>
+  <group_state name="reach" group="both_arms">
+    <joint name="L_joint1" value="-0.52" />
+    <joint name="L_joint2" value="-0.58" />
+    <joint name="L_joint3" value="-0.09" />
+    <joint name="L_joint4" value="-0.77" />
+    <joint name="L_joint5" value="-0.12" />
+    <joint name="L_joint6" value="-0.28" />
+    <joint name="L_joint7" value="-0.08" />
+    <joint name="R_joint1" value="0.52" />
+    <joint name="R_joint2" value="0.58" />
+    <joint name="R_joint3" value="0.09" />
+    <joint name="R_joint4" value="0.77" />
+    <joint name="R_joint5" value="0.12" />
+    <joint name="R_joint6" value="0.28" />
+    <joint name="R_joint7" value="0.08" />
+  </group_state>
+  <group_state name="open" group="left_gripper">
+    <joint name="L_gripper_joint" value="-1.2217304763960306" />
+  </group_state>
+  <group_state name="closed" group="left_gripper">
+    <joint name="L_gripper_joint" value="0.08726646259971647" />
+  </group_state>
+  <group_state name="open" group="right_gripper">
+    <joint name="R_gripper_joint" value="1.2915436464758039" />
+  </group_state>
+  <group_state name="closed" group="right_gripper">
+    <joint name="R_gripper_joint" value="-0.10471975511965978" />
+  </group_state>
+  <end_effector name="left_end_effector" parent_link="L_tcp" group="left_gripper" parent_group="left_arm" />
+  <end_effector name="right_end_effector" parent_link="R_tcp" group="right_gripper" parent_group="right_arm" />
+  <disable_collisions link1="L_XM540_cover_link" link2="L_link1" reason="Fixed" />
+  <disable_collisions link1="L_XM540_cover_link" link2="L_link2" reason="Adjacent" />
+  <disable_collisions link1="L_XM540_cover_link" link2="L_shoulder_cover_link" reason="Adjacent" />
+  <disable_collisions link1="L_XM540_cover_link" link2="L_shoulder_mount" reason="Adjacent" />
+  <disable_collisions link1="L_XM540_cover_link" link2="R_shoulder_cover_link" reason="Adjacent" />
+  <disable_collisions link1="L_XM540_cover_link" link2="R_shoulder_mount" reason="Adjacent" />
+  <disable_collisions link1="L_XM540_cover_link" link2="base_footprint" reason="Adjacent" />
+  <disable_collisions link1="L_XM540_cover_link" link2="base_link" reason="Adjacent" />
+  <disable_collisions link1="L_XM540_cover_link" link2="lower_frame_link" reason="Adjacent" />
+  <disable_collisions link1="L_XM540_cover_link" link2="main_column_link" reason="Adjacent" />
+  <disable_collisions link1="L_XM540_cover_link" link2="torso_link" reason="Adjacent" />
+  <disable_collisions link1="L_finger_left" link2="L_gripper_base" reason="Adjacent" />
+  <disable_collisions link1="L_finger_left" link2="L_link7" reason="Adjacent" />
+  <disable_collisions link1="L_finger_left" link2="L_tcp" reason="Adjacent" />
+  <disable_collisions link1="L_finger_right" link2="L_gripper_base" reason="Adjacent" />
+  <disable_collisions link1="L_finger_right" link2="L_link7" reason="Adjacent" />
+  <disable_collisions link1="L_finger_right" link2="L_tcp" reason="Adjacent" />
+  <disable_collisions link1="L_gripper_base" link2="L_joint7_cover_link" reason="Adjacent" />
+  <disable_collisions link1="L_gripper_base" link2="L_link6" reason="Adjacent" />
+  <disable_collisions link1="L_gripper_base" link2="L_link7" reason="Fixed" />
+  <disable_collisions link1="L_gripper_base" link2="L_tcp" reason="Fixed" />
+  <disable_collisions link1="L_joint7_cover_link" link2="L_link5" reason="Adjacent" />
+  <disable_collisions link1="L_joint7_cover_link" link2="L_link6" reason="Fixed" />
+  <disable_collisions link1="L_joint7_cover_link" link2="L_link6_cover_link" reason="Adjacent" />
+  <disable_collisions link1="L_joint7_cover_link" link2="L_link7" reason="Adjacent" />
+  <disable_collisions link1="L_joint7_cover_link" link2="L_tcp" reason="Adjacent" />
+  <disable_collisions link1="L_link1" link2="L_link2" reason="Adjacent" />
+  <disable_collisions link1="L_link1" link2="L_shoulder_cover_link" reason="Adjacent" />
+  <disable_collisions link1="L_link1" link2="L_shoulder_mount" reason="Adjacent" />
+  <disable_collisions link1="L_link1" link2="R_shoulder_cover_link" reason="Adjacent" />
+  <disable_collisions link1="L_link1" link2="R_shoulder_mount" reason="Adjacent" />
+  <disable_collisions link1="L_link1" link2="base_footprint" reason="Adjacent" />
+  <disable_collisions link1="L_link1" link2="base_link" reason="Adjacent" />
+  <disable_collisions link1="L_link1" link2="lower_frame_link" reason="Adjacent" />
+  <disable_collisions link1="L_link1" link2="main_column_link" reason="Adjacent" />
+  <disable_collisions link1="L_link1" link2="torso_link" reason="Adjacent" />
+  <disable_collisions link1="L_link2" link2="L_link3" reason="Adjacent" />
+  <disable_collisions link1="L_link2" link2="L_link4_cover_link" reason="Adjacent" />
+  <disable_collisions link1="L_link3" link2="L_link4" reason="Adjacent" />
+  <disable_collisions link1="L_link3" link2="L_link4_cover_link" reason="Fixed" />
+  <disable_collisions link1="L_link4" link2="L_link4_cover_link" reason="Adjacent" />
+  <disable_collisions link1="L_link4" link2="L_link5" reason="Adjacent" />
+  <disable_collisions link1="L_link4" link2="L_link6_cover_link" reason="Adjacent" />
+  <disable_collisions link1="L_link5" link2="L_link6" reason="Adjacent" />
+  <disable_collisions link1="L_link5" link2="L_link6_cover_link" reason="Fixed" />
+  <disable_collisions link1="L_link6" link2="L_link6_cover_link" reason="Adjacent" />
+  <disable_collisions link1="L_link6" link2="L_link7" reason="Adjacent" />
+  <disable_collisions link1="L_link6" link2="L_tcp" reason="Adjacent" />
+  <disable_collisions link1="L_link7" link2="L_tcp" reason="Fixed" />
+  <disable_collisions link1="L_shoulder_cover_link" link2="L_shoulder_mount" reason="Fixed" />
+  <disable_collisions link1="L_shoulder_cover_link" link2="R_XM540_cover_link" reason="Adjacent" />
+  <disable_collisions link1="L_shoulder_cover_link" link2="R_link1" reason="Adjacent" />
+  <disable_collisions link1="L_shoulder_cover_link" link2="R_shoulder_cover_link" reason="Fixed" />
+  <disable_collisions link1="L_shoulder_cover_link" link2="R_shoulder_mount" reason="Fixed" />
+  <disable_collisions link1="L_shoulder_cover_link" link2="base_footprint" reason="Fixed" />
+  <disable_collisions link1="L_shoulder_cover_link" link2="base_link" reason="Fixed" />
+  <disable_collisions link1="L_shoulder_cover_link" link2="lower_frame_link" reason="Fixed" />
+  <disable_collisions link1="L_shoulder_cover_link" link2="main_column_link" reason="Fixed" />
+  <disable_collisions link1="L_shoulder_cover_link" link2="neck_pan_link" reason="Adjacent" />
+  <disable_collisions link1="L_shoulder_cover_link" link2="neck_tilt_cover_link" reason="Adjacent" />
+  <disable_collisions link1="L_shoulder_cover_link" link2="torso_link" reason="Fixed" />
+  <disable_collisions link1="L_shoulder_mount" link2="R_XM540_cover_link" reason="Adjacent" />
+  <disable_collisions link1="L_shoulder_mount" link2="R_link1" reason="Adjacent" />
+  <disable_collisions link1="L_shoulder_mount" link2="R_shoulder_cover_link" reason="Fixed" />
+  <disable_collisions link1="L_shoulder_mount" link2="R_shoulder_mount" reason="Fixed" />
+  <disable_collisions link1="L_shoulder_mount" link2="base_footprint" reason="Fixed" />
+  <disable_collisions link1="L_shoulder_mount" link2="base_link" reason="Fixed" />
+  <disable_collisions link1="L_shoulder_mount" link2="lower_frame_link" reason="Fixed" />
+  <disable_collisions link1="L_shoulder_mount" link2="main_column_link" reason="Fixed" />
+  <disable_collisions link1="L_shoulder_mount" link2="neck_pan_link" reason="Adjacent" />
+  <disable_collisions link1="L_shoulder_mount" link2="neck_tilt_cover_link" reason="Adjacent" />
+  <disable_collisions link1="L_shoulder_mount" link2="torso_link" reason="Fixed" />
+  <disable_collisions link1="R_XM540_cover_link" link2="R_link1" reason="Fixed" />
+  <disable_collisions link1="R_XM540_cover_link" link2="R_link2" reason="Adjacent" />
+  <disable_collisions link1="R_XM540_cover_link" link2="R_shoulder_cover_link" reason="Adjacent" />
+  <disable_collisions link1="R_XM540_cover_link" link2="R_shoulder_mount" reason="Adjacent" />
+  <disable_collisions link1="R_XM540_cover_link" link2="base_footprint" reason="Adjacent" />
+  <disable_collisions link1="R_XM540_cover_link" link2="base_link" reason="Adjacent" />
+  <disable_collisions link1="R_XM540_cover_link" link2="lower_frame_link" reason="Adjacent" />
+  <disable_collisions link1="R_XM540_cover_link" link2="main_column_link" reason="Adjacent" />
+  <disable_collisions link1="R_XM540_cover_link" link2="torso_link" reason="Adjacent" />
+  <disable_collisions link1="R_finger_left" link2="R_gripper_base" reason="Adjacent" />
+  <disable_collisions link1="R_finger_left" link2="R_link7" reason="Adjacent" />
+  <disable_collisions link1="R_finger_left" link2="R_tcp" reason="Adjacent" />
+  <disable_collisions link1="R_finger_right" link2="R_gripper_base" reason="Adjacent" />
+  <disable_collisions link1="R_finger_right" link2="R_link7" reason="Adjacent" />
+  <disable_collisions link1="R_finger_right" link2="R_tcp" reason="Adjacent" />
+  <disable_collisions link1="R_gripper_base" link2="R_joint7_cover_link" reason="Adjacent" />
+  <disable_collisions link1="R_gripper_base" link2="R_link6" reason="Adjacent" />
+  <disable_collisions link1="R_gripper_base" link2="R_link7" reason="Fixed" />
+  <disable_collisions link1="R_gripper_base" link2="R_tcp" reason="Fixed" />
+  <disable_collisions link1="R_joint7_cover_link" link2="R_link5" reason="Adjacent" />
+  <disable_collisions link1="R_joint7_cover_link" link2="R_link6" reason="Fixed" />
+  <disable_collisions link1="R_joint7_cover_link" link2="R_link6_cover_link" reason="Adjacent" />
+  <disable_collisions link1="R_joint7_cover_link" link2="R_link7" reason="Adjacent" />
+  <disable_collisions link1="R_joint7_cover_link" link2="R_tcp" reason="Adjacent" />
+  <disable_collisions link1="R_link1" link2="R_link2" reason="Adjacent" />
+  <disable_collisions link1="R_link1" link2="R_shoulder_cover_link" reason="Adjacent" />
+  <disable_collisions link1="R_link1" link2="R_shoulder_mount" reason="Adjacent" />
+  <disable_collisions link1="R_link1" link2="base_footprint" reason="Adjacent" />
+  <disable_collisions link1="R_link1" link2="base_link" reason="Adjacent" />
+  <disable_collisions link1="R_link1" link2="lower_frame_link" reason="Adjacent" />
+  <disable_collisions link1="R_link1" link2="main_column_link" reason="Adjacent" />
+  <disable_collisions link1="R_link1" link2="torso_link" reason="Adjacent" />
+  <disable_collisions link1="R_link2" link2="R_link3" reason="Adjacent" />
+  <disable_collisions link1="R_link2" link2="R_link4_cover_link" reason="Adjacent" />
+  <disable_collisions link1="R_link3" link2="R_link4" reason="Adjacent" />
+  <disable_collisions link1="R_link3" link2="R_link4_cover_link" reason="Fixed" />
+  <disable_collisions link1="R_link4" link2="R_link4_cover_link" reason="Adjacent" />
+  <disable_collisions link1="R_link4" link2="R_link5" reason="Adjacent" />
+  <disable_collisions link1="R_link4" link2="R_link6_cover_link" reason="Adjacent" />
+  <disable_collisions link1="R_link5" link2="R_link6" reason="Adjacent" />
+  <disable_collisions link1="R_link5" link2="R_link6_cover_link" reason="Fixed" />
+  <disable_collisions link1="R_link6" link2="R_link6_cover_link" reason="Adjacent" />
+  <disable_collisions link1="R_link6" link2="R_link7" reason="Adjacent" />
+  <disable_collisions link1="R_link6" link2="R_tcp" reason="Adjacent" />
+  <disable_collisions link1="R_link7" link2="R_tcp" reason="Fixed" />
+  <disable_collisions link1="R_shoulder_cover_link" link2="R_shoulder_mount" reason="Fixed" />
+  <disable_collisions link1="R_shoulder_cover_link" link2="base_footprint" reason="Fixed" />
+  <disable_collisions link1="R_shoulder_cover_link" link2="base_link" reason="Fixed" />
+  <disable_collisions link1="R_shoulder_cover_link" link2="lower_frame_link" reason="Fixed" />
+  <disable_collisions link1="R_shoulder_cover_link" link2="main_column_link" reason="Fixed" />
+  <disable_collisions link1="R_shoulder_cover_link" link2="neck_pan_link" reason="Adjacent" />
+  <disable_collisions link1="R_shoulder_cover_link" link2="neck_tilt_cover_link" reason="Adjacent" />
+  <disable_collisions link1="R_shoulder_cover_link" link2="torso_link" reason="Fixed" />
+  <disable_collisions link1="R_shoulder_mount" link2="base_footprint" reason="Fixed" />
+  <disable_collisions link1="R_shoulder_mount" link2="base_link" reason="Fixed" />
+  <disable_collisions link1="R_shoulder_mount" link2="lower_frame_link" reason="Fixed" />
+  <disable_collisions link1="R_shoulder_mount" link2="main_column_link" reason="Fixed" />
+  <disable_collisions link1="R_shoulder_mount" link2="neck_pan_link" reason="Adjacent" />
+  <disable_collisions link1="R_shoulder_mount" link2="neck_tilt_cover_link" reason="Adjacent" />
+  <disable_collisions link1="R_shoulder_mount" link2="torso_link" reason="Fixed" />
+  <disable_collisions link1="base_footprint" link2="base_link" reason="Fixed" />
+  <disable_collisions link1="base_footprint" link2="lower_frame_link" reason="Fixed" />
+  <disable_collisions link1="base_footprint" link2="main_column_link" reason="Fixed" />
+  <disable_collisions link1="base_footprint" link2="neck_pan_link" reason="Adjacent" />
+  <disable_collisions link1="base_footprint" link2="neck_tilt_cover_link" reason="Adjacent" />
+  <disable_collisions link1="base_footprint" link2="torso_link" reason="Fixed" />
+  <disable_collisions link1="base_link" link2="lower_frame_link" reason="Fixed" />
+  <disable_collisions link1="base_link" link2="main_column_link" reason="Fixed" />
+  <disable_collisions link1="base_link" link2="neck_pan_link" reason="Adjacent" />
+  <disable_collisions link1="base_link" link2="neck_tilt_cover_link" reason="Adjacent" />
+  <disable_collisions link1="base_link" link2="torso_link" reason="Fixed" />
+  <disable_collisions link1="camera_link" link2="camera_optical_frame" reason="Fixed" />
+  <disable_collisions link1="camera_link" link2="neck_pan_link" reason="Adjacent" />
+  <disable_collisions link1="camera_link" link2="neck_tilt_cover_link" reason="Adjacent" />
+  <disable_collisions link1="camera_link" link2="neck_tilt_link" reason="Fixed" />
+  <disable_collisions link1="camera_link" link2="realsense_mount_link" reason="Fixed" />
+  <disable_collisions link1="camera_optical_frame" link2="neck_pan_link" reason="Adjacent" />
+  <disable_collisions link1="camera_optical_frame" link2="neck_tilt_cover_link" reason="Adjacent" />
+  <disable_collisions link1="camera_optical_frame" link2="neck_tilt_link" reason="Fixed" />
+  <disable_collisions link1="camera_optical_frame" link2="realsense_mount_link" reason="Fixed" />
+  <disable_collisions link1="lower_frame_link" link2="main_column_link" reason="Fixed" />
+  <disable_collisions link1="lower_frame_link" link2="neck_pan_link" reason="Adjacent" />
+  <disable_collisions link1="lower_frame_link" link2="neck_tilt_cover_link" reason="Adjacent" />
+  <disable_collisions link1="lower_frame_link" link2="torso_link" reason="Fixed" />
+  <disable_collisions link1="main_column_link" link2="neck_pan_link" reason="Adjacent" />
+  <disable_collisions link1="main_column_link" link2="neck_tilt_cover_link" reason="Adjacent" />
+  <disable_collisions link1="main_column_link" link2="torso_link" reason="Fixed" />
+  <disable_collisions link1="neck_pan_link" link2="neck_tilt_cover_link" reason="Fixed" />
+  <disable_collisions link1="neck_pan_link" link2="neck_tilt_link" reason="Adjacent" />
+  <disable_collisions link1="neck_pan_link" link2="realsense_mount_link" reason="Adjacent" />
+  <disable_collisions link1="neck_pan_link" link2="torso_link" reason="Adjacent" />
+  <disable_collisions link1="neck_pan_servo_link" link2="base_link" reason="Fixed" />
+  <disable_collisions link1="neck_pan_servo_link" link2="torso_link" reason="Fixed" />
+  <disable_collisions link1="neck_pan_servo_link" link2="neck_pan_link" reason="Adjacent" />
+  <disable_collisions link1="neck_pan_servo_link" link2="neck_tilt_cover_link" reason="Adjacent" />
+  <disable_collisions link1="neck_tilt_cover_link" link2="neck_tilt_link" reason="Adjacent" />
+  <disable_collisions link1="neck_tilt_cover_link" link2="realsense_mount_link" reason="Adjacent" />
+  <disable_collisions link1="neck_tilt_cover_link" link2="torso_link" reason="Adjacent" />
+  <disable_collisions link1="neck_tilt_link" link2="realsense_mount_link" reason="Fixed" />
+  <!-- 実測の開閉範囲で、同じグリッパーの連動指同士のCADメッシュが重なる。 -->
+  <disable_collisions link1="L_finger_left" link2="L_finger_right" reason="Adjacent" />
+  <disable_collisions link1="R_finger_left" link2="R_finger_right" reason="Adjacent" />
+  <passive_joint name="L_gripper_mimic" />
+  <passive_joint name="R_gripper_mimic" />
+</robot>

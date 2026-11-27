@@ -17,9 +17,10 @@ TargetLimiter::TargetLimiter(const std::vector<Joint> &joints, const SessionOpti
         }
     }
     if (options.floor_enabled) {
-        floor_ = std::make_unique<FloorGuard>(options.robot_model, options.floor_z_m, options.floor_margin_m);
+        floor_ = std::make_unique<FloorGuard>(options.robot_model, options.floor_z_m, options.floor_margin_m,
+                                              options.robot_model_fragment);
         if (joints.size() != floor_->names().size())
-            throw std::invalid_argument("床補正には18軸が必要です");
+            throw std::invalid_argument("床補正のURDFと機体設定の駆動軸数が一致しません");
         for (const auto &name : floor_->names()) {
             auto it = std::find_if(joints.begin(), joints.end(),
                                    [&](const auto &d) { return d.config.joint_name == name; });

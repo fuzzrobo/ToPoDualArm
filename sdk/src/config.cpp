@@ -1,10 +1,15 @@
 // SPDX-License-Identifier: Apache-2.0
 #include "topoarm_hardware/config.hpp"
+#include "topoarm_hardware/vsido.hpp"
 #include <filesystem>
 #include <set>
 #include <yaml-cpp/yaml.h>
 namespace fuzzrobo::topoarm_hardware {
 namespace {
+const std::set<std::string> hardware_keys{
+    "hardware_verified", "connection", "options", "joints", "calibration_note",
+    "motor_settings_note", "range_note", "neck_calibration_note", "gripper_mapping_note",
+    "input_transform", "model", "modules", "pan_tilt", "actuator_profiles", "vsido"};
 void keys(const YAML::Node &node, const std::set<std::string> &allowed, const std::string &context) {
     if (!node.IsMap())
         throw std::invalid_argument(context + "はマッピングが必要です");
@@ -21,15 +26,100 @@ template <class T> void read(const YAML::Node &node, const char *key, T &value) 
     if (node[key])
         value = node[key].as<T>();
 }
+constexpr auto neck_pan = "neck_pan_joint";
+constexpr auto neck_tilt = "neck_tilt_joint";
+
+bool uses_pan_tilt(const YAML::Node &root) {
+    const auto modules = root["modules"];
+    if (!modules)
+        return false;
+    if (!root["model"] || root["model"].as<std::string>() != "300mm")
+        throw std::invalid_argument("modulesにはmodel: 300mmを指定してください");
+    if (!modules.IsSequence() || modules.size() > 1 ||
+        (modules.size() == 1 && modules[0].as<std::string>() != "pan_tilt"))
+        throw std::invalid_argument("modulesには[]または[pan_tilt]を指定してください");
+    return modules.size() == 1;
+}
+
+YAML::Node read_joints(const YAML::Node &root, bool pan_tilt) {
+    const auto base = root["joints"];
+    keys(base, {}, "joints");
+    if (root["model"] && root["model"].as<std::string>() == "300mm" &&
+        (base[neck_pan] || base[neck_tilt]))
+        throw std::invalid_argument("首の関節はpan_tilt.jointsに指定してください");
+    auto joints = YAML::Clone(base);
+    if (pan_tilt) {
+        const auto module = root["pan_tilt"];
+        keys(module, {"joints"}, "pan_tilt");
+        const auto extra = module["joints"];
+        keys(extra, {neck_pan, neck_tilt}, "pan_tilt.joints");
+        if (extra.size() != 2)
+            throw std::invalid_argument("pan_tilt.jointsにはpan/tilt両軸が必要です");
+        for (const auto &axis : extra)
+            joints[axis.first.as<std::string>()] = YAML::Clone(axis.second);
+    }
+    return joints;
+}
+
+void read_geometry(const YAML::Node &root, const std::string &path, bool pan_tilt, SessionOptions &options) {
+    const auto directory = std::filesystem::absolute(path).parent_path();
+    const auto model = root["model"];
+    const bool named_model = model && model.as<std::string>() == "300mm";
+    if (auto o = root["options"]) {
+        read(o, "clip_to_limits", options.clip_to_limits);
+        if (!named_model || pan_tilt) {
+            read(o, "neck_envelope", options.neck_envelope);
+            if (auto n = o["neck_limits"]) {
+                keys(n, {"pan_abs_at_outer", "tilt_min_at_outer", "outward_margin"}, "neck_limits");
+                options.neck_limits.pan_abs_at_outer = n["pan_abs_at_outer"].as<double>();
+                options.neck_limits.tilt_min_at_outer = n["tilt_min_at_outer"].as<double>();
+                options.neck_limits.outward_margin = n["outward_margin"].as<double>();
+            }
+        }
+        if (auto f = o["floor_config"]) {
+            auto file = std::filesystem::path(f.as<std::string>());
+            if (file.empty())
+                throw std::invalid_argument("floor_configが空です");
+            const auto floor = YAML::LoadFile((directory / file).lexically_normal().string());
+            keys(floor, {"enabled", "z_m", "margin_m"}, "floor");
+            options.floor_enabled = floor["enabled"].as<bool>();
+            options.floor_z_m = floor["z_m"].as<double>();
+            options.floor_margin_m = floor["margin_m"].as<double>();
+        }
+    }
+    if (model) {
+        const auto models = (directory / "../../models/300mm").lexically_normal();
+        const auto standard = models / "robot.urdf";
+        const auto model_value = model.as<std::string>();
+        if (model_value.empty())
+            throw std::invalid_argument("modelが空です");
+        auto file = (directory / model_value).lexically_normal();
+        const auto axes = root["joints"];
+        const bool legacy_equipped = !named_model && axes.IsMap() && axes[neck_pan] && axes[neck_tilt] &&
+                                     (file == standard || file == models / "robot_pan_tilt.urdf");
+        if (named_model || legacy_equipped)
+            file = standard;
+        options.robot_model = file.string();
+        if (pan_tilt || legacy_equipped)
+            options.robot_model_fragment = (models / "pan_tilt.urdf").string();
+    }
+}
+
+void read_axis(const YAML::Node &node, JointConfig &joint) {
+    const int id = node["id"].as<int>();
+    if (id < 1 || id > 253)
+        throw std::invalid_argument("IDが不正です: " + joint.joint_name);
+    joint.id = id;
+    joint.multiplier = node["multiplier"].as<double>();
+    joint.offset = node["offset"].as<double>();
+    joint.limit_pos_min = node["min"].as<double>();
+    joint.limit_pos_max = node["max"].as<double>();
+}
 } // namespace
 HardwareConfig load_config(const std::string &path, const std::vector<std::string> &selected) {
     try {
         const auto root = YAML::LoadFile(path);
-        keys(root,
-             {"hardware_verified", "connection", "options", "joints", "calibration_note",
-              "motor_settings_note", "range_note", "neck_calibration_note", "gripper_mapping_note",
-              "input_transform", "model", "actuator_profiles"},
-             "設定");
+        keys(root, hardware_keys, "設定");
         HardwareConfig config;
         read(root, "hardware_verified", config.hardware_verified);
         if (auto c = root["connection"]) {
@@ -47,7 +137,6 @@ HardwareConfig load_config(const std::string &path, const std::vector<std::strin
                   "neck_envelope", "neck_limits", "floor_config", "read_profile", "startup_configuration"},
                  "options");
             read(o, "torque_retention", config.options.retention);
-            read(o, "clip_to_limits", config.options.clip_to_limits);
             read(o, "write_pid_on_connect", config.options.write_pid_on_connect);
             read(o, "return_delay_time", config.options.return_delay_time);
             read(o, "read_profile", config.options.read_profile);
@@ -60,35 +149,9 @@ HardwareConfig load_config(const std::string &path, const std::vector<std::strin
             // 旧YAMLとの互換用。値の型だけ検査し、自動復旧は常時有効とする。
             if (o["auto_reset"])
                 (void)o["auto_reset"].as<bool>();
-            read(o, "neck_envelope", config.options.neck_envelope);
-            if (auto n = o["neck_limits"]) {
-                keys(n, {"pan_abs_at_outer", "tilt_min_at_outer", "outward_margin"}, "neck_limits");
-                auto &limits = config.options.neck_limits;
-                limits.pan_abs_at_outer = n["pan_abs_at_outer"].as<double>();
-                limits.tilt_min_at_outer = n["tilt_min_at_outer"].as<double>();
-                limits.outward_margin = n["outward_margin"].as<double>();
-            }
-            if (auto f = o["floor_config"]) {
-                auto floor_path = std::filesystem::path(f.as<std::string>());
-                if (floor_path.empty())
-                    throw std::invalid_argument("floor_configが空です");
-                if (floor_path.is_relative())
-                    floor_path = std::filesystem::absolute(path).parent_path() / floor_path;
-                const auto floor = YAML::LoadFile(floor_path.lexically_normal().string());
-                keys(floor, {"enabled", "z_m", "margin_m"}, "floor");
-                config.options.floor_enabled = floor["enabled"].as<bool>();
-                config.options.floor_z_m = floor["z_m"].as<double>();
-                config.options.floor_margin_m = floor["margin_m"].as<double>();
-            }
         }
-        if (auto value = root["model"]) {
-            auto model = std::filesystem::path(value.as<std::string>());
-            if (model.empty())
-                throw std::invalid_argument("modelが空です");
-            if (model.is_relative())
-                model = std::filesystem::absolute(path).parent_path() / model;
-            config.options.robot_model = model.lexically_normal().string();
-        }
+        const bool pan_tilt = uses_pan_tilt(root);
+        read_geometry(root, path, pan_tilt, config.options);
         if (auto t = root["input_transform"]) {
             keys(t, {"neck_tilt_negative_scale"}, "input_transform");
             read(t, "neck_tilt_negative_scale", config.neck_tilt_negative_scale);
@@ -97,15 +160,18 @@ HardwareConfig load_config(const std::string &path, const std::vector<std::strin
         }
         YAML::Node profiles;
         if (const auto source = root["actuator_profiles"]) {
-            const auto file = std::filesystem::absolute(path).parent_path() / source.as<std::string>();
-            profiles = YAML::LoadFile(file.lexically_normal().string());
+            if (source.IsMap()) {
+                profiles = source;
+            } else {
+                const auto file = std::filesystem::absolute(path).parent_path() / source.as<std::string>();
+                profiles = YAML::LoadFile(file.lexically_normal().string());
+            }
             keys(profiles, {}, "actuator_profiles");
             for (const auto &preset : profiles)
                 keys(preset.second, {"position_kp", "position_ki", "position_kd", "profile_velocity",
                      "profile_acceleration", "profile_duration_ms", "profile_acceleration_ms"}, "servo profile");
         }
-        const auto joints = root["joints"];
-        keys(joints, {}, "joints");
+        const auto joints = read_joints(root, pan_tilt);
         for (const auto &item : joints) {
             JointConfig d;
             d.joint_name = item.first.as<std::string>();
@@ -126,15 +192,11 @@ HardwareConfig load_config(const std::string &path, const std::vector<std::strin
                   "initial_current_limit", "position_kp", "position_ki", "position_kd", "profile_velocity",
                   "profile_acceleration", "profile_duration_ms", "profile_acceleration_ms"},
                  d.joint_name);
-            const int id = j["id"].as<int>(), mode = j["operating_mode"].as<int>();
-            if (id < 1 || id > 253 || (mode != 3 && mode != 5))
-                throw std::invalid_argument("IDまたはmodeが不正です: " + d.joint_name);
-            d.id = id;
+            read_axis(j, d);
+            const int mode = j["operating_mode"].as<int>();
+            if (mode != 3 && mode != 5)
+                throw std::invalid_argument("modeが不正です: " + d.joint_name);
             d.operating_mode = mode;
-            d.multiplier = j["multiplier"].as<double>();
-            d.offset = j["offset"].as<double>();
-            d.limit_pos_min = j["min"].as<double>();
-            d.limit_pos_max = j["max"].as<double>();
             d.current_cap = j["current_cap"].as<double>();
             d.initial_current_limit = j["initial_current_limit"].as<double>();
             d.position_kp = j["position_kp"].as<int>();
@@ -164,6 +226,57 @@ HardwareConfig load_config(const std::string &path, const std::vector<std::strin
         return config;
     } catch (const YAML::Exception &e) {
         throw std::invalid_argument("YAML設定を読み込めません: " + path + ": " + e.what());
+    }
+}
+
+VsidoConfig load_vsido_config(const std::string &path, const std::string &peer_address,
+                              const std::string &bind_address) {
+    try {
+        const auto root = YAML::LoadFile(path);
+        const auto network = root["vsido"];
+        if (network)
+            keys(root, hardware_keys, "V-Sido設定");
+        else
+            keys(root, {"hardware_verified", "connection", "model", "options", "joints", "command_order"},
+                 "V-Sido設定");
+        VsidoConfig config;
+        read(root, "hardware_verified", config.hardware_verified);
+        // 旧形式ではUDP設定がconnectionに、送信順がルートにある。
+        const auto c = network ? network : root["connection"];
+        keys(c, {"bind_address", "peer_address", "receive_port", "command_port", "timeout_s",
+                 "command_order"}, "V-Sido接続");
+        read(c, "peer_address", config.peer_address);
+        read(c, "bind_address", config.bind_address);
+        read(c, "receive_port", config.receive_port);
+        read(c, "command_port", config.command_port);
+        read(c, "timeout_s", config.timeout_s);
+        if (!peer_address.empty())
+            config.peer_address = peer_address;
+        if (!bind_address.empty())
+            config.bind_address = bind_address;
+        if (config.peer_address.empty())
+            throw std::invalid_argument("V-Sidoのpeer_addressを指定してください");
+        if (const auto o = root["options"]; o && !network)
+            keys(o, {"clip_to_limits", "neck_envelope", "neck_limits", "floor_config"}, "options");
+        const bool pan_tilt = uses_pan_tilt(root);
+        read_geometry(root, path, pan_tilt, config.options);
+        const auto joints = read_joints(root, pan_tilt);
+        for (const auto &item : joints) {
+            JointConfig joint;
+            joint.joint_name = item.first.as<std::string>();
+            if (network)
+                keys(item.second, {}, joint.joint_name);
+            else
+                keys(item.second, {"id", "multiplier", "offset", "min", "max"}, joint.joint_name);
+            read_axis(item.second, joint);
+            joint.operating_mode = 3;
+            config.joints.push_back(joint);
+        }
+        const auto order = network ? network["command_order"] : root["command_order"];
+        config.command_order = order.as<std::vector<std::string>>();
+        return config;
+    } catch (const YAML::Exception &e) {
+        throw std::invalid_argument("V-Sido YAML設定を読み込めません: " + path + ": " + e.what());
     }
 }
 } // namespace fuzzrobo::topoarm_hardware

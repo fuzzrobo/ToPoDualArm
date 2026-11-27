@@ -1,0 +1,10 @@
+# Questから300 mmフォロワーへの座標校正。接続先は demo/demo.yaml で指定する。
+meta_trigger_released_opening: 0.5
+quest_to_robot_xyzw: [0, 0, 0, 1]
+position_scale: 1
+neck_mode: fixed
+neck_pan_deg: 0
+neck_tilt_deg: -45
+pose:
+  neck_pivot_m: [0.0, -0.075, 0.08]
+  frame_offset_m: [-0.085, 0.0, -0.14]

@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 #include "topoarm_hardware/floor_guard.hpp"
+#include "topoarm_hardware/robot_model.hpp"
 #include <algorithm>
 #include <cmath>
 #include <functional>
@@ -43,26 +44,20 @@ double scalar_attribute(const tinyxml2::XMLElement *element, const char *name, d
     return value;
 }
 } // namespace
-FloorGuard::FloorGuard(const std::string &path, double floor_z, double margin)
+FloorGuard::FloorGuard(const std::string &path, double floor_z, double margin,
+                       const std::string &fragment)
     : floor_(floor_z), margin_(margin) {
     if (!std::isfinite(floor_) || !std::isfinite(margin_) || margin_ < .001)
         throw std::invalid_argument("床高さ・余裕が不正です");
     tinyxml2::XMLDocument document;
-    if (document.LoadFile(path.c_str()) != tinyxml2::XML_SUCCESS)
-        throw std::invalid_argument("URDFを読み込めません: " + path);
+    load_robot_urdf(document, path, fragment);
     const auto *root = document.FirstChildElement("robot");
-    if (!root)
-        throw std::invalid_argument("URDFにrobotがありません");
     // 入出力順は関節名で固定し、URDFのXML記述順には依存しない。
     for (const auto &side : {"R_", "L_"}) {
         for (int i = 1; i <= 7; ++i)
             names_.push_back(std::string(side) + "joint" + std::to_string(i));
         names_.push_back(std::string(side) + "gripper_joint");
     }
-    names_.insert(names_.end(), {"neck_pan_joint", "neck_tilt_joint"});
-    std::map<std::string, int> indices;
-    for (size_t i = 0; i < names_.size(); ++i)
-        indices[names_[i]] = int(i);
     std::set<std::string> links, joint_names, independent;
     std::map<std::string, const tinyxml2::XMLElement *> parents;
     std::map<std::string, std::vector<std::string>> children;
@@ -79,15 +74,21 @@ FloorGuard::FloorGuard(const std::string &path, double floor_z, double margin)
             throw std::invalid_argument("URDFの関節木が不正です: " + name);
         if (type != "fixed" && type != "revolute" && type != "continuous")
             throw std::invalid_argument("未対応のURDF関節種別です: " + type);
-        if (type != "fixed" && !joint->FirstChildElement("mimic")) {
-            if (!indices.count(name))
-                throw std::invalid_argument("未対応の独立関節です: " + name);
+        if (type != "fixed" && !joint->FirstChildElement("mimic"))
             independent.insert(name);
-        }
         children[parent].push_back(child);
     }
-    if (independent.size() != names_.size())
-        throw std::invalid_argument("URDFには両腕・指・首の18関節が必要です");
+    const bool pan = independent.count("neck_pan_joint");
+    const bool tilt = independent.count("neck_tilt_joint");
+    if (pan != tilt)
+        throw std::invalid_argument("URDFのパンチルトには両軸が必要です");
+    if (pan)
+        names_.insert(names_.end(), {"neck_pan_joint", "neck_tilt_joint"});
+    if (independent != std::set<std::string>(names_.begin(), names_.end()))
+        throw std::invalid_argument("URDFには両腕・指の16関節、またはパンチルト付きの18関節が必要です");
+    std::map<std::string, int> indices;
+    for (size_t i = 0; i < names_.size(); ++i)
+        indices[names_[i]] = int(i);
     std::vector<std::string> roots;
     for (const auto &link : links)
         if (!parents.count(link))

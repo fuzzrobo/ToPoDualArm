@@ -1,4 +1,5 @@
 # 共通ロボットモデル上のカメラ取付先・光学フレーム。レンズ校正はconfig/camerasへ分離。
+# frontの取付先はパンチルト付きモデルにある。
 front:
   parent: camera_optical_frame
   position_m:

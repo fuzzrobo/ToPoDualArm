@@ -1,0 +1,4 @@
+input: quest
+quest:
+  quest_host: 192.168.11.23
+  hardware_verified: true

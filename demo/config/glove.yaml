@@ -1,0 +1,14 @@
+input: glove
+glove:
+  hardware_verified: false
+  arms:
+    right:
+      encoder_port: /dev/serial/by-id/REPLACE_WITH_RIGHT_YUBI_ENCODER
+      encoder_id: R003
+      encoder_closed_rad: 0
+      encoder_open_rad: 1
+    left:
+      encoder_port: /dev/serial/by-id/REPLACE_WITH_LEFT_YUBI_ENCODER
+      encoder_id: L003
+      encoder_closed_rad: 0
+      encoder_open_rad: 1

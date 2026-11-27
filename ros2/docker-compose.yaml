@@ -1,0 +1,20 @@
+name: topoarm-ros2
+
+services:
+  moveit:
+    image: topoarm-ros2:${ROS_DISTRO:-jazzy}
+    build:
+      context: ..
+      dockerfile: ros2/Dockerfile
+      args:
+        ROS_DISTRO: ${ROS_DISTRO:-jazzy}
+    environment:
+      DISPLAY: ${DISPLAY:-}
+      QT_X11_NO_MITSHM: "1"
+      LIBGL_ALWAYS_SOFTWARE: "1"
+    command:
+      - ros2
+      - launch
+      - topoarm_moveit
+      - moveit.launch.py
+      - start_rviz:=${START_RVIZ:-false}

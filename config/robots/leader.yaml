@@ -1,3 +1,0 @@
-backend: direct
-role: leader
-hardware: ../hardware/leader.yaml

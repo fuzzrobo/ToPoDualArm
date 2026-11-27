@@ -24,6 +24,7 @@ struct SessionOptions {
     bool neck_envelope{false};
     NeckEnvelopeConfig neck_limits;
     std::string robot_model;
+    std::string robot_model_fragment;
     bool floor_enabled{false};
     double floor_z_m{0}, floor_margin_m{.02};
     // 駆動時に、対象軸の電圧・過負荷エラーを条件確認後に復旧する。

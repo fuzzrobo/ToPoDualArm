@@ -35,8 +35,8 @@ protected:
     std::unique_ptr<DynamixelHandler> handler_;
 private:
     std::vector<MimicInfo> mimics_;
-    bool verified_{false}, read_only_{false};
-    std::unique_ptr<DriverSession> session_;
+    bool verified_{false}, read_only_{false}, vsido_{false};
+    std::unique_ptr<JointIO> session_;
     rclcpp::Logger logger_{rclcpp::get_logger("topoarm_hardware")};
     bool leader_torque_off();
     void update_mimics();
